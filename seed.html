@@ -6,8 +6,8 @@
   <title>عرض Seed - ATT/DES</title>
 
   <!-- اللوجو الخاص بالمتصفح (Favicon) -->
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" href="https://attdes.online/fav.ico">
+  <link rel="shortcut icon" type="image/x-icon" href="https://attdes.online/fav.ico">
 
   <!-- إعلانات Monetag (In-Page Push / Smart Script) -->
   <!-- ضع كود Monetag الخاص بك هنا -->
@@ -50,7 +50,7 @@
       width: 100%;
       aspect-ratio: 3464 / 1023;
       background-color: #1e293b;
-      border: 2px dashed var(--border-color);
+      border: 1px solid var(--border-color);
       border-radius: 12px;
       overflow: hidden;
       display: flex;
@@ -64,14 +64,6 @@
       height: 100%;
       object-fit: cover;
       display: block;
-    }
-
-    .header-placeholder-text {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      text-align: center;
-      position: absolute;
-      pointer-events: none;
     }
 
     /* أوعية الإعلانات */
@@ -153,8 +145,7 @@
   <!-- هيدر الصورة (3464×1023) -->
   <header class="header-banner-container">
     <div class="header-banner">
-      <img src="header-banner.jpg" alt="ATT/DES Banner" onerror="this.style.display='none'">
-      <span class="header-placeholder-text">مكان صورة الهيدر (3464×1023)<br>ضع ملف header-banner.jpg بنفس المجلد</span>
+      <img src="https://attdes.online/attdes-logo.png" alt="ATT/DES Logo">
     </div>
   </header>
 
@@ -171,7 +162,7 @@
       <!-- مكان عرض الـ Seed المشفّر بعد فكه -->
       <div id="seed-display" class="seed-box">جاري تحميل وتفكيك البيانات...</div>
 
-      <button class="btn-copy" onclick="copySeed()">نسخ كود الـ Seed</button>
+      <button id="btn-copy" class="btn-copy" onclick="copySeed()">نسخ كود الـ Seed</button>
 
       <!-- إعلان AADS وسط المقال -->
       <div class="ad-container" style="margin-top:25px;" id="aads-inline">
@@ -189,8 +180,8 @@
 
   <script>
     let rawSeedValue = "";
-    // رابط الجلب المباشر من مستودعك
-    const RAW_JSON_URL = "https://raw.githubusercontent.com/attackndestroy/ModsLib/main/seed.json";
+    // رابط الجلب المباشر الموحد من موقعك
+    const JSON_URL = "https://modslib.attdes.online/seed.json";
 
     function base64ToUtf8(str) {
       const binary = atob(str.replace(/\s/g, ''));
@@ -210,8 +201,8 @@
 
       try {
         // جلب البيانات مع تجنب الكاش (Cache Busting)
-        const response = await fetch(`${RAW_JSON_URL}?t=${new Date().getTime()}`);
-        if (!response.ok) throw new Error('تعذر تحميل الملف من GitHub');
+        const response = await fetch(`${JSON_URL}?t=${new Date().getTime()}`);
+        if (!response.ok) throw new Error('تعذر تحميل البيانات');
         
         const data = await response.json();
 
@@ -230,8 +221,15 @@
 
     function copySeed() {
       if (!rawSeedValue) return;
+      
+      const copyBtn = document.getElementById('btn-copy');
       navigator.clipboard.writeText(rawSeedValue).then(() => {
-        alert('تم نسخ الـ Seed بنجاح!');
+        copyBtn.innerText = '✅ تم نسخ الـ Seed بنجاح!';
+        setTimeout(() => {
+          copyBtn.innerText = 'نسخ كود الـ Seed';
+        }, 2000);
+      }).catch(err => {
+        console.error('فشل النسخ التلقائي: ', err);
       });
     }
 

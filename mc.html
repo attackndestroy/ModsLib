@@ -4,9 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تحميل ماين كرافت آخر إصدار - Minecraft Download</title>
+    
+    <!-- Favicon (أيقونة الموقع) -->
+    <link rel="icon" type="image/x-icon" href="https://attdes.online/fav.ico">
+    <link rel="shortcut icon" href="https://attdes.online/fav.ico">
+
+    <!-- كود Monetag -->
+    <script src="https://quge5.com/88/tag.min.js" data-zone="266903" async data-cfasync="false"></script>
+
     <style>
         :root {
             --bg-color: #0f172a;
+            --header-bg: rgba(15, 23, 42, 0.95);
             --card-bg: rgba(30, 41, 59, 0.7);
             --card-border: #334155;
             --accent-green: #22c55e;
@@ -34,9 +43,61 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
+            justify-content: flex-start;
+            padding-bottom: 20px;
             line-height: 1.6;
+        }
+
+        /* ===== إعلان فوق الهيدر ===== */
+        .top-banner-wrapper {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* ===== الهيدر ===== */
+        header {
+            width: 100%;
+            background: var(--header-bg);
+            border-bottom: 1px solid var(--card-border);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 12px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+            display: block;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-right: 15px;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--accent-green);
+        }
+
+        /* ===== مساحات الإعلانات ===== */
+        .ad-space {
+            width: 100%;
+            max-width: 750px;
+            margin: 20px auto;
+            text-align: center;
         }
 
         .container {
@@ -49,6 +110,7 @@
             padding: 40px 30px;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
             text-align: center;
+            margin-top: 10px;
         }
 
         .badge {
@@ -183,10 +245,53 @@
                 font-size: 1.05rem;
                 padding: 14px 20px;
             }
+
+            header {
+                padding: 10px 15px;
+            }
+
+            .logo-img {
+                height: 32px;
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- 1. البانر فوق الهيدر -->
+    <div class="top-banner-wrapper">
+        <script>
+          atOptions = {
+            'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+            'format' : 'iframe',
+            'height' : 50,
+            'width' : 320,
+            'params' : {}
+          };
+        </script>
+        <script src="https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"></script>
+    </div>
+
+    <!-- الهيدر مع اللوجو -->
+    <header>
+        <a href="#">
+            <img src="https://attdes.online/attdes-logo.png" alt="ATTACK N' DESTROY" class="logo-img">
+        </a>
+        <nav>
+            <a href="#">الرئيسية</a>
+            <a href="#">الألعاب</a>
+        </nav>
+    </header>
+
+    <!-- 2. إعلان AADS رقم 1 (أعلى الحاوية الرئيسية) -->
+    <div class="ad-space">
+        <!-- BEGIN AADS AD UNIT 2450619 -->
+        <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
+            <iframe data-aa='2450619' src='//acceptable.a-ads.com/2450619/?size=Adaptive'
+                    style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+        </div>
+        <!-- END AADS AD UNIT 2450619 -->
+    </div>
 
     <div class="container">
         <span class="badge">🎮 التحديث الأخير v1.26+</span>
@@ -217,9 +322,19 @@
             </div>
         </div>
 
+        <!-- 3. إعلان AADS رقم 2 (منتصف الحاوية قبل زر التحميل) -->
+        <div class="ad-space" style="margin: 25px auto;">
+            <!-- BEGIN AADS AD UNIT 2450619 -->
+            <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
+                <iframe data-aa='2450619' src='//acceptable.a-ads.com/2450619/?size=Adaptive'
+                        style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+            </div>
+            <!-- END AADS AD UNIT 2450619 -->
+        </div>
+
         <div class="download-box">
             <!-- يمكنك تغيير الرابط أدناه (href) لوضع رابط التحميل الخاص بك -->
-            <a href="https://mcpedl.org/uploads_files/27-06-2026/minecraft-26-32.apk" class="download-btn" target="_blank" rel="noopener noreferrer">
+            <a href="https://example.com/download-link" class="download-btn" target="_blank" rel="noopener noreferrer">
                 <span>تحميل الآن (رابط مباشر)</span>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -229,6 +344,16 @@
             </a>
             <p class="note">الرابط مباشر وسريع يدعم الاستكمال.</p>
         </div>
+    </div>
+
+    <!-- 4. إعلان AADS رقم 3 (أسفل الحاوية الرئيسية) -->
+    <div class="ad-space">
+        <!-- BEGIN AADS AD UNIT 2450619 -->
+        <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
+            <iframe data-aa='2450619' src='//acceptable.a-ads.com/2450619/?size=Adaptive'
+                    style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+        </div>
+        <!-- END AADS AD UNIT 2450619 -->
     </div>
 
     <footer>

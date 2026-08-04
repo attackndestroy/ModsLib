@@ -9,9 +9,6 @@
   <link rel="icon" type="image/x-icon" href="https://attdes.online/fav.ico">
   <link rel="shortcut icon" type="image/x-icon" href="https://attdes.online/fav.ico">
 
-  <!-- إعلانات Monetag (In-Page Push / Smart Script) -->
-  <!-- ضع كود Monetag الخاص بك هنا -->
-
   <style>
     :root {
       --bg-color: #0f172a;
@@ -38,6 +35,16 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
+    }
+
+    /* حاوية إعلان الـ Banner المباشر أعلى الصفحة */
+    .top-banner-ad {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      overflow: hidden;
     }
 
     /* هيدر الصورة */
@@ -82,6 +89,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     }
 
     main {
@@ -139,9 +147,29 @@
       color: #f87171;
       font-weight: bold;
     }
+
+    /* تنسيق إعلانات AADS Frame */
+    .aads-frame iframe {
+      max-width: 100%;
+      border: 0;
+    }
   </style>
 </head>
 <body>
+
+  <!-- إعلان Adsterra العلوي (320x50) فوق الهيدر -->
+  <div class="top-banner-ad">
+    <script>
+      atOptions = {
+        'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script src="https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"></script>
+  </div>
 
   <!-- هيدر الصورة -->
   <header class="header-banner-container">
@@ -150,9 +178,14 @@
     </div>
   </header>
 
-  <!-- إعلان Adsterra العلوي -->
-  <div class="ad-container" id="adsterra-top">
-    <span style="color: var(--text-muted); font-size: 0.8rem;">[إعلان Adsterra العلوي]</span>
+  <!-- الإعلان الأول: AADS العلوي -->
+  <div class="ad-container" id="ad-top">
+    <!-- BEGIN AADS AD UNIT 2450619 -->
+    <div class="aads-frame" style="width: 100%; margin: auto; position: relative; z-index: 99998;">
+      <iframe data-aa='2450619' src='//acceptable.a-ads.com/2450619/?size=Adaptive'
+              style='border:0; padding:0; width:70%; height:auto; overflow:hidden; display: block; margin: auto;'></iframe>
+    </div>
+    <!-- END AADS AD UNIT 2450619 -->
   </div>
 
   <main>
@@ -164,16 +197,26 @@
       <!-- زر الانتقال لرابط التحميل الحقيقي -->
       <a id="btn-download" class="btn-download" href="#" target="_blank" style="display: none;">📥 اضغط هنا للتحميل المباشر</a>
 
-      <!-- إعلان AADS وسط المقال -->
-      <div class="ad-container" style="margin-top:25px;" id="aads-inline">
-        <span style="color: var(--text-muted); font-size: 0.8rem;">[إعلان AADS]</span>
+      <!-- الإعلان الثاني: AADS وسط الكارت -->
+      <div class="ad-container" style="margin-top:25px;" id="ad-inline">
+        <!-- BEGIN AADS AD UNIT 2450619 -->
+        <div class="aads-frame" style="width: 100%; margin: auto; position: relative; z-index: 99998;">
+          <iframe data-aa='2450619' src='//acceptable.a-ads.com/2450619/?size=Adaptive'
+                  style='border:0; padding:0; width:70%; height:auto; overflow:hidden; display: block; margin: auto;'></iframe>
+        </div>
+        <!-- END AADS AD UNIT 2450619 -->
       </div>
     </div>
   </main>
 
-  <!-- إعلان Adsterra/AADS السفلي -->
-  <div class="ad-container" id="adsterra-bottom">
-    <span style="color: var(--text-muted); font-size: 0.8rem;">[إعلان Adsterra السفلي]</span>
+  <!-- الإعلان الثالث: AADS السفلي -->
+  <div class="ad-container" id="ad-bottom">
+    <!-- BEGIN AADS AD UNIT 2450619 -->
+    <div class="aads-frame" style="width: 100%; margin: auto; position: relative; z-index: 99998;">
+      <iframe data-aa='2450619' src='//acceptable.a-ads.com/2450619/?size=Adaptive'
+              style='border:0; padding:0; width:70%; height:auto; overflow:hidden; display: block; margin: auto;'></iframe>
+    </div>
+    <!-- END AADS AD UNIT 2450619 -->
   </div>
 
   <script>
@@ -220,6 +263,7 @@
     window.onload = loadMod;
   </script>
 
-  <!-- إعلانات Monetag Popunder / OnClick -->
+  <!-- كود Monetag الشامل -->
+  <script src="https://quge5.com/88/tag.min.js" data-zone="266903" async data-cfasync="false"></script>
 </body>
 </html>

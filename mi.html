@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATTACK N' DESTROY - تطبيق تركيب المودات</title>
+
+  <!-- Umami Analytics -->
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="023238f3-0c01-436b-a74b-d2d990f14db5"></script>
+
+  <!-- Monetag Full Ads -->
+  <script src="https://quge5.com/88/tag.min.js" data-zone="266246" async data-cfasync="false"></script>
+
+  <style>
+    :root {
+      --bg: #09090b;
+      --card: #18181b;
+      --accent: #facc15;
+      --accent-hover: #eab308;
+      --text: #f8fafc;
+      --border: #27272a;
+      --muted: #a1a1aa;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* الهيدر */
+    .brand {
+      color: var(--accent);
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .sub-brand {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    /* 1. قسم التحفيز والأسهم (في الأعلى) */
+    .hero-scroll {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .hero-scroll p {
+      font-size: 1rem;
+      font-weight: bold;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .arrows {
+      font-size: 1.4rem;
+      color: var(--accent);
+      animation: bounce 1.5s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(8px);
+      }
+      60% {
+        transform: translateY(4px);
+      }
+    }
+
+    /* حاوية الإعلانات (تلي قسم التحفيز) */
+    .ads-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 25px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ad-banner-frame {
+      width: 320px;
+      height: 50px;
+      border: 0;
+      overflow: hidden;
+      margin: auto;
+    }
+
+    /* قسم أزرار التحميل */
+    .download-section {
+      margin: 25px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* زر تحميل ماينكرافت الفرعي (صغير ولا يشتت الزائر) */
+    .btn-mc {
+      display: inline-block;
+      width: 80%;
+      padding: 9px 12px;
+      background: #16a34a;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      border-radius: 6px;
+      transition: background 0.2s, transform 0.1s;
+      opacity: 0.9;
+    }
+
+    .btn-mc:hover {
+      background: #15803d;
+      opacity: 1;
+    }
+
+    /* زر التحميل الرئيسي (بارز وكبير) */
+    .btn-dl {
+      display: inline-block;
+      width: 100%;
+      padding: 16px;
+      background: var(--accent);
+      color: #000;
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 1.15rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(250, 204, 21, 0.3);
+      transition: background 0.2s, transform 0.1s;
+      cursor: pointer;
+    }
+
+    .btn-dl:hover {
+      background: var(--accent-hover);
+    }
+
+    /* شبكة السوشيال ميديا */
+    .social-box {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .social-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: bold;
+      transition: border-color 0.2s;
+    }
+
+    .social-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* الكوبيرايت */
+    footer {
+      color: var(--muted);
+      font-size: 0.75rem;
+      margin-top: 15px;
+      border-top: 1px solid var(--border);
+      padding-top: 15px;
+      width: 100%;
+    }
+
+    .status-msg {
+      font-size: 0.85rem;
+      color: #4ade80;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- 1. الهيدر -->
+  <header>
+    <div class="brand">ATT / DES</div>
+    <div class="sub-brand">تطبيق نقل وتثبيت مودات وملفات ماين كرافت</div>
+  </header>
+
+  <!-- 2. كلام يحفز الهبوط للأسفل (أول شيء) -->
+  <div class="hero-scroll">
+    <p>رابط تحميل تطبيق إدارة المودات جاهز في الأسفل، يرجى النزول لفك الضغط والتثبيت 👇</p>
+    <div class="arrows">▼ ▼ ▼</div>
+  </div>
+
+  <!-- 🎯 منطقة الإعلانات (3x AADS + 7x Banner Ads) -->
+  <div class="ads-container">
+
+    <!-- 3x AADS ADS -->
+    <div style="width: 100%; margin: auto; position: relative; z-index: 99998;">
+      <iframe data-aa='2451592' src='//acceptable.a-ads.com/2451592/?size=Adaptive' style='border:0; padding:0; width:70%; height:auto; overflow:hidden; display: block; margin: auto;'></iframe>
+    </div>
+    <div style="width: 100%; margin: auto; position: relative; z-index: 99998;">
+      <iframe data-aa='2451592' src='//acceptable.a-ads.com/2451592/?size=Adaptive' style='border:0; padding:0; width:70%; height:auto; overflow:hidden; display: block; margin: auto;'></iframe>
+    </div>
+    <div style="width: 100%; margin: auto; position: relative; z-index: 99998;">
+      <iframe data-aa='2451592' src='//acceptable.a-ads.com/2451592/?size=Adaptive' style='border:0; padding:0; width:70%; height:auto; overflow:hidden; display: block; margin: auto;'></iframe>
+    </div>
+
+    <!-- 7x BANNER ADS -->
+    <iframe class="ad-banner-frame" srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>"></iframe>
+    <iframe class="ad-banner-frame" srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>"></iframe>
+    <iframe class="ad-banner-frame" srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>"></iframe>
+    <iframe class="ad-banner-frame" srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>"></iframe>
+    <iframe class="ad-banner-frame" srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>"></iframe>
+    <iframe class="ad-banner-frame" srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>"></iframe>
+    <iframe class="ad-banner-frame" srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>"></iframe>
+
+  </div>
+
+  <!-- حالة الجلب -->
+  <div id="statusMsg" class="status-msg">
+    ✅ رابط التطبيق جاهز للتحميل أدناه
+  </div>
+
+  <!-- 3. قسم أزرار التحميل -->
+  <div class="download-section">
+    <!-- زر تحميل ماين كرافت (فرعي وصغير) -->
+    <a href="https://link.attdes.online/mc" class="btn-mc" target="_blank">
+      تحميل ماين كرافت آخر اصدار ✅
+    </a>
+
+    <!-- زر تحميل التطبيق الرئيسي (بارز وكبير) -->
+    <a href="#" id="dlBtn" class="btn-dl" target="_blank">
+      تحميل التطبيق الآن 📥
+    </a>
+  </div>
+
+  <!-- 4. السوشيال ميديا -->
+  <div class="social-box">
+    <a href="https://facebook.com/modslib" class="social-btn" target="_blank">
+      فيسبوك
+    </a>
+
+    <a href="https://youtube.com/@modslib" class="social-btn" target="_blank">
+      يوتيوب
+    </a>
+
+    <a href="https://t.me/modslib" class="social-btn" target="_blank">
+      تلجرام
+    </a>
+  </div>
+
+  <!-- 5. الكوبيرايت -->
+  <footer>
+    &copy; 2026 ATTACK N' DESTROY. جميع الحقوق محفوظة.
+  </footer>
+
+</div>
+
+<script>
+  const APP_URL = 'https://play.google.com/store/apps/details?id=com.cxinventor.file.explorer';
+  const SMART_LINK = 'https://www.effectivecpmnetwork.com/qyw9rwgjh?key=ddfcf2ad5cc5d88d9d75ec98a1a7548b';
+
+  const dlBtn = document.getElementById('dlBtn');
+
+  // عند النقر على زر تحميل التطبيق
+  dlBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    // فتح رابط الإعلان SmartLink في نافذة جديدة
+    window.open(SMART_LINK, '_blank');
+    // تحويل المستخدم إلى رابط المتجر المباشر
+    setTimeout(() => {
+      window.location.href = APP_URL;
+    }, 300);
+  });
+</script>
+
+</body>
+</html>

@@ -1,319 +1,220 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ATTACK N' DESTROY - تطبيق تركيب المودات</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنامج التركيب</title>
 
-  <!-- Umami Analytics -->
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="023238f3-0c01-436b-a74b-d2d990f14db5"></script>
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "y6fnk8hu3k");
+    </script>
 
-  <!-- Monetag Full Ads -->
-  <script src="https://quge5.com/88/tag.min.js" data-zone="266246" async data-cfasync="false"></script>
+    <!-- Popunder Code -->
+    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
 
-  <style>
-    :root {
-      --bg: #09090b;
-      --card: #18181b;
-      --accent: #facc15;
-      --accent-hover: #eab308;
-      --text: #f8fafc;
-      --border: #27272a;
-      --muted: #a1a1aa;
-    }
+    <!-- Social Bar Code -->
+    <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
 
-    * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent-color: #ffcc00;
+            --text-color: #ffffff;
+            --green-btn: #28a745;
+            --green-btn-hover: #218838;
+        }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-    }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
 
-    .container {
-      max-width: 500px;
-      width: 100%;
-      text-align: center;
-    }
+        .header-img {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            display: block;
+            margin-top: 5px;
+        }
 
-    /* الهيدر */
-    .brand {
-      color: var(--accent);
-      font-size: 2rem;
-      font-weight: 900;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
+        .alert-box {
+            background-color: var(--card-bg);
+            border: 1.5px solid var(--accent-color);
+            color: var(--text-color);
+            padding: 8px 12px;
+            margin: 8px auto;
+            width: 90%;
+            max-width: 340px;
+            text-align: center;
+            border-radius: 6px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
 
-    .sub-brand {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 20px;
-    }
+        .banner-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            margin: 8px 0;
+        }
 
-    /* 1. قسم التحفيز والأسهم (في الأعلى) */
-    .hero-scroll {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px;
-      margin-bottom: 20px;
-    }
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin: 12px 0;
+            width: 100%;
+        }
 
-    .hero-scroll p {
-      font-size: 1rem;
-      font-weight: bold;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
+        .btn {
+            display: inline-block;
+            padding: 12px 16px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #ffffff;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            width: 85%;
+            max-width: 280px;
+            box-sizing: border-box;
+            border: none;
+            outline: none;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
 
-    .arrows {
-      font-size: 1.4rem;
-      color: var(--accent);
-      animation: bounce 1.5s infinite;
-    }
+        .btn:active {
+            transform: scale(0.98);
+        }
 
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-      }
-      40% {
-        transform: translateY(8px);
-      }
-      60% {
-        transform: translateY(4px);
-      }
-    }
+        .btn-green {
+            background-color: var(--green-btn);
+        }
 
-    /* حاوية الإعلانات (تلي قسم التحفيز) */
-    .ads-container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 25px;
-      align-items: center;
-      justify-content: center;
-    }
+        .btn-green:hover {
+            background-color: var(--green-btn-hover);
+        }
 
-    .ad-banner-frame {
-      width: 320px;
-      height: 50px;
-      border: 0;
-      overflow: hidden;
-      margin: auto;
-    }
-
-    /* قسم أزرار التحميل */
-    .download-section {
-      margin: 25px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-    }
-
-    /* زر تحميل ماينكرافت الفرعي (صغير ولا يشتت الزائر) */
-    .btn-mc {
-      display: inline-block;
-      width: 80%;
-      padding: 9px 12px;
-      background: #16a34a;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.85rem;
-      border-radius: 6px;
-      transition: background 0.2s, transform 0.1s;
-      opacity: 0.9;
-    }
-
-    .btn-mc:hover {
-      background: #15803d;
-      opacity: 1;
-    }
-
-    /* زر التحميل الرئيسي (بارز وكبير) */
-    .btn-dl {
-      display: inline-block;
-      width: 100%;
-      padding: 16px;
-      background: var(--accent);
-      color: #000;
-      text-decoration: none;
-      font-weight: 900;
-      font-size: 1.15rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(250, 204, 21, 0.3);
-      transition: background 0.2s, transform 0.1s;
-      cursor: pointer;
-    }
-
-    .btn-dl:hover {
-      background: var(--accent-hover);
-    }
-
-    /* شبكة السوشيال ميديا */
-    .social-box {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin: 20px 0;
-    }
-
-    .social-btn {
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 10px 18px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: bold;
-      transition: border-color 0.2s;
-    }
-
-    .social-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    /* الكوبيرايت */
-    footer {
-      color: var(--muted);
-      font-size: 0.75rem;
-      margin-top: 15px;
-      border-top: 1px solid var(--border);
-      padding-top: 15px;
-      width: 100%;
-    }
-
-    .status-msg {
-      font-size: 0.85rem;
-      color: #4ade80;
-      margin-bottom: 10px;
-    }
-  </style>
+        footer {
+            margin-top: auto;
+            padding: 12px;
+            text-align: center;
+            color: var(--accent-color);
+            font-size: 12px;
+            border-top: 1px solid #222;
+            width: 100%;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
+    <!-- Header Image -->
+    <img src="https://attdes.online/header.png" alt="Header" class="header-img">
 
-  <!-- 1. الهيدر -->
-  <header>
-    <div class="brand">ATT / DES</div>
-    <div class="sub-brand">تطبيق نقل وتثبيت مودات وملفات ماين كرافت</div>
-  </header>
-
-  <!-- 2. كلام يحفز الهبوط للأسفل (أول شيء) -->
-  <div class="hero-scroll">
-    <p>رابط تحميل تطبيق إدارة المودات جاهز في الأسفل، يرجى النزول لفك الضغط والتثبيت 👇</p>
-    <div class="arrows">▼ ▼ ▼</div>
-  </div>
-
-  <!-- 🎯 منطقة الإعلانات (3x AADS + 7x Banner Ads) -->
-  <div class="ads-container">
-
-    <!-- 3x AADS ADS (2452645) -->
-    <!-- BEGIN AADS AD UNIT 2452645 -->
-    <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-      <iframe data-aa='2452645' src='//acceptable.a-ads.com/2452645/?size=Adaptive'
-              style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+    <!-- Alert Box Under Header -->
+    <div class="alert-box">
+        الرابط جاهز للتحميل✅<br>
+        إنزل تحت وإضغط تحميل برنامج التركيب♥<br>
+        <span style="color: var(--accent-color); font-size: 12px;">The link is ready, scroll down to download</span>
     </div>
-    <!-- END AADS AD UNIT 2452645 -->
 
-    <!-- BEGIN AADS AD UNIT 2452645 -->
-    <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-      <iframe data-aa='2452645' src='//acceptable.a-ads.com/2452645/?size=Adaptive'
-              style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+    <!-- 3 Banners Stacked -->
+    <div class="banner-container">
+        <!-- Banner 1 -->
+        <div>
+            <script>
+              atOptions = {
+                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+              };
+            </script>
+            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"></script>
+        </div>
+
+        <!-- Banner 2 -->
+        <div>
+            <script>
+              atOptions = {
+                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+              };
+            </script>
+            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"></script>
+        </div>
+
+        <!-- Banner 3 -->
+        <div>
+            <script>
+              atOptions = {
+                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+              };
+            </script>
+            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"></script>
+        </div>
     </div>
-    <!-- END AADS AD UNIT 2452645 -->
 
-    <!-- BEGIN AADS AD UNIT 2452645 -->
-    <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-      <iframe data-aa='2452645' src='//acceptable.a-ads.com/2452645/?size=Adaptive'
-              style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+    <!-- Fourth Banner -->
+    <div style="margin: 5px 0;">
+        <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js"></script>
+        <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
     </div>
-    <!-- END AADS AD UNIT 2452645 -->
 
-    <!-- 7x BANNER ADS -->
-    <iframe class="ad-banner-frame" srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>"></iframe>
-    <iframe class="ad-banner-frame" srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>"></iframe>
-    <iframe class="ad-banner-frame" srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>"></iframe>
-    <iframe class="ad-banner-frame" srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>"></iframe>
-    <iframe class="ad-banner-frame" srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>"></iframe>
-    <iframe class="ad-banner-frame" srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>"></iframe>
-    <iframe class="ad-banner-frame" srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>"></iframe>
+    <!-- Button Section -->
+    <div class="btn-container">
+        <!-- Hidden Link Trigger Button -->
+        <button id="dlBtn" class="btn btn-green">
+            تحميل برنامج التركيب
+        </button>
+    </div>
 
-  </div>
+    <!-- Footer -->
+    <footer>
+        Copyright: ATT/DES Progz
+    </footer>
 
-  <!-- حالة الجلب -->
-  <div id="statusMsg" class="status-msg">
-    ✅ رابط التطبيق جاهز للتحميل أدناه
-  </div>
+    <!-- Protected Link Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Base64 Encoded Target URL: https://link.attdes.online/midl
+            const encryptedUrl = "aHR0cHM6Ly9saW5rLmF0dGRlcy5vbmxpbmUvbWlkbA==";
+            const dlBtn = document.getElementById('dlBtn');
 
-  <!-- 3. قسم أزرار التحميل -->
-  <div class="download-section">
-    <!-- زر تحميل ماين كرافت (فرعي وصغير) -->
-    <a href="https://link.attdes.online/mc" class="btn-mc" target="_blank">
-      تحميل ماين كرافت آخر اصدار ✅
-    </a>
-
-    <!-- زر تحميل التطبيق الرئيسي (بارز وكبير) -->
-    <a href="#" id="dlBtn" class="btn-dl" target="_blank">
-      تحميل التطبيق الآن 📥
-    </a>
-  </div>
-
-  <!-- 4. السوشيال ميديا -->
-  <div class="social-box">
-    <a href="https://facebook.com/modslib" class="social-btn" target="_blank">
-      فيسبوك
-    </a>
-
-    <a href="https://youtube.com/@modslib" class="social-btn" target="_blank">
-      يوتيوب
-    </a>
-
-    <a href="https://t.me/modslib" class="social-btn" target="_blank">
-      تلجرام
-    </a>
-  </div>
-
-  <!-- 5. الكوبيرايت -->
-  <footer>
-    &copy; 2026 ATTACK N' DESTROY. جميع الحقوق محفوظة.
-  </footer>
-
-</div>
-
-<script>
-  const APP_URL = 'https://play.google.com/store/apps/details?id=com.cxinventor.file.explorer';
-  const SMART_LINK = 'https://www.effectivecpmnetwork.com/qyw9rwgjh?key=ddfcf2ad5cc5d88d9d75ec98a1a7548b';
-
-  const dlBtn = document.getElementById('dlBtn');
-
-  // عند النقر على زر تحميل التطبيق
-  dlBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    // فتح رابط الإعلان SmartLink في نافذة جديدة
-    window.open(SMART_LINK, '_blank');
-    // تحويل المستخدم إلى رابط المتجر المباشر
-    setTimeout(() => {
-      window.location.href = APP_URL;
-    }, 300);
-  });
-</script>
-
+            dlBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                try {
+                    const destination = atob(encryptedUrl);
+                    window.open(destination, '_blank');
+                } catch (err) {
+                    console.error("Error directing to link");
+                }
+            });
+        });
+    </script>
 </body>
 </html>

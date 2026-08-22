@@ -1,530 +1,267 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ATTACK N' DESTROY - صفحة التحميل</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحميل المود - ATT/DES Progz</title>
 
-  <!-- Umami Analytics -->
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="023238f3-0c01-436b-a74b-d2d990f14db5"></script>
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "y6fe0xwngl");
+    </script>
 
-  <!-- Monetag Full Ads -->
-  <script src="https://quge5.com/88/tag.min.js" data-zone="266246" async data-cfasync="false"></script>
+    <!-- Popunder Code -->
+    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
 
-  <style>
-    :root {
-      --bg: #09090b;
-      --card: #18181b;
-      --accent: #facc15;
-      --accent-hover: #eab308;
-      --text: #f8fafc;
-      --border: #27272a;
-      --muted: #a1a1aa;
-    }
+    <!-- Social Bar Code -->
+    <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
 
-    * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent-color: #ffcc00;
+            --text-color: #ffffff;
+            --green-btn: #28a745;
+            --green-btn-hover: #218838;
+        }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-    }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-    .container {
-      max-width: 500px;
-      width: 100%;
-      text-align: center;
-    }
+        .header-img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            display: block;
+        }
 
-    .brand {
-      color: var(--accent);
-      font-size: 2rem;
-      font-weight: 900;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
+        .alert-box {
+            background-color: var(--card-bg);
+            border: 2px solid var(--accent-color);
+            color: var(--text-color);
+            padding: 15px;
+            margin: 15px auto;
+            width: 90%;
+            max-width: 480px;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
 
-    .sub-brand {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 20px;
-    }
+        .banner-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
 
-    .hero-scroll {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px;
-      margin-bottom: 20px;
-    }
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+            width: 100%;
+        }
 
-    .hero-scroll p {
-      font-size: 1rem;
-      font-weight: bold;
-      color: var(--text);
-      margin-bottom: 12px;
-    }
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            width: 80%;
+            max-width: 320px;
+            box-sizing: border-box;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
 
-    .arrows {
-      font-size: 1.4rem;
-      color: var(--accent);
-      animation: bounce 1.5s infinite;
-    }
+        .btn:active {
+            transform: scale(0.98);
+        }
 
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-      }
+        .btn-green {
+            background-color: var(--green-btn);
+        }
 
-      40% {
-        transform: translateY(8px);
-      }
+        .btn-green:hover {
+            background-color: var(--green-btn-hover);
+        }
 
-      60% {
-        transform: translateY(4px);
-      }
-    }
+        .btn-yellow {
+            background-color: var(--accent-color);
+            color: #000000;
+        }
 
-    .ads-container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 25px;
-      align-items: center;
-      justify-content: center;
-    }
+        .btn-yellow:hover {
+            background-color: #e6b800;
+        }
 
-    .ad-banner-frame {
-      width: 320px;
-      height: 50px;
-      border: 0;
-      overflow: hidden;
-      margin: auto;
-    }
-
-    .download-section {
-      margin: 25px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .btn-mc {
-      display: inline-block;
-      width: 80%;
-      padding: 9px 12px;
-      background: #16a34a;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.85rem;
-      border-radius: 6px;
-      transition: background 0.2s, transform 0.1s;
-      opacity: 0.9;
-    }
-
-    .btn-mc:hover {
-      background: #15803d;
-      opacity: 1;
-    }
-
-    .btn-dl {
-      display: inline-block;
-      width: 100%;
-      padding: 16px;
-      background: var(--accent);
-      color: #000;
-      text-decoration: none;
-      font-weight: 900;
-      font-size: 1.15rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(250, 204, 21, 0.3);
-      transition: background 0.2s, transform 0.1s;
-      cursor: pointer;
-    }
-
-    .btn-dl.disabled {
-      pointer-events: none;
-      opacity: 0.5;
-    }
-
-    .btn-dl:hover {
-      background: var(--accent-hover);
-    }
-
-    .social-box {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin: 20px 0;
-    }
-
-    .social-btn {
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 10px 18px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: bold;
-      transition: border-color 0.2s;
-    }
-
-    .social-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    footer {
-      color: var(--muted);
-      font-size: 0.75rem;
-      margin-top: 15px;
-      border-top: 1px solid var(--border);
-      padding-top: 15px;
-      width: 100%;
-    }
-
-    .status-msg {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 10px;
-    }
-  </style>
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            color: var(--accent-color);
+            font-size: 14px;
+            border-top: 1px solid #333;
+            width: 100%;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
+    <!-- Header Image -->
+    <img src="https://attdes.online/header.png" alt="Header" class="header-img">
 
-  <!-- الهيدر -->
-  <header>
-    <div class="brand">ATT / DES</div>
-    <div class="sub-brand">Attack N' Destroy - ملفات ومودات الألعاب</div>
-  </header>
-
-  <!-- رسالة النزول -->
-  <div class="hero-scroll">
-    <p>رابط ملفك جاهز في الأسفل، يرجى النزول لإكماله 👇</p>
-    <div class="arrows">▼ ▼ ▼</div>
-  </div>
-
-  <!-- الإعلانات -->
-  <div class="ads-container">
-
-    <!-- 3x A-ADS (2452645) -->
-    <!-- BEGIN AADS AD UNIT 2452645 -->
-    <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-      <iframe data-aa='2452645' src='//acceptable.a-ads.com/2452645/?size=Adaptive'
-              style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+    <!-- Alert Box Under Header -->
+    <div class="alert-box">
+        المود جاهز للتحميل✅<br>
+        إنزل تحت وأضغط تحميل♥<br>
+        <span style="color: var(--accent-color);">The mod is ready, scroll down then click download</span>
     </div>
-    <!-- END AADS AD UNIT 2452645 -->
 
-    <!-- BEGIN AADS AD UNIT 2452645 -->
-    <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-      <iframe data-aa='2452645' src='//acceptable.a-ads.com/2452645/?size=Adaptive'
-              style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+    <!-- 3 Banners Stacked -->
+    <div class="banner-container">
+        <!-- Banner 1 -->
+        <div>
+            <script>
+              atOptions = {
+                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+              };
+            </script>
+            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"></script>
+        </div>
+
+        <!-- Banner 2 -->
+        <div>
+            <script>
+              atOptions = {
+                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+              };
+            </script>
+            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"></script>
+        </div>
+
+        <!-- Banner 3 -->
+        <div>
+            <script>
+              atOptions = {
+                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+              };
+            </script>
+            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"></script>
+        </div>
     </div>
-    <!-- END AADS AD UNIT 2452645 -->
 
-    <!-- BEGIN AADS AD UNIT 2452645 -->
-    <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-      <iframe data-aa='2452645' src='//acceptable.a-ads.com/2452645/?size=Adaptive'
-              style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+    <!-- Fourth Banner (Additional Network) -->
+    <div style="margin: 10px 0;">
+        <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js"></script>
+        <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
     </div>
-    <!-- END AADS AD UNIT 2452645 -->
 
-    <!-- 7x Banner Ads -->
-    <iframe
-      class="ad-banner-frame"
-      srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>">
-    </iframe>
-
-    <iframe
-      class="ad-banner-frame"
-      srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>">
-    </iframe>
-
-    <iframe
-      class="ad-banner-frame"
-      srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>">
-    </iframe>
-
-    <iframe
-      class="ad-banner-frame"
-      srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>">
-    </iframe>
-
-    <iframe
-      class="ad-banner-frame"
-      srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>">
-    </iframe>
-
-    <iframe
-      class="ad-banner-frame"
-      srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>">
-    </iframe>
-
-    <iframe
-      class="ad-banner-frame"
-      srcdoc="<script>atOptions={'key':'28d1f1f838ea883f1f7fc0d4733ebba6','format':'iframe','height':50,'width':320,'params':{}};</script><script src='https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js'></script>">
-    </iframe>
-
-  </div>
-
-  <!-- حالة الرابط -->
-  <div id="statusMsg" class="status-msg">
-    جاري تجهيز الرابط من السحابة...
-  </div>
-
-  <!-- أزرار التحميل -->
-  <div class="download-section">
-
-    <a
-      href="https://link.attdes.online/mc"
-      class="btn-mc"
-      target="_blank"
-      rel="noopener noreferrer">
-      تحميل ماين كرافت آخر اصدار ✅
-    </a>
-
-    <a
-      href="#"
-      id="dlBtn"
-      class="btn-dl disabled"
-      target="_blank"
-      rel="noopener noreferrer">
-      تحميل الملف الآن 📥
-    </a>
-
-  </div>
-
-  <!-- السوشيال ميديا -->
-  <div class="social-box">
-
-    <a
-      href="https://facebook.com/modslib"
-      class="social-btn"
-      target="_blank"
-      rel="noopener noreferrer">
-      فيسبوك
-    </a>
-
-    <a
-      href="https://youtube.com/@modslib"
-      class="social-btn"
-      target="_blank"
-      rel="noopener noreferrer">
-      يوتيوب
-    </a>
-
-    <a
-      href="https://t.me/modslib"
-      class="social-btn"
-      target="_blank"
-      rel="noopener noreferrer">
-      تلجرام
-    </a>
-
-  </div>
-
-  <!-- حقوق النشر -->
-  <footer>
-    &copy; 2026 ATTACK N' DESTROY. جميع الحقوق محفوظة.
-  </footer>
-
-</div>
-
-<script>
-
-  /* =========================================
-     مصدر ملف JSON الجديد
-     ========================================= */
-
-  const JSON_URL = 'https://modslib.attdes.online/mod.json';
-
-  /* رابط الإعلان */
-  const SMART_LINK =
-    'https://www.effectivecpmnetwork.com/qyw9rwgjh?key=ddfcf2ad5cc5d88d9d75ec98a1a7548b';
-
-
-  /* =========================================
-     فك Base64
-     ========================================= */
-
-  function decodeBase64(str) {
-    try {
-      return decodeURIComponent(
-        atob(str)
-          .split('')
-          .map(c =>
-            '%' +
-            ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-          )
-          .join('')
-      );
-    } catch (e) {
-      return str;
-    }
-  }
-
-
-  /* =========================================
-     قراءة id من الرابط
-     مثال:
-     ?id=1
-     ?id=15
-     ?id=001
-     ========================================= */
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const modId = urlParams.get('id');
-
-  const msgEl = document.getElementById('statusMsg');
-  const dlBtn = document.getElementById('dlBtn');
-
-
-  /* =========================================
-     التأكد من وجود ID
-     ========================================= */
-
-  if (!modId) {
-
-    msgEl.innerText =
-      '⚠️ خطأ: لم يتم تحديد رقم المود في الرابط!';
-
-    msgEl.style.color = '#f87171';
-
-  } else {
-
-    /* =========================================
-       جلب mod.json
-       ========================================= */
-
-    fetch(JSON_URL)
-
-      .then(res => {
-
-        if (!res.ok) {
-          throw new Error(
-            'HTTP Error: ' + res.status
-          );
-        }
-
-        return res.json();
-
-      })
-
-      .then(data => {
-
-        /* =====================================
-           البحث عن ID داخل JSON
-           ===================================== */
-
-        if (data && Object.prototype.hasOwnProperty.call(data, modId)) {
-
-          const encodedUrl = data[modId];
-
-          const originalUrl =
-            decodeBase64(encodedUrl);
-
-
-          /* ===================================
-             تفعيل زر التحميل
-             =================================== */
-
-          dlBtn.classList.remove('disabled');
-
-          dlBtn.innerText =
-            'تحميل الملف الآن 📥';
-
-
-          /* ===================================
-             زر التحميل
-             =================================== */
-
-          dlBtn.addEventListener('click', function(e) {
-
-            e.preventDefault();
-
-            /*
-             * فتح الإعلان
-             */
-            window.open(
-              SMART_LINK,
-              '_blank'
-            );
-
-
-            /*
-             * الانتقال إلى رابط الملف
-             */
-            setTimeout(() => {
-
-              window.location.href =
-                originalUrl;
-
-            }, 300);
-
-          });
-
-
-          /* ===================================
-             رسالة النجاح
-             =================================== */
-
-          msgEl.innerText =
-            '✅ الملف جاهز للتحميل أدناه';
-
-          msgEl.style.color =
-            '#4ade80';
-
-
-        } else {
-
-          /* ===================================
-             ID غير موجود
-             =================================== */
-
-          msgEl.innerText =
-            '❌ عذراً، هذا المود غير موجود.';
-
-          msgEl.style.color =
-            '#f87171';
-
-        }
-
-      })
-
-      .catch(err => {
-
-        console.error(
-          'JSON Error:',
-          err
-        );
-
-        msgEl.innerText =
-          '❌ فشل الاتصال بملف البيانات.';
-
-        msgEl.style.color =
-          '#f87171';
-
-      });
-
-  }
-
-</script>
-
+    <!-- Buttons Section -->
+    <div class="btn-container">
+        <!-- Static Green Button -->
+        <a href="https://link.attdes.online/mc" class="btn btn-green" target="_blank">
+            تحميل لعبة ماين كرافت APK
+        </a>
+
+        <!-- Dynamic Mod Download Button -->
+        <a href="#" id="modDownloadBtn" class="btn btn-yellow">
+            تحميل المود Download Mod
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        Copyright: ATT/DES Progz
+    </footer>
+
+    <!-- JSON Search & Base64 Logic Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // الحصول على المعامل id من الـ URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const modId = urlParams.get('id');
+
+            const downloadBtn = document.getElementById('modDownloadBtn');
+
+            if (modId) {
+                // جلب ملف mod.json من نفس المجلد
+                fetch('mod.json')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // البحث عن الـ id داخل الكائن
+                        if (data && data[modId]) {
+                            try {
+                                // فك تشفير الـ Base64
+                                const decodedUrl = atob(data[modId]);
+                                downloadBtn.href = decodedUrl;
+                            } catch (e) {
+                                console.error('Base64 Decoding Error:', e);
+                                downloadBtn.addEventListener('click', function(e) {
+                                    e.preventDefault();
+                                    alert('خطأ في رابط التحميل المشفّر.');
+                                });
+                            }
+                        } else {
+                            downloadBtn.addEventListener('click', function(e) {
+                                e.preventDefault();
+                                alert('عذراً، المود غير موجود.');
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching mod.json:', error);
+                        downloadBtn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            alert('تعذر تحميل بيانات المود.');
+                        });
+                    });
+            } else {
+                downloadBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('لم يتم تحديد معرف المود (id).');
+                });
+            }
+        });
+    </script>
 </body>
 </html>

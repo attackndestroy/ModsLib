@@ -110,7 +110,7 @@
             background-color: var(--green-btn-hover);
         }
 
-        /* Seed Container Box */
+        /* Seed Box Container */
         .seed-box-wrapper {
             display: flex;
             align-items: center;
@@ -133,6 +133,7 @@
             user-select: all;
             flex-grow: 1;
             text-align: center;
+            direction: ltr; /* لضمان ظهور الأرقام ورموز السالب بالشكل الصحيح */
         }
 
         .btn-copy {
@@ -245,8 +246,19 @@
         Copyright: ATT/DES Progz
     </footer>
 
-    <!-- JSON Fetch & Base64 Seed Copy Logic Script -->
+    <!-- Safe UTF-8 Base64 Decoding Script -->
     <script>
+        // دالة آمنة لفك تشفير Base64 تدعم ترميز UTF-8
+        function decodeBase64UTF8(str) {
+            try {
+                const binaryString = atob(str);
+                const bytes = Uint8Array.from(binaryString, char => char.charCodeAt(0));
+                return new TextDecoder().decode(bytes);
+            } catch (e) {
+                return null;
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             const urlParams = new URLSearchParams(window.location.search);
             const seedId = urlParams.get('id');
@@ -254,7 +266,6 @@
             const copyBtn = document.getElementById('copyBtn');
 
             if (seedId) {
-                // Fetch seed.json file
                 fetch('seed.json')
                     .then(response => {
                         if (!response.ok) throw new Error('Network response error');
@@ -262,12 +273,12 @@
                     })
                     .then(data => {
                         if (data && data[seedId]) {
-                            try {
-                                // Decode base64 seed
-                                const decodedSeed = atob(data[seedId]);
+                            const decodedSeed = decodeBase64UTF8(data[seedId]);
+                            
+                            if (decodedSeed) {
                                 seedDisplay.textContent = decodedSeed;
 
-                                // Copy functionality
+                                // آلية النسخ للحافظة
                                 copyBtn.onclick = function() {
                                     navigator.clipboard.writeText(decodedSeed).then(() => {
                                         copyBtn.textContent = 'تم النسخ! ✓';
@@ -280,10 +291,16 @@
                                             copyBtn.style.color = '#000000';
                                         }, 2000);
                                     }).catch(() => {
-                                        seedDisplay.select();
+                                        // حافز احتياطي للنسخ في حال منع المتصفح الأذونات
+                                        const range = document.createRange();
+                                        range.selectNode(seedDisplay);
+                                        window.getSelection().removeAllRanges();
+                                        window.getSelection().addRange(range);
+                                        document.execCommand('copy');
+                                        window.getSelection().removeAllRanges();
                                     });
                                 };
-                            } catch (e) {
+                            } else {
                                 seedDisplay.textContent = 'خطأ في الترميز';
                             }
                         } else {

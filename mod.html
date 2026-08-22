@@ -35,63 +35,65 @@
             color: var(--text-color);
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            padding: 0 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            box-sizing: border-box;
         }
 
         .header-img {
             width: 100%;
-            max-width: 600px;
+            max-width: 320px; /* تصغير الهيدر ليصبح ألمّ على الشاشة */
             height: auto;
             display: block;
+            margin-top: 5px;
         }
 
         .alert-box {
             background-color: var(--card-bg);
-            border: 2px solid var(--accent-color);
+            border: 1.5px solid var(--accent-color);
             color: var(--text-color);
-            padding: 15px;
-            margin: 15px auto;
+            padding: 8px 12px; /* تصغير الحشوة الداخلية */
+            margin: 8px auto;
             width: 90%;
-            max-width: 480px;
+            max-width: 340px; /* تصغير عرض الإطار */
             text-align: center;
-            border-radius: 8px;
-            font-size: 16px;
-            line-height: 1.5;
+            border-radius: 6px;
+            font-size: 13px; /* تصغير الخط */
+            line-height: 1.4;
         }
 
         .banner-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
-            margin: 15px 0;
+            gap: 6px;
+            margin: 8px 0;
         }
 
         .btn-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
-            margin: 20px 0;
+            gap: 10px;
+            margin: 12px 0;
             width: 100%;
         }
 
         .btn {
             display: inline-block;
-            padding: 14px 28px;
-            font-size: 18px;
+            padding: 10px 16px; /* تصغير ارتفاع وحجم الأزرار */
+            font-size: 14px; /* تصغير خط الزر */
             font-weight: bold;
             color: #ffffff;
             text-decoration: none;
             border-radius: 6px;
             text-align: center;
             cursor: pointer;
-            width: 80%;
-            max-width: 320px;
+            width: 85%;
+            max-width: 280px; /* تصغير العرض الأقصى للزر */
             box-sizing: border-box;
             transition: background-color 0.2s ease, transform 0.1s ease;
         }
@@ -119,11 +121,11 @@
 
         footer {
             margin-top: auto;
-            padding: 20px;
+            padding: 12px;
             text-align: center;
             color: var(--accent-color);
-            font-size: 14px;
-            border-top: 1px solid #333;
+            font-size: 12px; /* تصغير خط الفوتر */
+            border-top: 1px solid #222;
             width: 100%;
         }
     </style>
@@ -137,7 +139,7 @@
     <div class="alert-box">
         المود جاهز للتحميل✅<br>
         إنزل تحت وأضغط تحميل♥<br>
-        <span style="color: var(--accent-color);">The mod is ready, scroll down then click download</span>
+        <span style="color: var(--accent-color); font-size: 12px;">The mod is ready, scroll down then click download</span>
     </div>
 
     <!-- 3 Banners Stacked -->
@@ -186,7 +188,7 @@
     </div>
 
     <!-- Fourth Banner (Additional Network) -->
-    <div style="margin: 10px 0;">
+    <div style="margin: 5px 0;">
         <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js"></script>
         <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
     </div>
@@ -212,26 +214,19 @@
     <!-- JSON Search & Base64 Logic Script -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // الحصول على المعامل id من الـ URL
             const urlParams = new URLSearchParams(window.location.search);
             const modId = urlParams.get('id');
-
             const downloadBtn = document.getElementById('modDownloadBtn');
 
             if (modId) {
-                // جلب ملف mod.json من نفس المجلد
                 fetch('mod.json')
                     .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
+                        if (!response.ok) throw new Error('Network response was not ok');
                         return response.json();
                     })
                     .then(data => {
-                        // البحث عن الـ id داخل الكائن
                         if (data && data[modId]) {
                             try {
-                                // فك تشفير الـ Base64
                                 const decodedUrl = atob(data[modId]);
                                 downloadBtn.href = decodedUrl;
                             } catch (e) {

@@ -1,901 +1,302 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>ATTACK N' DESTROY - عرض Seed العالم</title>
-
-  <!-- Monetag -->
-  <script
-    src="https://quge5.com/88/tag.min.js"
-    data-zone="266903"
-    async
-    data-cfasync="false">
-  </script>
-
-  <style>
-    :root {
-      --bg: #09090b;
-      --card: #18181b;
-      --accent: #facc15;
-      --accent-hover: #eab308;
-      --text: #f8fafc;
-      --border: #27272a;
-      --muted: #a1a1aa;
-      --success: #4ade80;
-      --error: #f87171;
-    }
-
-    * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 500px;
-      width: 100%;
-      text-align: center;
-    }
-
-    /* =========================
-       الهيدر
-    ========================= */
-
-    .brand {
-      color: var(--accent);
-      font-size: 2rem;
-      font-weight: 900;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-
-    .sub-brand {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin-bottom: 25px;
-    }
-
-    /* =========================
-       قسم التحفيز
-    ========================= */
-
-    .hero-scroll {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 25px;
-    }
-
-    .hero-scroll p {
-      font-size: 1rem;
-      font-weight: bold;
-      color: var(--text);
-      margin-bottom: 15px;
-    }
-
-    .arrows {
-      font-size: 1.5rem;
-      color: var(--accent);
-      animation: bounce 1.5s infinite;
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-      }
-
-      40% {
-        transform: translateY(8px);
-      }
-
-      60% {
-        transform: translateY(4px);
-      }
-    }
-
-    /* =========================
-       حالة الجلب
-    ========================= */
-
-    .status-msg {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 10px;
-      min-height: 20px;
-    }
-
-    /* =========================
-       الإعلانات
-    ========================= */
-
-    .ads-section {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-bottom: 30px;
-    }
-
-    .ad-box {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 70px;
-    }
-
-    /* =========================
-       Seed
-    ========================= */
-
-    .seed-section {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      margin: 30px 0;
-    }
-
-    .seed-box {
-      background: #000;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 14px;
-
-      font-family: monospace;
-      font-size: 1.2rem;
-      font-weight: bold;
-
-      color: var(--accent);
-      letter-spacing: 1px;
-
-      margin-bottom: 15px;
-
-      user-select: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-
-      word-break: break-all;
-      overflow-wrap: anywhere;
-    }
-
-    /* =========================
-       زر النسخ
-    ========================= */
-
-    .btn-copy {
-      display: inline-block;
-      width: 100%;
-
-      padding: 14px;
-
-      background: var(--accent);
-      color: #000;
-
-      border: none;
-      border-radius: 8px;
-
-      font-weight: 900;
-      font-size: 1rem;
-
-      cursor: pointer;
-
-      box-shadow: 0 4px 15px rgba(250, 204, 21, 0.3);
-
-      transition:
-        background 0.2s,
-        transform 0.1s,
-        opacity 0.2s;
-
-      opacity: 0.5;
-      pointer-events: none;
-    }
-
-    .btn-copy.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .btn-copy:hover {
-      background: var(--accent-hover);
-    }
-
-    .btn-copy:active {
-      transform: scale(0.98);
-    }
-
-    /* =========================
-       Social Media
-    ========================= */
-
-    .social-box {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin: 20px 0;
-      flex-wrap: wrap;
-    }
-
-    .social-btn {
-      background: var(--card);
-      border: 1px solid var(--border);
-
-      color: var(--text);
-
-      padding: 10px 18px;
-
-      border-radius: 8px;
-
-      text-decoration: none;
-
-      font-size: 0.85rem;
-      font-weight: bold;
-
-      transition:
-        border-color 0.2s,
-        color 0.2s;
-    }
-
-    .social-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    /* =========================
-       Footer
-    ========================= */
-
-    footer {
-      color: var(--muted);
-
-      font-size: 0.75rem;
-
-      margin-top: 15px;
-
-      border-top: 1px solid var(--border);
-
-      padding-top: 15px;
-
-      width: 100%;
-    }
-
-    /* =========================
-       الهاتف
-    ========================= */
-
-    @media (max-width: 400px) {
-
-      body {
-        padding: 15px;
-      }
-
-      .brand {
-        font-size: 1.7rem;
-      }
-
-      .seed-box {
-        font-size: 1rem;
-      }
-
-      .social-box {
-        gap: 8px;
-      }
-
-      .social-btn {
-        padding: 9px 13px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سيدات ماين كرافت - ATT/DES Progz</title>
+
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "y6fnk8hu3k");
+    </script>
+
+    <!-- Popunder Code -->
+    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
+
+    <!-- Social Bar Code -->
+    <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent-color: #ffcc00;
+            --text-color: #ffffff;
+            --green-btn: #28a745;
+            --green-btn-hover: #218838;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .header-img {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .alert-box {
+            background-color: var(--card-bg);
+            border: 1.5px solid var(--accent-color);
+            color: var(--text-color);
+            padding: 8px 12px;
+            margin: 8px auto;
+            width: 90%;
+            max-width: 340px;
+            text-align: center;
+            border-radius: 6px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .banner-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            margin: 8px 0;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin: 12px 0;
+            width: 100%;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            width: 85%;
+            max-width: 280px;
+            box-sizing: border-box;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-green {
+            background-color: var(--green-btn);
+        }
+
+        .btn-green:hover {
+            background-color: var(--green-btn-hover);
+        }
+
+        /* Seed Container Box */
+        .seed-box-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--card-bg);
+            border: 1.5px solid var(--accent-color);
+            border-radius: 6px;
+            padding: 4px 6px;
+            width: 85%;
+            max-width: 280px;
+            box-sizing: border-box;
+        }
+
+        .seed-value {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 14px;
+            padding: 0 8px;
+            word-break: break-all;
+            user-select: all;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .btn-copy {
+            background-color: var(--accent-color);
+            color: #000000;
+            border: none;
+            padding: 8px 12px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-copy:hover {
+            background-color: #e6b800;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 12px;
+            text-align: center;
+            color: var(--accent-color);
+            font-size: 12px;
+            border-top: 1px solid #222;
+            width: 100%;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
+    <!-- Header Image -->
+    <img src="https://attdes.online/header.png" alt="Header" class="header-img">
 
-  <!-- =========================
-       1. الهيدر
-  ========================= -->
-
-  <header>
-
-    <div class="brand">
-      ATT / DES
+    <!-- Alert Box Under Header -->
+    <div class="alert-box">
+        السيد جاهز للنسخ✅<br>
+        إنزل تحت وأنسخ السيد♥<br>
+        <span style="color: var(--accent-color); font-size: 12px;">The seed is ready, scroll down then copy</span>
     </div>
 
-    <div class="sub-brand">
-      Attack N' Destroy - أكواد الـ Seed
+    <!-- 3 Banners Stacked -->
+    <div class="banner-container">
+        <!-- Banner 1 -->
+        <div>
+            <script>
+              atOptions = {
+                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+              };
+            </script>
+            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"></script>
+        </div>
+
+        <!-- Banner 2 -->
+        <div>
+            <script>
+              atOptions = {
+                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+              };
+            </script>
+            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"></script>
+        </div>
+
+        <!-- Banner 3 -->
+        <div>
+            <script>
+              atOptions = {
+                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+              };
+            </script>
+            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"></script>
+        </div>
     </div>
 
-  </header>
-
-
-  <!-- =========================
-       2. رسالة النزول
-  ========================= -->
-
-  <div class="hero-scroll">
-
-    <p>
-      كود الـ Seed جاهز في الأسفل، يرجى النزول لنسخه 👇
-    </p>
-
-    <div class="arrows">
-      ▼ ▼ ▼
+    <!-- Fourth Banner (Additional Network) -->
+    <div style="margin: 5px 0;">
+        <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js"></script>
+        <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
     </div>
 
-  </div>
+    <!-- Buttons & Seed Section -->
+    <div class="btn-container">
+        <!-- Static Green Button -->
+        <a href="https://link.attdes.online/mc" class="btn btn-green" target="_blank">
+            تحميل لعبة ماين كرافت APK
+        </a>
 
-
-  <!-- =========================
-       3. حالة تحميل Seed
-  ========================= -->
-
-  <div id="statusMsg" class="status-msg">
-    جاري تجهيز الكود من السحابة...
-  </div>
-
-
-  <!-- =========================
-       4. الإعلانات
-  ========================= -->
-
-  <div class="ads-section">
-
-
-    <!-- =====================
-         A-Ads رقم 1
-    ====================== -->
-
-    <div class="ad-box">
-
-      <!-- BEGIN AADS AD UNIT 2452645 -->
-
-      <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-        <iframe data-aa='2452645' src='//acceptable.a-ads.com/2452645/?size=Adaptive'
-                style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
-      </div>
-
-      <!-- END AADS AD UNIT 2452645 -->
-
+        <!-- Seed Display Box & Copy Button -->
+        <div class="seed-box-wrapper">
+            <span id="seedDisplay" class="seed-value">جاري التحميل...</span>
+            <button id="copyBtn" class="btn-copy">نسخ Copy</button>
+        </div>
     </div>
 
-
-    <!-- =====================
-         Banner رقم 1
-    ====================== -->
-
-    <div class="ad-box">
-
-      <script>
-        atOptions = {
-          'key': '28d1f1f838ea883f1f7fc0d4733ebba6',
-          'format': 'iframe',
-          'height': 50,
-          'width': 320,
-          'params': {}
-        };
-      </script>
-
-      <script
-        src="https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js">
-      </script>
-
-    </div>
-
-
-    <!-- =====================
-         A-Ads رقم 2
-    ====================== -->
-
-    <div class="ad-box">
-
-      <!-- BEGIN AADS AD UNIT 2452645 -->
-
-      <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-        <iframe data-aa='2452645' src='//acceptable.a-ads.com/2452645/?size=Adaptive'
-                style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
-      </div>
-
-      <!-- END AADS AD UNIT 2452645 -->
-
-    </div>
-
-
-    <!-- =====================
-         Banner رقم 2
-    ====================== -->
-
-    <div class="ad-box">
-
-      <script>
-        atOptions = {
-          'key': '28d1f1f838ea883f1f7fc0d4733ebba6',
-          'format': 'iframe',
-          'height': 50,
-          'width': 320,
-          'params': {}
-        };
-      </script>
-
-      <script
-        src="https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js">
-      </script>
-
-    </div>
-
-
-    <!-- =====================
-         A-Ads رقم 3
-    ====================== -->
-
-    <div class="ad-box">
-
-      <!-- BEGIN AADS AD UNIT 2452645 -->
-
-      <div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-        <iframe data-aa='2452645' src='//acceptable.a-ads.com/2452645/?size=Adaptive'
-                style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
-      </div>
-
-      <!-- END AADS AD UNIT 2452645 -->
-
-    </div>
-
-
-    <!-- =====================
-         Banner رقم 3
-    ====================== -->
-
-    <div class="ad-box">
-
-      <script>
-        atOptions = {
-          'key': '28d1f1f838ea883f1f7fc0d4733ebba6',
-          'format': 'iframe',
-          'height': 50,
-          'width': 320,
-          'params': {}
-        };
-      </script>
-
-      <script
-        src="https://www.highperformanceformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js">
-      </script>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================
-       5. عرض Seed
-  ========================= -->
-
-  <div class="seed-section">
-
-    <div
-      id="seedBox"
-      class="seed-box"
-    >
-      ----
-    </div>
-
-    <button
-      id="copyBtn"
-      class="btn-copy"
-      onclick="copySeed()"
-    >
-      نسخ Seed العالم 📋
-    </button>
-
-  </div>
-
-
-  <!-- =========================
-       6. Social Media
-  ========================= -->
-
-  <div class="social-box">
-
-    <a
-      href="https://facebook.com/modslib"
-      class="social-btn"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      فيسبوك
-    </a>
-
-    <a
-      href="https://youtube.com/@modslib"
-      class="social-btn"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      يوتيوب
-    </a>
-
-    <a
-      href="https://t.me/modslib"
-      class="social-btn"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      تلجرام
-    </a>
-
-  </div>
-
-
-  <!-- =========================
-       7. Footer
-  ========================= -->
-
-  <footer>
-    &copy; 2026 ATTACK N' DESTROY.
-    جميع الحقوق محفوظة.
-  </footer>
-
-</div>
-
-
-<script>
-
-  /* =========================================
-     رابط قاعدة بيانات Seeds
-  ========================================= */
-
-  const SEED_URL =
-    'https://modslib.attdes.online/seed.json';
-
-
-  /* =========================================
-     قراءة ID من الرابط
-     
-     مثال:
-     https://example.com/?id=123
-  ========================================= */
-
-  const urlParams =
-    new URLSearchParams(window.location.search);
-
-  const seedId =
-    urlParams.get('id');
-
-
-  /* =========================================
-     عناصر الصفحة
-  ========================================= */
-
-  const msgEl =
-    document.getElementById('statusMsg');
-
-  const seedBox =
-    document.getElementById('seedBox');
-
-  const copyBtn =
-    document.getElementById('copyBtn');
-
-
-  /* =========================================
-     Seed الحالي
-  ========================================= */
-
-  let rawSeedValue = '';
-
-
-  /* =========================================
-     التأكد من وجود ID
-  ========================================= */
-
-  if (!seedId) {
-
-    msgEl.innerText =
-      '⚠️ خطأ: لم يتم تحديد رقم الـ ID في الرابط!';
-
-    msgEl.style.color =
-      'var(--error)';
-
-  }
-
-
-  /* =========================================
-     جلب ملف seed.json
-  ========================================= */
-
-  else {
-
-    fetch(SEED_URL, {
-      method: 'GET',
-      cache: 'no-cache'
-    })
-
-    .then(function(response) {
-
-      if (!response.ok) {
-        throw new Error(
-          'HTTP ' + response.status
-        );
-      }
-
-      return response.json();
-
-    })
-
-    .then(function(data) {
-
-      /* ===============================
-         التأكد من وجود ID
-      =============================== */
-
-      if (
-        data &&
-        Object.prototype.hasOwnProperty.call(
-          data,
-          seedId
-        )
-      ) {
-
-        /*
-         * أخذ Seed كما هو تماما.
-         *
-         * لا Base64
-         * لا decode
-         * لا تحويل
-         */
-
-        rawSeedValue =
-          String(data[seedId]);
-
-
-        /* ===============================
-           عرض Seed
-        =============================== */
-
-        seedBox.innerText =
-          rawSeedValue;
-
-
-        /* ===============================
-           تفعيل زر النسخ
-        =============================== */
-
-        copyBtn.classList.add('active');
-
-
-        /* ===============================
-           رسالة النجاح
-        =============================== */
-
-        msgEl.innerText =
-          '✅ كود الـ Seed جاهز للنسخ أدناه';
-
-        msgEl.style.color =
-          'var(--success)';
-
-      }
-
-
-      /* ===============================
-         ID غير موجود
-      =============================== */
-
-      else {
-
-        seedBox.innerText =
-          '----';
-
-        msgEl.innerText =
-          '❌ عذراً، هذا الـ Seed غير موجود.';
-
-        msgEl.style.color =
-          'var(--error)';
-
-      }
-
-    })
-
-
-    /* ===============================
-       خطأ في الاتصال
-    =============================== */
-
-    .catch(function(error) {
-
-      console.error(
-        'Seed loading error:',
-        error
-      );
-
-      seedBox.innerText =
-        '----';
-
-      msgEl.innerText =
-        '❌ فشل تحميل ملف Seed.';
-
-      msgEl.style.color =
-        'var(--error)';
-
-    });
-
-  }
-
-
-  /* =========================================
-     وظيفة نسخ Seed
-  ========================================= */
-
-  function copySeed() {
-
-    if (!rawSeedValue) {
-      return;
-    }
-
-
-    /* ===============================
-       Clipboard API
-    =============================== */
-
-    if (
-      navigator.clipboard &&
-      window.isSecureContext
-    ) {
-
-      navigator.clipboard
-        .writeText(rawSeedValue)
-
-        .then(function() {
-
-          showCopySuccess();
-
-        })
-
-        .catch(function() {
-
-          fallbackCopy();
-
+    <!-- Footer -->
+    <footer>
+        Copyright: ATT/DES Progz
+    </footer>
+
+    <!-- JSON Fetch & Base64 Seed Copy Logic Script -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const seedId = urlParams.get('id');
+            const seedDisplay = document.getElementById('seedDisplay');
+            const copyBtn = document.getElementById('copyBtn');
+
+            if (seedId) {
+                // Fetch seed.json file
+                fetch('seed.json')
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network response error');
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data && data[seedId]) {
+                            try {
+                                // Decode base64 seed
+                                const decodedSeed = atob(data[seedId]);
+                                seedDisplay.textContent = decodedSeed;
+
+                                // Copy functionality
+                                copyBtn.onclick = function() {
+                                    navigator.clipboard.writeText(decodedSeed).then(() => {
+                                        copyBtn.textContent = 'تم النسخ! ✓';
+                                        copyBtn.style.backgroundColor = '#28a745';
+                                        copyBtn.style.color = '#ffffff';
+                                        
+                                        setTimeout(() => {
+                                            copyBtn.textContent = 'نسخ Copy';
+                                            copyBtn.style.backgroundColor = 'var(--accent-color)';
+                                            copyBtn.style.color = '#000000';
+                                        }, 2000);
+                                    }).catch(() => {
+                                        seedDisplay.select();
+                                    });
+                                };
+                            } catch (e) {
+                                seedDisplay.textContent = 'خطأ في الترميز';
+                            }
+                        } else {
+                            seedDisplay.textContent = 'غير موجود';
+                        }
+                    })
+                    .catch(error => {
+                        seedDisplay.textContent = 'خطأ في الجلب';
+                    });
+            } else {
+                seedDisplay.textContent = 'غير محدد id';
+            }
         });
-
-    }
-
-
-    /* ===============================
-       الطريقة الاحتياطية
-    =============================== */
-
-    else {
-
-      fallbackCopy();
-
-    }
-
-  }
-
-
-  /* =========================================
-     النسخ الاحتياطي
-  ========================================= */
-
-  function fallbackCopy() {
-
-    const textarea =
-      document.createElement('textarea');
-
-    textarea.value =
-      rawSeedValue;
-
-    textarea.style.position =
-      'fixed';
-
-    textarea.style.left =
-      '-9999px';
-
-    textarea.style.top =
-      '-9999px';
-
-    document.body.appendChild(
-      textarea
-    );
-
-    textarea.focus();
-    textarea.select();
-
-    try {
-
-      const successful =
-        document.execCommand('copy');
-
-      if (successful) {
-
-        showCopySuccess();
-
-      } else {
-
-        showCopyError();
-
-      }
-
-    }
-
-    catch (error) {
-
-      showCopyError();
-
-    }
-
-    document.body.removeChild(
-      textarea
-    );
-
-  }
-
-
-  /* =========================================
-     نجاح النسخ
-  ========================================= */
-
-  function showCopySuccess() {
-
-    copyBtn.innerText =
-      'تم النسخ بنجاح! ✓';
-
-    copyBtn.style.background =
-      'var(--success)';
-
-    copyBtn.style.color =
-      '#000';
-
-
-    setTimeout(function() {
-
-      copyBtn.innerText =
-        'نسخ Seed العالم 📋';
-
-      copyBtn.style.background =
-        'var(--accent)';
-
-      copyBtn.style.color =
-        '#000';
-
-    }, 2000);
-
-  }
-
-
-  /* =========================================
-     فشل النسخ
-  ========================================= */
-
-  function showCopyError() {
-
-    msgEl.innerText =
-      '❌ تعذر نسخ الـ Seed تلقائيا، حاول نسخه يدويا.';
-
-    msgEl.style.color =
-      'var(--error)';
-
-  }
-
-</script>
-
+    </script>
 </body>
 </html>

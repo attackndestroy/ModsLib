@@ -1,66 +1,62 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة المودات - الرئيسية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root { --bg-base: #060709; --bg-surface: #0d0f14; --bg-card: #13161f; --accent-yellow: #ffcc00; --text-main: #f3f4f6; --text-muted: #8b92a5; --metal-border: #242938; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: var(--bg-base); color: var(--text-main); font-family: 'Cairo', sans-serif; padding-bottom: 50px; }
-        header { background: var(--bg-surface); border-bottom: 2px solid var(--metal-border); padding: 15px; text-align: center; }
-        header img { max-height: 60px; }
-        .container { max-width: 800px; margin: 30px auto; padding: 0 20px; }
-        .feed { display: flex; flex-direction: column; gap: 25px; }
-        .card { background: var(--bg-card); border: 1px solid var(--metal-border); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; }
-        .card img { width: 100%; height: 220px; object-fit: cover; }
-        .card-body { padding: 20px; }
-        .title { font-size: 20px; font-weight: 700; margin-bottom: 10px; color: var(--text-main); }
-        .desc { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; }
-        .btn { display: inline-block; background: transparent; color: var(--accent-yellow); border: 1px solid var(--accent-yellow); padding: 10px 20px; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 13px; text-decoration: none; border-radius: 2px; transition: 0.2s; }
-        .btn:hover { background: var(--accent-yellow); color: #000; }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>ATT/DES — Minecraft Mods</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <!-- Popup -->
+    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js">
+    </script>
+    <!-- Analytics -->
+    <script src="https://modslib.attdes.online/analytics.js">
+    </script>
 </head>
 <body>
-    <header>
-        <img src="https://attdes.online/header.png" alt="Logo">
+
+    <!-- ===== HEADER ===== -->
+    <header class="site-header">
+        <a href="index.html">
+            <img src="https://attdes.online/header.png" alt="ATT/DES Logo" class="header-logo" />
+        </a>
     </header>
-    <div class="container">
-        <div class="feed" id="mods-feed">
-            <p style="text-align:center; color:var(--text-muted);">جاري تحميل المودات...</p>
-        </div>
+
+    <!-- ===== NATIVE BANNER (once) ===== -->
+    <div class="native-banner-wrapper">
+        <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js">
+        </script>
+        <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
     </div>
 
-    <script>
-        async function loadIndex() {
-            try {
-                let res = await fetch('mods.json');
-                let mods = await res.json();
-                let feed = document.getElementById('mods-feed');
-                feed.innerHTML = '';
+    <!-- ===== SOCIAL BAR ===== -->
+    <div class="social-bar-wrapper">
+        <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js">
+        </script>
+    </div>
 
-                // تصفية العناصر التي تخص الواجهة أو عرض العناصر التي نوعها m/i
-                let filtered = mods.filter(m => m.type === 'i' || m.type === 'm');
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="container">
 
-                filtered.forEach(mod => {
-                    let card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        <img src="${mod.image_url}" alt="${mod.title}">
-                        <div class="card-body">
-                            <h2 class="title">${mod.title}</h2>
-                            <p class="desc">${mod.description}</p>
-                            <a href="tomod.html?id=${mod.id}" class="btn">الانتقال لصفحة التحميل</a>
-                        </div>
-                    `;
-                    feed.appendChild(card);
-                });
-            } catch (e) {
-                document.getElementById('mods-feed').innerHTML = '<p style="text-align:center; color:#ff4444;">تعذر تحميل البيانات.</p>';
-            }
-        }
-        loadIndex();
-    </script>
+        <!-- Feed controls -->
+        <div class="feed-controls">
+            <button class="btn-sort active" data-sort="newest">أحدث</button>
+            <button class="btn-sort" data-sort="oldest">أقدم</button>
+        </div>
+
+        <!-- Feed -->
+        <div id="feed" class="feed"></div>
+
+        <!-- Load More -->
+        <div id="load-more-wrap" class="load-more-wrap">
+            <button id="btn-load-more" class="btn-load-more">إظهار المزيد</button>
+        </div>
+
+        <!-- Loading / Error states -->
+        <div id="feed-status" class="feed-status"></div>
+
+    </main>
+
+    <!-- ===== MAIN JAVASCRIPT ===== -->
+    <script src="js/main.js"></script>
 </body>
 </html>

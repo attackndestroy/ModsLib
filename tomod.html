@@ -26,73 +26,15 @@
         .header-logo { max-width: 100%; height: auto; max-height: 80px; width: auto; display: inline-block; }
 
         /* ===== CONTAINER ===== */
-        .container { max-width: 800px; margin: 0 auto; padding: 1rem; width: 100%; flex: 1; }
+        .container { max-width: 800px; margin: 0 auto; padding: 0.8rem; width: 100%; flex: 1; }
 
         /* ===== NATIVE BANNER & SOCIAL ===== */
-        .native-banner-wrapper, .social-bar-wrapper { text-align: center; margin: 0.5rem 0; overflow: hidden; }
+        .native-banner-wrapper, .social-bar-wrapper { text-align: center; margin: 0.2rem 0; overflow: hidden; }
         .native-banner-wrapper iframe, .social-bar-wrapper iframe { max-width: 100%; }
 
-        /* ===== BANNER 320x50 (عام) ===== */
-        .banner-320x50 {
-            width: 100%; max-width: 320px; margin: 0 auto; overflow: hidden;
-            text-align: center; background: transparent;
-        }
-        .banner-320x50 iframe { max-width: 100%; border: none; overflow: hidden; }
-        .banner-between { margin: 1.5rem 0; text-align: center; }
-
-        /* ===== tomod الخاص ===== */
-        .mod-detail {
-            background: #1e1e1e; border-radius: 16px; padding: 1.5rem;
-            margin-bottom: 2rem; box-shadow: 0 4px 16px rgba(0,0,0,0.6);
-        }
-        .mod-detail-image { text-align: center; margin-bottom: 1.5rem; }
-        .mod-detail-image img {
-            max-width: 100%; height: auto; max-height: 400px; object-fit: contain;
-            border-radius: 8px; background: #2a2a2a;
-        }
-        .mod-detail-image-placeholder {
-            background: #2a2a2a; color: #888; padding: 3rem 1rem;
-            border-radius: 8px; font-size: 1.2rem;
-        }
-        .mod-detail-title {
-            font-size: 2rem; font-weight: 700; color: #f5c842;
-            margin: 0.5rem 0 1rem; text-align: center; line-height: 1.3;
-        }
-        .mod-detail-description {
-            font-size: 1.1rem; line-height: 1.8; color: #ddd;
-            background: #2a2a2a; padding: 1.2rem; border-radius: 8px;
-            margin-bottom: 2rem; white-space: pre-wrap; word-break: break-word;
-        }
-        .download-btn {
-            display: inline-block; background: #f5c842; color: #1a1a1a;
-            font-weight: 700; padding: 0.8rem 2.5rem; border-radius: 50px;
-            text-decoration: none; font-size: 1.3rem; transition: background 0.2s, transform 0.1s;
-            border: none; cursor: pointer; min-height: 48px; min-width: 180px;
-            text-align: center; line-height: 1.4; margin: 0.5rem 0;
-        }
-        .download-btn:hover { background: #e0b030; text-decoration: none; transform: scale(1.03); }
-        .download-btn:active { transform: scale(0.97); }
-
-        .error-box {
-            background: #1e1e1e; border: 1px solid #f5c842; border-radius: 16px;
-            padding: 2rem 1.5rem; text-align: center; max-width: 600px; margin: 2rem auto;
-        }
-        .error-box h2 { color: #f5c842; font-size: 1.8rem; margin-bottom: 0.5rem; }
-        .error-box p { color: #ccc; margin-bottom: 1.5rem; font-size: 1.1rem; }
-        .error-box .mod-card-btn {
-            display: inline-block; background: #f5c842; color: #1a1a1a;
-            font-weight: 700; padding: 0.6rem 1.5rem; border-radius: 50px;
-            text-decoration: none; transition: background 0.2s;
-            min-height: 44px; min-width: 120px; text-align: center; line-height: 1.4;
-            margin: 0.5rem auto;
-        }
-        .error-box .mod-card-btn:hover { background: #e0b030; text-decoration: none; }
-
-        .detail-status { text-align: center; padding: 1rem; color: #aaa; font-size: 1rem; }
-
-        /* ===== إعلانات 320×50 داخل tomod ===== */
+        /* ===== BANNER 320×50 (لـ tomod) ===== */
         .tomod-banner {
-            margin: 1.5rem 0;
+            margin: 0.6rem 0;
             text-align: center;
         }
         .tomod-banner iframe {
@@ -101,16 +43,66 @@
             overflow: hidden;
         }
 
+        /* ===== MOD DETAIL ===== */
+        .mod-detail {
+            background: #1e1e1e; border-radius: 12px; padding: 1rem;
+            margin-bottom: 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        .mod-detail-image { text-align: center; margin-bottom: 0.8rem; }
+        .mod-detail-image img {
+            max-width: 100%; height: auto; max-height: 350px; object-fit: contain;
+            border-radius: 6px; background: #2a2a2a;
+        }
+        .mod-detail-image-placeholder {
+            background: #2a2a2a; color: #888; padding: 2rem 1rem;
+            border-radius: 6px; font-size: 1.1rem;
+        }
+        .mod-detail-title {
+            font-size: 1.8rem; font-weight: 700; color: #f5c842;
+            margin: 0.3rem 0 0.5rem; text-align: center; line-height: 1.3;
+        }
+        .mod-detail-description {
+            font-size: 1rem; line-height: 1.7; color: #ddd;
+            background: #2a2a2a; padding: 0.8rem; border-radius: 6px;
+            margin-bottom: 1rem; white-space: pre-wrap; word-break: break-word;
+        }
+        .download-btn {
+            display: inline-block; background: #f5c842; color: #1a1a1a;
+            font-weight: 700; padding: 0.7rem 2rem; border-radius: 50px;
+            text-decoration: none; font-size: 1.2rem; transition: background 0.2s, transform 0.1s;
+            border: none; cursor: pointer; min-height: 44px; min-width: 160px;
+            text-align: center; line-height: 1.4; margin: 0.5rem 0;
+        }
+        .download-btn:hover { background: #e0b030; text-decoration: none; transform: scale(1.02); }
+        .download-btn:active { transform: scale(0.97); }
+
+        .error-box {
+            background: #1e1e1e; border: 1px solid #f5c842; border-radius: 12px;
+            padding: 1.5rem; text-align: center; max-width: 600px; margin: 1rem auto;
+        }
+        .error-box h2 { color: #f5c842; font-size: 1.6rem; margin-bottom: 0.3rem; }
+        .error-box p { color: #ccc; margin-bottom: 1rem; font-size: 1rem; }
+        .error-box .mod-card-btn {
+            display: inline-block; background: #f5c842; color: #1a1a1a;
+            font-weight: 700; padding: 0.5rem 1.2rem; border-radius: 50px;
+            text-decoration: none; transition: background 0.2s;
+            min-height: 40px; min-width: 100px; text-align: center; line-height: 1.3;
+            margin: 0.3rem auto;
+        }
+        .error-box .mod-card-btn:hover { background: #e0b030; text-decoration: none; }
+
+        .detail-status { text-align: center; padding: 0.5rem; color: #aaa; font-size: 0.95rem; }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 360px) {
-            .container { padding: 0.6rem; }
-            .mod-detail-title { font-size: 1.6rem; }
-            .mod-detail-description { font-size: 1rem; padding: 0.8rem; }
-            .download-btn { font-size: 1.1rem; padding: 0.6rem 1.8rem; min-width: 140px; }
+            .container { padding: 0.5rem; }
+            .mod-detail-title { font-size: 1.4rem; }
+            .mod-detail-description { font-size: 0.95rem; padding: 0.6rem; }
+            .download-btn { font-size: 1rem; padding: 0.5rem 1.5rem; min-width: 120px; }
         }
         @media (min-width: 900px) {
-            .mod-detail { padding: 2rem; }
-            .mod-detail-title { font-size: 2.5rem; }
+            .mod-detail { padding: 1.5rem; }
+            .mod-detail-title { font-size: 2.2rem; }
             .header-logo { max-height: 100px; }
         }
         img, iframe, video { max-width: 100%; height: auto; }
@@ -229,7 +221,6 @@
                 const title = item.title || 'بدون عنوان';
                 const desc = item.description || 'لا يوجد وصف.';
 
-                // بناء المحتوى يدوياً مع إضافة الإعلانات
                 const container = document.createElement('div');
 
                 // الصورة
@@ -248,7 +239,7 @@
                 }
                 container.appendChild(imgDiv);
 
-                // ===== إعلان 320×50 تحت الصورة =====
+                // إعلان 1 تحت الصورة
                 container.appendChild(createBanner320x50());
 
                 // العنوان
@@ -263,7 +254,7 @@
                 descEl.innerHTML = escapeHtml(desc).replace(/\n/g, '<br>');
                 container.appendChild(descEl);
 
-                // ===== إعلان 320×50 فوق زر التحميل =====
+                // إعلان 2 فوق زر التحميل
                 container.appendChild(createBanner320x50());
 
                 // زر التحميل
@@ -273,11 +264,9 @@
                 btn.textContent = 'تحميل المود';
                 container.appendChild(btn);
 
-                // مسح المحتوى السابق وإضافة الجديد
                 detailEl.innerHTML = '';
                 detailEl.appendChild(container);
 
-                // إنشاء صلاحية
                 try {
                     sessionStorage.setItem('download_access_' + id, 'true');
                 } catch(e) {}

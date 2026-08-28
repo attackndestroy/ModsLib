@@ -1,186 +1,617 @@
 <!DOCTYPE html>
-<html lang="ar" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>ATT/DES — تفاصيل المود</title>
-    <link rel="stylesheet" href="css/styles.css" />
-    <!-- Popup -->
-    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js">
-    </script>
-    <!-- Analytics -->
-    <script src="https://modslib.attdes.online/analytics.js">
-    </script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATT/DES — تفاصيل المود</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    min-height:100%;
+    background:#0b0b0b;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    overflow-x:hidden;
+}
+
+/* ===== HEADER ===== */
+
+.site-header{
+    width:100%;
+    padding:14px 10px;
+    background:#111;
+    border-bottom:1px solid #242424;
+    text-align:center;
+}
+
+.header-logo{
+    display:block;
+    width:min(280px,85vw);
+    height:auto;
+    margin:auto;
+}
+
+/* ===== ADS ===== */
+
+.native-banner-wrapper,
+.social-bar-wrapper{
+    width:100%;
+    max-width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    margin:10px 0;
+}
+
+/* ===== MAIN ===== */
+
+.container{
+    width:100%;
+    max-width:760px;
+    margin:0 auto;
+    padding:10px 12px 35px;
+}
+
+.mod-detail{
+    width:100%;
+    background:#151515;
+    border:1px solid #272727;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 4px 20px rgba(0,0,0,.25);
+}
+
+/* ===== IMAGE ===== */
+
+.mod-detail-image{
+    width:100%;
+    min-height:180px;
+    background:#101010;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.mod-detail-image img{
+    display:block;
+    width:100%;
+    height:auto;
+    max-width:100%;
+    object-fit:contain;
+}
+
+.mod-detail-image-placeholder{
+    width:100%;
+    min-height:180px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#666;
+    font-size:14px;
+}
+
+/* ===== TITLE ===== */
+
+.mod-detail-title{
+    margin:0;
+    padding:18px 14px 8px;
+    text-align:center;
+    font-size:clamp(20px,5vw,30px);
+    line-height:1.3;
+    word-break:break-word;
+}
+
+/* ===== DESCRIPTION ===== */
+
+.mod-detail-description{
+    padding:8px 16px 18px;
+    color:#bdbdbd;
+    font-size:15px;
+    line-height:1.8;
+    text-align:center;
+    overflow-wrap:anywhere;
+}
+
+/* ===== BUTTON ===== */
+
+.mod-card-btn{
+    display:block;
+    width:calc(100% - 24px);
+    margin:0 12px 16px;
+    padding:13px 15px;
+    border-radius:8px;
+    background:#fff;
+    color:#000;
+    text-decoration:none;
+    text-align:center;
+    font-size:16px;
+    font-weight:bold;
+    transition:.15s;
+}
+
+.mod-card-btn:active{
+    transform:scale(.98);
+}
+
+/* ===== 320x50 BANNER ===== */
+
+.tomod-banner{
+    width:100%;
+    min-height:50px;
+    margin:14px 0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+/* ===== STATUS ===== */
+
+.detail-status{
+    width:100%;
+    text-align:center;
+    color:#888;
+    padding:12px 5px;
+    font-size:14px;
+    overflow-wrap:anywhere;
+}
+
+.error-box{
+    background:#151515;
+    border:1px solid #292929;
+    border-radius:10px;
+    padding:25px 15px;
+    text-align:center;
+}
+
+.error-box h2{
+    margin:0 0 10px;
+    font-size:20px;
+}
+
+.error-box p{
+    margin:0 0 20px;
+    color:#aaa;
+    line-height:1.7;
+}
+
+/* ===== SMALL SCREENS ===== */
+
+@media(max-width:360px){
+
+    .container{
+        padding-left:7px;
+        padding-right:7px;
+    }
+
+    .site-header{
+        padding:10px 6px;
+    }
+
+    .header-logo{
+        width:min(240px,90vw);
+    }
+
+    .mod-detail-title{
+        font-size:19px;
+        padding:15px 10px 7px;
+    }
+
+    .mod-detail-description{
+        padding:7px 11px 15px;
+        font-size:14px;
+    }
+
+    .mod-card-btn{
+        width:calc(100% - 16px);
+        margin-left:8px;
+        margin-right:8px;
+    }
+}
+</style>
+
+<!-- Popup -->
+<script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
+
+<!-- Analytics -->
+<script src="https://modslib.attdes.online/analytics.js"></script>
+
 </head>
+
 <body>
 
-    <!-- ===== HEADER ===== -->
-    <header class="site-header">
-        <a href="index.html">
-            <img src="https://attdes.online/header.png" alt="ATT/DES Logo" class="header-logo" />
-        </a>
-    </header>
+<!-- ===== HEADER ===== -->
 
-    <!-- ===== NATIVE BANNER (مرة واحدة) ===== -->
-    <div class="native-banner-wrapper">
-        <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js">
-        </script>
-        <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
-    </div>
+<header class="site-header">
+    <a href="index.html">
+        <img
+            src="https://attdes.online/header.png"
+            alt="ATT/DES"
+            class="header-logo"
+        >
+    </a>
+</header>
 
-    <!-- ===== SOCIAL BAR ===== -->
-    <div class="social-bar-wrapper">
-        <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js">
-        </script>
-    </div>
+<!-- ===== NATIVE BANNER ===== -->
 
-    <!-- ===== MAIN CONTENT ===== -->
-    <main class="container tomod-container">
+<div class="native-banner-wrapper">
 
-        <!-- تفاصيل المود -->
-        <div id="mod-detail" class="mod-detail">
-            <!-- يتم ملؤها بواسطة JavaScript -->
-        </div>
-
-        <!-- Banner 320x50 (مرة واحدة في مكان مناسب) -->
-        <div class="banner-320x50 tomod-banner">
-            <script>
-                atOptions = {
-                    'key': '28d1f1f838ea883f1f7fc0d4733ebba6',
-                    'format': 'iframe',
-                    'height': 50,
-                    'width': 320,
-                    'params': {}
-                };
-            </script>
-            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js">
-            </script>
-        </div>
-
-        <!-- حالة التحميل / الأخطاء -->
-        <div id="detail-status" class="detail-status"></div>
-
-    </main>
-
-    <script>
-        (function() {
-            'use strict';
-
-            // ----- helpers -----
-            function getUrlParam(param) {
-                const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get(param);
-            }
-
-            function escapeHtml(str) {
-                if (!str) return '';
-                return String(str).replace(/[&<>"]/g, function(m) {
-                    if (m === '&') return '&amp;';
-                    if (m === '<') return '&lt;';
-                    if (m === '>') return '&gt;';
-                    if (m === '"') return '&quot;';
-                    return m;
-                });
-            }
-
-            // ----- read ID -----
-            const id = getUrlParam('id');
-            const detailEl = document.getElementById('mod-detail');
-            const statusEl = document.getElementById('detail-status');
-
-            if (!id) {
-                // ID مفقود
-                showError('لم يتم تحديد معرف المود.', 'الرجاء استخدام رابط صحيح.');
-                return;
-            }
-
-            // ----- load data -----
-            function showError(title, message) {
-                detailEl.innerHTML = '';
-                statusEl.innerHTML = `
-                    <div class="error-box">
-                        <h2>${escapeHtml(title)}</h2>
-                        <p>${escapeHtml(message)}</p>
-                        <a href="index.html" class="mod-card-btn">العودة للرئيسية</a>
-                    </div>
-                `;
-            }
-
-            function renderDetail(record) {
-                // record should contain image_url, title, description
-                const img = record.image_url || '';
-                const title = record.title || 'بدون عنوان';
-                const desc = record.description || 'لا يوجد وصف لهذا المود.';
-
-                detailEl.innerHTML = `
-                    <div class="mod-detail-image">
-                        ${img ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(title)}" />` : '<div class="mod-detail-image-placeholder">لا توجد صورة</div>'}
-                    </div>
-                    <h1 class="mod-detail-title">${escapeHtml(title)}</h1>
-                    <div class="mod-detail-description">${escapeHtml(desc).replace(/\n/g, '<br>')}</div>
-                    <a href="mod.html?id=${encodeURIComponent(id)}" class="mod-card-btn download-btn">تحميل المود</a>
-                `;
-
-                // ----- إنشاء Access State في sessionStorage -----
-                try {
-                    sessionStorage.setItem('download_access_' + id, 'true');
-                } catch (e) {
-                    // تجاهل أخطاء التخزين
-                }
-
-                statusEl.innerHTML = ''; // مسح رسائل الخطأ
-            }
-
-            function fetchData() {
-                statusEl.innerHTML = 'جاري تحميل البيانات…';
-                fetch('mods.json')
-                    .then(function(res) {
-                        if (!res.ok) throw new Error('HTTP ' + res.status);
-                        return res.json();
-                    })
-                    .then(function(data) {
-                        if (!Array.isArray(data) || data.length === 0) {
-                            throw new Error('البيانات فارغة أو غير صالحة.');
-                        }
-
-                        // البحث عن سجل type="t" مع id مطابق
-                        const keyType = btoa('type');
-                        const keyId = btoa('id');
-                        const keyImg = btoa('image_url');
-                        const keyTitle = btoa('title');
-                        const keyDesc = btoa('description');
-
-                        let found = null;
-                        for (var i = 0; i < data.length; i++) {
-                            var rec = data[i];
-                            if (rec[keyType] === 't' && String(rec[keyId]) === String(id)) {
-                                found = {
-                                    image_url: rec[keyImg] || '',
-                                    title: rec[keyTitle] || '',
-                                    description: rec[keyDesc] || ''
-                                };
-                                break;
-                            }
-                        }
-
-                        if (found) {
-                            renderDetail(found);
-                        } else {
-                            showError('المود غير موجود',
-                                'لم نعثر على مود بالمعرف المطلوب. تأكد من الرابط أو عد للرئيسية.');
-                        }
-                    })
-                    .catch(function(err) {
-                        console.error('Error loading mods.json:', err);
-                        showError('خطأ في التحميل',
-                            'تعذر تحميل بيانات المود. تأكد من اتصالك بالإنترنت ووجود ملف mods.json.');
-                    });
-            }
-
-            fetchData();
-
-        })();
+    <script
+        async
+        data-cfasync="false"
+        src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js">
     </script>
+
+    <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
+
+</div>
+
+<!-- ===== SOCIAL BAR ===== -->
+
+<div class="social-bar-wrapper">
+
+    <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
+
+</div>
+
+<!-- ===== CONTENT ===== -->
+
+<main class="container">
+
+    <div id="mod-detail" class="mod-detail"></div>
+
+    <!-- 320x50 -->
+
+    <div class="tomod-banner">
+
+        <script>
+        atOptions = {
+            'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+            'format' : 'iframe',
+            'height' : 50,
+            'width' : 320,
+            'params' : {}
+        };
+        </script>
+
+        <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"></script>
+
+    </div>
+
+    <div id="detail-status" class="detail-status">
+        جاري تحميل المود...
+    </div>
+
+</main>
+
+<script>
+(function(){
+
+    "use strict";
+
+    const detail =
+        document.getElementById("mod-detail");
+
+    const status =
+        document.getElementById("detail-status");
+
+    /* =========================
+       GET ID
+    ========================= */
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+    const requestedId =
+        params.get("id");
+
+    /* =========================
+       BASE64 DECODE
+    ========================= */
+
+    function decodeBase64(value){
+
+        if(!value){
+            return "";
+        }
+
+        try{
+
+            return atob(value);
+
+        }catch(error){
+
+            console.error(
+                "Base64 decode error:",
+                error
+            );
+
+            return "";
+
+        }
+
+    }
+
+    /* =========================
+       ESCAPE HTML
+    ========================= */
+
+    function escapeHTML(value){
+
+        return String(value ?? "")
+            .replace(/&/g,"&amp;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;")
+            .replace(/"/g,"&quot;")
+            .replace(/'/g,"&#039;");
+
+    }
+
+    /* =========================
+       ERROR
+    ========================= */
+
+    function showError(title,message){
+
+        detail.innerHTML = `
+            <div class="error-box">
+
+                <h2>
+                    ${escapeHTML(title)}
+                </h2>
+
+                <p>
+                    ${escapeHTML(message)}
+                </p>
+
+                <a
+                    href="index.html"
+                    class="mod-card-btn"
+                >
+                    العودة للرئيسية
+                </a>
+
+            </div>
+        `;
+
+        status.textContent = "";
+
+    }
+
+    /* =========================
+       NO ID
+    ========================= */
+
+    if(!requestedId){
+
+        showError(
+            "المعرف مفقود",
+            "لم يتم تحديد معرف المود في الرابط."
+        );
+
+        return;
+
+    }
+
+    /* =========================
+       LOAD MODS.JSON
+    ========================= */
+
+    fetch("/mods.json",{
+        cache:"no-cache"
+    })
+
+    .then(function(response){
+
+        if(!response.ok){
+
+            throw new Error(
+                "HTTP " + response.status
+            );
+
+        }
+
+        return response.json();
+
+    })
+
+    .then(function(data){
+
+        /*
+         * mods.json الجديد:
+         *
+         * {
+         *   "1": {
+         *      "id": 1,
+         *      "title": "...",
+         *      "description": "...",
+         *      "image": "...",
+         *      "download": "Base64"
+         *   }
+         * }
+         */
+
+        if(
+            !data ||
+            typeof data !== "object" ||
+            Array.isArray(data)
+        ){
+
+            throw new Error(
+                "Invalid mods.json structure"
+            );
+
+        }
+
+        let mod = null;
+
+        /*
+         * نبحث داخل قيم Object
+         */
+
+        Object.values(data).some(function(item){
+
+            if(
+                item &&
+                String(item.id) ===
+                String(requestedId)
+            ){
+
+                mod = item;
+
+                return true;
+
+            }
+
+            return false;
+
+        });
+
+        if(!mod){
+
+            showError(
+                "المود غير موجود",
+                "لم يتم العثور على مود بهذا المعرف."
+            );
+
+            return;
+
+        }
+
+        renderMod(mod);
+
+    })
+
+    .catch(function(error){
+
+        console.error(
+            "mods.json error:",
+            error
+        );
+
+        showError(
+            "خطأ في التحميل",
+            "تعذر تحميل بيانات المود. تأكد من وجود mods.json."
+        );
+
+    });
+
+    /* =========================
+       RENDER
+    ========================= */
+
+    function renderMod(mod){
+
+        const title =
+            mod.title ||
+            "بدون عنوان";
+
+        const description =
+            mod.description ||
+            "لا يوجد وصف لهذا المود.";
+
+        const image =
+            mod.image ||
+            "";
+
+        const download =
+            decodeBase64(
+                mod.download || ""
+            );
+
+        let imageHTML;
+
+        if(image){
+
+            imageHTML = `
+                <div class="mod-detail-image">
+
+                    <img
+                        src="${escapeHTML(image)}"
+                        alt="${escapeHTML(title)}"
+                        loading="lazy"
+                    >
+
+                </div>
+            `;
+
+        }else{
+
+            imageHTML = `
+                <div class="mod-detail-image">
+
+                    <div class="mod-detail-image-placeholder">
+                        لا توجد صورة
+                    </div>
+
+                </div>
+            `;
+
+        }
+
+        let downloadHTML;
+
+        if(download){
+
+            downloadHTML = `
+                <a
+                    href="${escapeHTML(download)}"
+                    class="mod-card-btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    تحميل المود
+                </a>
+            `;
+
+        }else{
+
+            downloadHTML = `
+                <div
+                    class="mod-card-btn"
+                    style="background:#333;color:#777;cursor:not-allowed"
+                >
+                    رابط التحميل غير متوفر
+                </div>
+            `;
+
+        }
+
+        detail.innerHTML = `
+
+            ${imageHTML}
+
+            <h1 class="mod-detail-title">
+                ${escapeHTML(title)}
+            </h1>
+
+            <div class="mod-detail-description">
+                ${escapeHTML(description)
+                    .replace(/\n/g,"<br>")}
+            </div>
+
+            ${downloadHTML}
+
+        `;
+
+        status.textContent = "";
+
+    }
+
+})();
+</script>
 
 </body>
 </html>

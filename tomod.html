@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>ATT/DES — تفاصيل المود</title>
     <style>
-        /* ===== RESET & BASE (نفس الأساس) ===== */
+        /* ===== RESET & BASE ===== */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { overflow-x: hidden; font-size: 16px; scroll-behavior: smooth; }
         body {
@@ -18,23 +18,29 @@
         a:hover { text-decoration: underline; }
         :focus-visible { outline: 2px solid #f5c842; outline-offset: 2px; border-radius: 4px; }
 
+        /* ===== HEADER ===== */
         .site-header {
             background: #1a1a1a; padding: 0.8rem 1rem; text-align: center;
             border-bottom: 1px solid #2a2a2a;
         }
         .header-logo { max-width: 100%; height: auto; max-height: 80px; width: auto; display: inline-block; }
 
+        /* ===== CONTAINER ===== */
         .container { max-width: 800px; margin: 0 auto; padding: 1rem; width: 100%; flex: 1; }
 
+        /* ===== NATIVE BANNER & SOCIAL ===== */
         .native-banner-wrapper, .social-bar-wrapper { text-align: center; margin: 0.5rem 0; overflow: hidden; }
         .native-banner-wrapper iframe, .social-bar-wrapper iframe { max-width: 100%; }
 
+        /* ===== BANNER 320x50 (عام) ===== */
         .banner-320x50 {
-            width: 100%; max-width: 320px; margin: 1.5rem auto; overflow: hidden;
+            width: 100%; max-width: 320px; margin: 0 auto; overflow: hidden;
             text-align: center; background: transparent;
         }
-        .banner-320x50 iframe { max-width: 100%; height: auto; }
+        .banner-320x50 iframe { max-width: 100%; border: none; overflow: hidden; }
+        .banner-between { margin: 1.5rem 0; text-align: center; }
 
+        /* ===== tomod الخاص ===== */
         .mod-detail {
             background: #1e1e1e; border-radius: 16px; padding: 1.5rem;
             margin-bottom: 2rem; box-shadow: 0 4px 16px rgba(0,0,0,0.6);
@@ -67,8 +73,6 @@
         .download-btn:hover { background: #e0b030; text-decoration: none; transform: scale(1.03); }
         .download-btn:active { transform: scale(0.97); }
 
-        .tomod-banner { margin: 1.5rem auto; max-width: 320px; overflow: hidden; text-align: center; }
-
         .error-box {
             background: #1e1e1e; border: 1px solid #f5c842; border-radius: 16px;
             padding: 2rem 1.5rem; text-align: center; max-width: 600px; margin: 2rem auto;
@@ -86,6 +90,18 @@
 
         .detail-status { text-align: center; padding: 1rem; color: #aaa; font-size: 1rem; }
 
+        /* ===== إعلانات 320×50 داخل tomod ===== */
+        .tomod-banner {
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .tomod-banner iframe {
+            max-width: 100%;
+            border: none;
+            overflow: hidden;
+        }
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 360px) {
             .container { padding: 0.6rem; }
             .mod-detail-title { font-size: 1.6rem; }
@@ -120,18 +136,6 @@
 
     <main class="container tomod-container">
         <div id="mod-detail" class="mod-detail"></div>
-        <div class="banner-320x50 tomod-banner">
-            <script>
-                atOptions = {
-                    'key': '28d1f1f838ea883f1f7fc0d4733ebba6',
-                    'format': 'iframe',
-                    'height': 50,
-                    'width': 320,
-                    'params': {}
-                };
-            </script>
-            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"></script>
-        </div>
         <div id="detail-status" class="detail-status"></div>
     </main>
 
@@ -153,6 +157,44 @@
                     if (m === '"') return '&quot;';
                     return m;
                 });
+            }
+
+            function createBanner320x50() {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'tomod-banner';
+
+                const iframe = document.createElement('iframe');
+                iframe.width = '320';
+                iframe.height = '50';
+                iframe.style.border = 'none';
+                iframe.style.overflow = 'hidden';
+                iframe.style.maxWidth = '100%';
+                iframe.scrolling = 'no';
+                iframe.srcdoc = `
+                    <html>
+                    <head>
+                        <style>
+                            body { margin: 0; padding: 0; background: transparent; overflow: hidden; }
+                            * { box-sizing: border-box; }
+                        </style>
+                    </head>
+                    <body>
+                        <script>
+                            window.atOptions = {
+                                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+                                'format' : 'iframe',
+                                'height' : 50,
+                                'width' : 320,
+                                'params' : {}
+                            };
+                        <\/script>
+                        <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"><\/script>
+                    </body>
+                    </html>
+                `;
+
+                wrapper.appendChild(iframe);
+                return wrapper;
             }
 
             const id = getUrlParam('id');
@@ -187,15 +229,53 @@
                 const title = item.title || 'بدون عنوان';
                 const desc = item.description || 'لا يوجد وصف.';
 
-                detailEl.innerHTML = `
-                    <div class="mod-detail-image">
-                        ${img ? `<img src="${escapeHtml(img)}" alt="${escapeHtml(title)}" />` :
-                               `<div class="mod-detail-image-placeholder">لا توجد صورة</div>`}
-                    </div>
-                    <h1 class="mod-detail-title">${escapeHtml(title)}</h1>
-                    <div class="mod-detail-description">${escapeHtml(desc).replace(/\n/g, '<br>')}</div>
-                    <a href="mod.html?id=${encodeURIComponent(id)}" class="download-btn">تحميل المود</a>
-                `;
+                // بناء المحتوى يدوياً مع إضافة الإعلانات
+                const container = document.createElement('div');
+
+                // الصورة
+                const imgDiv = document.createElement('div');
+                imgDiv.className = 'mod-detail-image';
+                if (img) {
+                    const imgEl = document.createElement('img');
+                    imgEl.src = img;
+                    imgEl.alt = title;
+                    imgDiv.appendChild(imgEl);
+                } else {
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'mod-detail-image-placeholder';
+                    placeholder.textContent = 'لا توجد صورة';
+                    imgDiv.appendChild(placeholder);
+                }
+                container.appendChild(imgDiv);
+
+                // ===== إعلان 320×50 تحت الصورة =====
+                container.appendChild(createBanner320x50());
+
+                // العنوان
+                const titleEl = document.createElement('h1');
+                titleEl.className = 'mod-detail-title';
+                titleEl.textContent = title;
+                container.appendChild(titleEl);
+
+                // الوصف
+                const descEl = document.createElement('div');
+                descEl.className = 'mod-detail-description';
+                descEl.innerHTML = escapeHtml(desc).replace(/\n/g, '<br>');
+                container.appendChild(descEl);
+
+                // ===== إعلان 320×50 فوق زر التحميل =====
+                container.appendChild(createBanner320x50());
+
+                // زر التحميل
+                const btn = document.createElement('a');
+                btn.className = 'download-btn';
+                btn.href = 'mod.html?id=' + encodeURIComponent(id);
+                btn.textContent = 'تحميل المود';
+                container.appendChild(btn);
+
+                // مسح المحتوى السابق وإضافة الجديد
+                detailEl.innerHTML = '';
+                detailEl.appendChild(container);
 
                 // إنشاء صلاحية
                 try {

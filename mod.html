@@ -4,45 +4,112 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>ATT/DES — تحميل المود</title>
-    <link rel="stylesheet" href="css/styles.css" />
-    <!-- Popup -->
-    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js">
-    </script>
-    <!-- Analytics -->
-    <script src="https://modslib.attdes.online/analytics.js">
-    </script>
+    <style>
+        /* ===== نفس الأساس ===== */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { overflow-x: hidden; font-size: 16px; scroll-behavior: smooth; }
+        body {
+            background: #121212; color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6; overflow-x: hidden; min-height: 100vh;
+            display: flex; flex-direction: column;
+        }
+        a { color: #f5c842; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        :focus-visible { outline: 2px solid #f5c842; outline-offset: 2px; border-radius: 4px; }
+
+        .site-header {
+            background: #1a1a1a; padding: 0.8rem 1rem; text-align: center;
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .header-logo { max-width: 100%; height: auto; max-height: 80px; width: auto; display: inline-block; }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 1rem; width: 100%; flex: 1; }
+
+        .native-banner-wrapper, .social-bar-wrapper { text-align: center; margin: 0.5rem 0; overflow: hidden; }
+        .native-banner-wrapper iframe, .social-bar-wrapper iframe { max-width: 100%; }
+
+        .banner-320x50 {
+            width: 100%; max-width: 320px; margin: 1.5rem auto; overflow: hidden;
+            text-align: center; background: transparent;
+        }
+        .banner-320x50 iframe { max-width: 100%; height: auto; }
+
+        .mod-download {
+            background: #1e1e1e; border-radius: 16px; padding: 2rem 1.5rem;
+            margin-bottom: 2rem; box-shadow: 0 4px 16px rgba(0,0,0,0.6); text-align: center;
+        }
+        .download-card { max-width: 500px; margin: 0 auto; }
+        .download-title {
+            font-size: 2rem; font-weight: 700; color: #f5c842;
+            margin-top: 0; margin-bottom: 0.5rem; line-height: 1.3;
+        }
+        .download-ready {
+            font-size: 1.2rem; color: #8f8; margin: 0.8rem 0 1.2rem;
+        }
+        .download-btn {
+            display: inline-block; background: #f5c842; color: #1a1a1a;
+            font-weight: 700; padding: 0.8rem 2.5rem; border-radius: 50px;
+            text-decoration: none; font-size: 1.3rem; transition: background 0.2s, transform 0.1s;
+            border: none; cursor: pointer; min-height: 48px; min-width: 180px;
+            text-align: center; line-height: 1.4; margin: 0.5rem 0;
+        }
+        .download-btn:hover { background: #e0b030; text-decoration: none; transform: scale(1.03); }
+        .download-btn:active { transform: scale(0.97); }
+        .download-note { color: #aaa; font-size: 0.9rem; margin-top: 1rem; }
+
+        .mod-banner { margin: 1.5rem auto; max-width: 320px; overflow: hidden; text-align: center; }
+
+        .error-box {
+            background: #1e1e1e; border: 1px solid #f5c842; border-radius: 16px;
+            padding: 2rem 1.5rem; text-align: center; max-width: 600px; margin: 2rem auto;
+        }
+        .error-box h2 { color: #f5c842; font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .error-box p { color: #ccc; margin-bottom: 1.5rem; font-size: 1.1rem; }
+        .error-box .mod-card-btn {
+            display: inline-block; background: #f5c842; color: #1a1a1a;
+            font-weight: 700; padding: 0.6rem 1.5rem; border-radius: 50px;
+            text-decoration: none; transition: background 0.2s;
+            min-height: 44px; min-width: 120px; text-align: center; line-height: 1.4;
+            margin: 0.5rem auto;
+        }
+        .error-box .mod-card-btn:hover { background: #e0b030; text-decoration: none; }
+
+        .download-status { text-align: center; padding: 1rem; color: #aaa; font-size: 1rem; }
+
+        @media (max-width: 360px) {
+            .container { padding: 0.6rem; }
+            .download-title { font-size: 1.6rem; }
+            .download-btn { font-size: 1.1rem; padding: 0.6rem 1.8rem; min-width: 140px; }
+        }
+        @media (min-width: 900px) {
+            .mod-download { padding: 2.5rem; }
+            .download-title { font-size: 2.5rem; }
+            .header-logo { max-height: 100px; }
+        }
+        img, iframe, video { max-width: 100%; height: auto; }
+        * { max-width: 100%; }
+    </style>
+    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
+    <script src="https://modslib.attdes.online/analytics.js"></script>
 </head>
 <body>
 
-    <!-- ===== HEADER ===== -->
     <header class="site-header">
-        <a href="index.html">
-            <img src="https://attdes.online/header.png" alt="ATT/DES Logo" class="header-logo" />
-        </a>
+        <a href="index.html"><img src="https://attdes.online/header.png" alt="ATT/DES Logo" class="header-logo" /></a>
     </header>
 
-    <!-- ===== NATIVE BANNER (مرة واحدة) ===== -->
     <div class="native-banner-wrapper">
-        <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js">
-        </script>
+        <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js"></script>
         <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
     </div>
 
-    <!-- ===== SOCIAL BAR ===== -->
     <div class="social-bar-wrapper">
-        <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js">
-        </script>
+        <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
     </div>
 
-    <!-- ===== MAIN CONTENT ===== -->
     <main class="container mod-container">
-
-        <!-- محتوى التحميل -->
-        <div id="mod-download" class="mod-download">
-            <!-- يتم ملؤها بواسطة JavaScript -->
-        </div>
-
-        <!-- Banner 320x50 (مرة واحدة) -->
+        <div id="mod-download" class="mod-download"></div>
         <div class="banner-320x50 mod-banner">
             <script>
                 atOptions = {
@@ -53,20 +120,15 @@
                     'params': {}
                 };
             </script>
-            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js">
-            </script>
+            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"></script>
         </div>
-
-        <!-- حالة التحميل / الأخطاء -->
         <div id="download-status" class="download-status"></div>
-
     </main>
 
     <script>
         (function() {
             'use strict';
 
-            // ----- helpers -----
             function getUrlParam(param) {
                 const urlParams = new URLSearchParams(window.location.search);
                 return urlParams.get(param);
@@ -83,64 +145,78 @@
                 });
             }
 
-            // ----- read ID -----
             const id = getUrlParam('id');
             const downloadEl = document.getElementById('mod-download');
             const statusEl = document.getElementById('download-status');
 
             if (!id) {
-                showError('لم يتم تحديد المود.', 'الرجاء استخدام رابط صحيح يحتوي على معرف المود.', null);
+                downloadEl.innerHTML = '';
+                statusEl.innerHTML = `
+                    <div class="error-box">
+                        <h2>لم يتم تحديد المود</h2>
+                        <p>الرجاء استخدام رابط صحيح.</p>
+                        <a href="index.html" class="mod-card-btn">العودة للرئيسية</a>
+                    </div>
+                `;
                 return;
             }
 
-            // ----- check access state -----
+            // التحقق من الصلاحية
             const accessKey = 'download_access_' + id;
             let hasAccess = false;
             try {
                 hasAccess = (sessionStorage.getItem(accessKey) === 'true');
-            } catch (e) {
-                // تجاهل
-            }
+            } catch(e) {}
 
             if (!hasAccess) {
-                // لم يمر من tomod
-                showError(
-                    'لحظة يا بطل 😂',
-                    'المود لن يهرب منك، لكن عليك المرور من الصفحة السابقة أولًا.',
-                    'tomod.html?id=' + encodeURIComponent(id)
-                );
+                downloadEl.innerHTML = '';
+                statusEl.innerHTML = `
+                    <div class="error-box">
+                        <h2>لحظة يا بطل 😂</h2>
+                        <p>المود لن يهرب منك، لكن عليك المرور من الصفحة السابقة أولًا.</p>
+                        <a href="tomod.html?id=${encodeURIComponent(id)}" class="mod-card-btn">الذهاب إلى صفحة المود</a>
+                    </div>
+                `;
                 return;
             }
 
-            // ----- after access granted, load data -----
-            function showError(title, message, backLink) {
+            function showError(title, msg) {
                 downloadEl.innerHTML = '';
                 statusEl.innerHTML = `
                     <div class="error-box">
                         <h2>${escapeHtml(title)}</h2>
-                        <p>${escapeHtml(message)}</p>
-                        ${backLink ? `<a href="${escapeHtml(backLink)}" class="mod-card-btn">الذهاب إلى صفحة المود</a>` : `<a href="index.html" class="mod-card-btn">العودة للرئيسية</a>`}
+                        <p>${escapeHtml(msg)}</p>
+                        <a href="index.html" class="mod-card-btn">العودة للرئيسية</a>
                     </div>
                 `;
-                // إزالة الصلاحية إذا كانت موجودة ولكن غير صالحة (لنمنع إعادة المحاولة)
-                try {
-                    sessionStorage.removeItem(accessKey);
-                } catch (e) {}
+                // إزالة الصلاحية
+                try { sessionStorage.removeItem(accessKey); } catch(e) {}
             }
 
-            function renderDownload(record, title) {
-                // record contains download_url
-                const downloadUrl = record.download_url || '';
+            function renderDownload(item) {
+                const downloadUrl = item.download || '';
                 if (!downloadUrl) {
-                    showError('رابط التحميل غير متوفر', 'هذا المود لا يحتوي على رابط تحميل صالح.', null);
+                    showError('رابط التحميل غير متوفر', 'هذا المود لا يحتوي على رابط تحميل صالح.');
                     return;
+                }
+
+                // فك تشفير Base64 للحصول على الرابط الحقيقي (إذا كان مشفراً)
+                let realUrl = downloadUrl;
+                try {
+                    // محاولة فك تشفير Base64 (بافتراض أن الرابط مشفر)
+                    const decoded = atob(downloadUrl);
+                    if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
+                        realUrl = decoded;
+                    }
+                } catch(e) {
+                    // إذا لم يكن Base64 صالح، نستخدم الرابط كما هو
                 }
 
                 downloadEl.innerHTML = `
                     <div class="download-card">
-                        <h1 class="download-title">${escapeHtml(title || 'تحميل المود')}</h1>
+                        <h1 class="download-title">${escapeHtml(item.title || 'تحميل المود')}</h1>
                         <p class="download-ready">المود جاهز للتحميل ✅</p>
-                        <a href="${escapeHtml(downloadUrl)}" target="_blank" rel="noopener noreferrer" class="mod-card-btn download-btn">تحميل المود</a>
+                        <a href="${escapeHtml(realUrl)}" target="_blank" rel="noopener noreferrer" class="download-btn">تحميل المود</a>
                         <p class="download-note">سيتم فتح رابط التحميل في نافذة جديدة.</p>
                     </div>
                 `;
@@ -148,60 +224,28 @@
             }
 
             function fetchData() {
-                statusEl.innerHTML = 'جاري تجهيز التحميل…';
-                fetch('mods.json')
-                    .then(function(res) {
+                statusEl.textContent = 'جاري تجهيز التحميل…';
+                fetch('/mods.json')
+                    .then(res => {
                         if (!res.ok) throw new Error('HTTP ' + res.status);
                         return res.json();
                     })
-                    .then(function(data) {
-                        if (!Array.isArray(data) || data.length === 0) {
-                            throw new Error('البيانات فارغة أو غير صالحة.');
+                    .then(data => {
+                        if (typeof data !== 'object' || data === null) throw new Error('JSON غير صالح');
+                        const item = data[id];
+                        if (!item) {
+                            showError('المود غير موجود', 'لم نعثر على بيانات التحميل.');
+                            return;
                         }
-
-                        // البحث عن سجل type="m" مع id مطابق
-                        const keyType = btoa('type');
-                        const keyId = btoa('id');
-                        const keyDownload = btoa('download_url');
-
-                        let foundM = null;
-                        let foundTitle = null;
-
-                        for (var i = 0; i < data.length; i++) {
-                            var rec = data[i];
-                            if (rec[keyType] === 'm' && String(rec[keyId]) === String(id)) {
-                                foundM = {
-                                    download_url: rec[keyDownload] || ''
-                                };
-                            }
-                            // نجلب title من سجل t إذا وجد لعرضه
-                            if (rec[keyType] === 't' && String(rec[keyId]) === String(id)) {
-                                const keyTitle = btoa('title');
-                                foundTitle = rec[keyTitle] || '';
-                            }
-                        }
-
-                        if (foundM) {
-                            renderDownload(foundM, foundTitle || 'مود ' + id);
-                            // نترك الصلاحية موجودة للاستخدام
-                        } else {
-                            showError('المود غير موجود', 'لم نعثر على بيانات التحميل لهذا المود.', null);
-                            try {
-                                sessionStorage.removeItem(accessKey);
-                            } catch (e) {}
-                        }
+                        renderDownload(item);
                     })
-                    .catch(function(err) {
-                        console.error('Error loading mods.json:', err);
-                        showError('خطأ في التحميل', 'تعذر تحميل بيانات المود. تأكد من اتصالك بالإنترنت.', null);
-                        try {
-                            sessionStorage.removeItem(accessKey);
-                        } catch (e) {}
+                    .catch(err => {
+                        console.error(err);
+                        showError('خطأ في التحميل', 'تعذر تحميل البيانات. تأكد من وجود /mods.json.');
                     });
             }
 
             fetchData();
-
         })();
     </script>
 

@@ -1,18 +1,187 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ATT/DES — Minecraft Mods</title>
 
-    <title>ATT/DES — Minecraft Mods</title>
+<style>
+*{
+    box-sizing:border-box;
+}
 
-    <link rel="stylesheet" href="/css/styles.css">
+html,body{
+    margin:0;
+    padding:0;
+    background:#0b0b0b;
+    color:#fff;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    min-height:100vh;
+}
+
+.site-header{
+    width:100%;
+    padding:18px 12px;
+    text-align:center;
+    background:#111;
+    border-bottom:1px solid #222;
+}
+
+.header-logo{
+    max-width:280px;
+    width:100%;
+    height:auto;
+    display:block;
+    margin:auto;
+}
+
+.native-banner-wrapper,
+.social-bar-wrapper{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:12px 0;
+    overflow:hidden;
+}
+
+.container{
+    width:min(900px,94%);
+    margin:0 auto;
+    padding-bottom:30px;
+}
+
+.feed-controls{
+    display:flex;
+    gap:8px;
+    margin:20px 0;
+}
+
+.feed-controls button{
+    flex:1;
+    border:1px solid #333;
+    background:#171717;
+    color:#aaa;
+    padding:11px;
+    border-radius:7px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.feed-controls button.active{
+    background:#fff;
+    color:#000;
+    border-color:#fff;
+}
+
+.mod-card{
+    background:#151515;
+    border:1px solid #252525;
+    border-radius:10px;
+    overflow:hidden;
+    margin-bottom:10px;
+}
+
+.mod-card-image{
+    width:100%;
+    min-height:120px;
+    background:#101010;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.mod-card-image img{
+    width:100%;
+    height:auto;
+    display:block;
+}
+
+.mod-card-image-placeholder{
+    width:100%;
+    min-height:120px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#666;
+    font-size:14px;
+}
+
+.mod-card-title{
+    margin:0;
+    padding:15px 12px;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.mod-card-btn{
+    display:block;
+    margin:0 12px 12px;
+    padding:11px;
+    text-align:center;
+    text-decoration:none;
+    background:#fff;
+    color:#000;
+    border-radius:7px;
+    font-weight:bold;
+}
+
+.mod-card-btn:active{
+    transform:scale(.98);
+}
+
+.banner-between{
+    width:100%;
+    min-height:50px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:12px 0;
+    overflow:hidden;
+}
+
+.load-more-wrap{
+    text-align:center;
+    margin:22px 0;
+}
+
+#loadMore{
+    border:1px solid #333;
+    background:#171717;
+    color:#fff;
+    padding:12px 25px;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+#loadMore:hover{
+    background:#222;
+}
+
+#feed-status{
+    text-align:center;
+    color:#777;
+    padding:15px;
+    font-size:14px;
+}
+</style>
+
+<!-- Popup -->
+<script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
+
+<!-- Analytics -->
+<script src="https://modslib.attdes.online/analytics.js"></script>
+
 </head>
 
 <body>
 
 <header class="site-header">
-    <a href="/">
+    <a href="index.html">
         <img
             src="https://attdes.online/header.png"
             alt="ATT/DES"
@@ -21,161 +190,214 @@
     </a>
 </header>
 
+<!-- Native Banner -->
+<div class="native-banner-wrapper">
+    <script
+        async
+        data-cfasync="false"
+        src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js">
+    </script>
+
+    <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
+</div>
+
+<!-- Social Bar -->
+<div class="social-bar-wrapper">
+    <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
+</div>
+
 <main class="container">
 
     <div class="feed-controls">
-        <button class="btn-sort active" data-sort="newest" type="button">
-            أحدث
-        </button>
-
-        <button class="btn-sort" data-sort="oldest" type="button">
-            أقدم
-        </button>
+        <button id="newest" class="active">أحدث</button>
+        <button id="oldest">أقدم</button>
     </div>
 
-    <div id="feed" class="feed"></div>
+    <div id="feed"></div>
 
-    <div id="load-more-wrap" class="load-more-wrap">
-        <button id="btn-load-more" class="btn-load-more" type="button">
-            إظهار المزيد
-        </button>
+    <div class="load-more-wrap">
+        <button id="loadMore">إظهار المزيد</button>
     </div>
 
-    <div id="feed-status" class="feed-status">
+    <div id="feed-status">
         جاري تحميل المودات...
     </div>
 
 </main>
 
 <script>
-(function () {
+(function(){
 
-    "use strict";
+"use strict";
 
-    const feed = document.getElementById("feed");
-    const status = document.getElementById("feed-status");
-    const loadMoreWrap = document.getElementById("load-more-wrap");
-    const loadMoreBtn = document.getElementById("btn-load-more");
-    const sortButtons = document.querySelectorAll(".btn-sort");
+const feed = document.getElementById("feed");
+const status = document.getElementById("feed-status");
+const loadMore = document.getElementById("loadMore");
 
-    const PAGE_SIZE = 5;
+const newestBtn = document.getElementById("newest");
+const oldestBtn = document.getElementById("oldest");
 
-    let mods = [];
-    let visibleCount = PAGE_SIZE;
-    let currentSort = "newest";
+let mods = [];
+let visibleCount = 5;
+let sortMode = "newest";
 
-    /*
-     * فك Base64
-     */
-    function decodeBase64(value) {
-        try {
-            return decodeURIComponent(
-                Array.prototype.map.call(
-                    atob(value),
-                    function (char) {
-                        return "%" +
-                            ("00" + char.charCodeAt(0).toString(16)).slice(-2);
-                    }
-                ).join("")
-            );
-        } catch (error) {
-            return value || "";
+function decodeBase64(value){
+
+    try{
+        return atob(value);
+    }catch(e){
+        return "#";
+    }
+
+}
+
+function loadMods(){
+
+    fetch("/mods.json",{
+        cache:"no-cache"
+    })
+
+    .then(function(response){
+
+        if(!response.ok){
+            throw new Error("HTTP " + response.status);
         }
-    }
 
-    /*
-     * تحويل Object الخاص بـ mods.json إلى Array
-     */
-    function normalizeMods(data) {
+        return response.json();
 
-        return Object.keys(data)
-            .map(function (key) {
+    })
 
-                const mod = data[key];
+    .then(function(data){
 
-                if (!mod || typeof mod !== "object") {
-                    return null;
-                }
+        if(!data || typeof data !== "object"){
+            throw new Error("Invalid mods.json");
+        }
 
-                return {
-                    key: key,
-                    id: mod.id,
-                    title: mod.title || "بدون عنوان",
-                    description: mod.description || "",
-                    image: mod.image || "",
-                    download: mod.download || ""
-                };
+        mods = Object.values(data).filter(function(mod){
 
-            })
-            .filter(Boolean);
-    }
+            return mod &&
+                   typeof mod === "object" &&
+                   mod.id !== undefined;
 
-    /*
-     * ترتيب حسب مفتاح السجل نفسه
-     * وليس id الموجود داخله.
-     *
-     * هذا مهم لأن عندك:
-     * "001": { id: 1, ... }
-     */
-    function sortMods(list) {
-
-        return [...list].sort(function (a, b) {
-
-            const aNum = Number(a.key);
-            const bNum = Number(b.key);
-
-            if (!Number.isNaN(aNum) && !Number.isNaN(bNum)) {
-
-                return currentSort === "newest"
-                    ? bNum - aNum
-                    : aNum - bNum;
-            }
-
-            return currentSort === "newest"
-                ? b.key.localeCompare(a.key)
-                : a.key.localeCompare(b.key);
         });
-    }
 
-    /*
-     * إنشاء بطاقة
-     */
-    function createCard(mod) {
+        if(!mods.length){
+            throw new Error("No mods");
+        }
 
-        const card = document.createElement("article");
+        render();
+
+    })
+
+    .catch(function(error){
+
+        console.error("mods.json:",error);
+
+        feed.innerHTML = "";
+
+        status.textContent =
+            "تعذر تحميل المودات.";
+
+        loadMore.style.display = "none";
+
+    });
+
+}
+
+function getSortedMods(){
+
+    const list = mods.slice();
+
+    list.sort(function(a,b){
+
+        const aId = Number(a.id);
+        const bId = Number(b.id);
+
+        if(sortMode === "newest"){
+            return bId - aId;
+        }
+
+        return aId - bId;
+
+    });
+
+    return list;
+
+}
+
+function createBanner(){
+
+    const wrapper =
+        document.createElement("div");
+
+    wrapper.className =
+        "banner-between";
+
+    const banner =
+        document.createElement("div");
+
+    const script1 =
+        document.createElement("script");
+
+    script1.textContent = `
+        atOptions = {
+            'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+            'format' : 'iframe',
+            'height' : 50,
+            'width' : 320,
+            'params' : {}
+        };
+    `;
+
+    const script2 =
+        document.createElement("script");
+
+    script2.src =
+        "https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js";
+
+    banner.appendChild(script1);
+    banner.appendChild(script2);
+
+    wrapper.appendChild(banner);
+
+    return wrapper;
+
+}
+
+function render(){
+
+    feed.innerHTML = "";
+
+    const list = getSortedMods();
+
+    const visible =
+        list.slice(0,visibleCount);
+
+    visible.forEach(function(mod){
+
+        const card =
+            document.createElement("article");
+
         card.className = "mod-card";
 
-        /*
-         * الصورة
-         */
-        const imageBox = document.createElement("div");
-        imageBox.className = "mod-card-image";
+        const imageBox =
+            document.createElement("div");
 
-        if (mod.image && mod.image.trim() !== "") {
+        imageBox.className =
+            "mod-card-image";
 
-            const img = document.createElement("img");
+        if(mod.image){
 
-            img.src = mod.image;
-            img.alt = mod.title;
-            img.loading = "lazy";
+            const image =
+                document.createElement("img");
 
-            img.onerror = function () {
-                imageBox.innerHTML = "";
+            image.src = mod.image;
+            image.alt = mod.title || "";
+            image.loading = "lazy";
 
-                const placeholder =
-                    document.createElement("div");
+            imageBox.appendChild(image);
 
-                placeholder.className =
-                    "mod-card-image-placeholder";
-
-                placeholder.textContent = "لا توجد صورة";
-
-                imageBox.appendChild(placeholder);
-            };
-
-            imageBox.appendChild(img);
-
-        } else {
+        }else{
 
             const placeholder =
                 document.createElement("div");
@@ -183,190 +405,106 @@
             placeholder.className =
                 "mod-card-image-placeholder";
 
-            placeholder.textContent = "لا توجد صورة";
+            placeholder.textContent =
+                "ATT/DES";
 
             imageBox.appendChild(placeholder);
+
         }
 
-        card.appendChild(imageBox);
-
-        /*
-         * العنوان
-         */
         const title =
-            document.createElement("h3");
+            document.createElement("h2");
 
-        title.className = "mod-card-title";
-        title.textContent = mod.title;
+        title.className =
+            "mod-card-title";
 
-        card.appendChild(title);
+        title.textContent =
+            mod.title || "بدون عنوان";
 
-        /*
-         * زر التفاصيل
-         *
-         * نستخدم key وليس id
-         * حتى يعمل 001 بشكل صحيح.
-         */
         const button =
             document.createElement("a");
 
-        button.className = "mod-card-btn";
+        button.className =
+            "mod-card-btn";
 
         button.href =
-            "/tomod.html?id=" +
-            encodeURIComponent(mod.key);
+            "tomod.html?id=" +
+            encodeURIComponent(mod.id);
 
-        button.textContent = "عرض التفاصيل";
+        button.textContent =
+            "عرض التفاصيل";
 
+        card.appendChild(imageBox);
+        card.appendChild(title);
         card.appendChild(button);
 
-        return card;
-    }
+        feed.appendChild(card);
 
-    /*
-     * عرض المنشورات
-     */
-    function render() {
-
-        feed.innerHTML = "";
-
-        const sortedMods = sortMods(mods);
-
-        const visibleMods =
-            sortedMods.slice(0, visibleCount);
-
-        if (visibleMods.length === 0) {
-
-            status.textContent =
-                "لا توجد منشورات لعرضها.";
-
-            loadMoreWrap.style.display = "none";
-
-            return;
-        }
-
-        visibleMods.forEach(function (mod) {
-
-            feed.appendChild(
-                createCard(mod)
-            );
-
-        });
-
-        status.textContent = "";
-
-        if (visibleCount < sortedMods.length) {
-
-            loadMoreWrap.style.display = "block";
-
-            loadMoreBtn.textContent =
-                "إظهار المزيد (" +
-                (sortedMods.length - visibleCount) +
-                " متبقي)";
-
-        } else {
-
-            loadMoreWrap.style.display = "none";
-        }
-    }
-
-    /*
-     * تحميل mods.json
-     */
-    fetch("/mods.json", {
-        cache: "no-store"
-    })
-        .then(function (response) {
-
-            if (!response.ok) {
-                throw new Error(
-                    "HTTP " + response.status
-                );
-            }
-
-            return response.json();
-        })
-
-        .then(function (data) {
-
-            if (
-                !data ||
-                typeof data !== "object" ||
-                Array.isArray(data)
-            ) {
-                throw new Error(
-                    "صيغة mods.json غير صحيحة"
-                );
-            }
-
-            mods = normalizeMods(data);
-
-            visibleCount = PAGE_SIZE;
-
-            render();
-        })
-
-        .catch(function (error) {
-
-            console.error(
-                "mods.json error:",
-                error
-            );
-
-            feed.innerHTML = "";
-
-            loadMoreWrap.style.display = "none";
-
-            status.textContent =
-                "تعذر تحميل المودات. تأكد من وجود /mods.json.";
-        });
-
-    /*
-     * أحدث / أقدم
-     */
-    sortButtons.forEach(function (button) {
-
-        button.addEventListener(
-            "click",
-            function () {
-
-                const newSort =
-                    button.dataset.sort;
-
-                if (newSort === currentSort) {
-                    return;
-                }
-
-                currentSort = newSort;
-
-                visibleCount = PAGE_SIZE;
-
-                sortButtons.forEach(
-                    function (btn) {
-                        btn.classList.remove("active");
-                    }
-                );
-
-                button.classList.add("active");
-
-                render();
-            }
-        );
+        // بانر بعد كل مود
+        feed.appendChild(createBanner());
 
     });
 
-    /*
-     * إظهار المزيد
-     */
-    loadMoreBtn.addEventListener(
-        "click",
-        function () {
+    status.textContent = "";
 
-            visibleCount += PAGE_SIZE;
+    if(visibleCount < list.length){
 
-            render();
-        }
-    );
+        loadMore.style.display =
+            "inline-block";
+
+        loadMore.textContent =
+            "إظهار المزيد (" +
+            (list.length - visibleCount) +
+            " متبقي)";
+
+    }else{
+
+        loadMore.style.display =
+            "none";
+
+    }
+
+}
+
+loadMore.addEventListener("click",function(){
+
+    visibleCount += 5;
+
+    render();
+
+});
+
+newestBtn.addEventListener("click",function(){
+
+    if(sortMode === "newest") return;
+
+    sortMode = "newest";
+
+    visibleCount = 5;
+
+    newestBtn.classList.add("active");
+    oldestBtn.classList.remove("active");
+
+    render();
+
+});
+
+oldestBtn.addEventListener("click",function(){
+
+    if(sortMode === "oldest") return;
+
+    sortMode = "oldest";
+
+    visibleCount = 5;
+
+    oldestBtn.classList.add("active");
+    newestBtn.classList.remove("active");
+
+    render();
+
+});
+
+loadMods();
 
 })();
 </script>

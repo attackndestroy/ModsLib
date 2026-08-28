@@ -1,192 +1,625 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ATT/DES - @modslib</title>
-  <style>
-    :root {
-      --bg: #09090b;
-      --card: #18181b;
-      --accent: #facc15;
-      --text: #f8fafc;
-      --border: #27272a;
-      --muted: #a1a1aa;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة مودات ماين كرافت</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-base: #060709;
+            --bg-surface: #0d0f14;
+            --bg-card: #13161f;
+            --bg-card-hover: #1a1e29;
+            --accent-yellow: #ffcc00;
+            --accent-yellow-glow: rgba(255, 204, 0, 0.2);
+            --text-main: #f3f4f6;
+            --text-muted: #8b92a5;
+            --metal-border: #242938;
+            --metal-border-bright: #3d465c;
+            --metal-sheen: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 100%);
+        }
 
-      --yt-color: #ff0000;
-      --tg-color: #229ed9;
-      --fb-color: #1877f2;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: 'Cairo', sans-serif;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(255,204,0,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,204,0,0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+        /* Header Styling */
+        header {
+            width: 100%;
+            background: var(--bg-surface);
+            border-bottom: 2px solid var(--metal-border-bright);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.8);
+        }
 
-    .container {
-      width: 100%;
-      max-width: 480px;
-      text-align: center;
-    }
+        .header-content {
+            max-width: 1350px;
+            margin: 0 auto;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .logo-box {
-      margin-bottom: 25px;
-    }
+        .header-side {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-    .logo-box h1 {
-      color: var(--accent);
-      font-size: 2.2rem;
-      letter-spacing: 2px;
-      margin-bottom: 5px;
-    }
+        .icon-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--metal-border-bright);
+            color: var(--accent-yellow);
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .logo-box p {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
+        .icon-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: var(--metal-sheen);
+        }
 
-    .tag {
-      display: inline-block;
-      background: #27272a;
-      color: var(--accent);
-      padding: 4px 14px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      margin-top: 12px;
-      font-weight: bold;
-    }
+        .icon-btn:hover {
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 12px var(--accent-yellow-glow);
+            background: var(--bg-card-hover);
+        }
 
-    .social-links {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin: 30px 0;
-    }
+        .icon-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--accent-yellow);
+            z-index: 1;
+        }
 
-    .social-btn {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 20px;
-      border-radius: 12px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: #fff;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.05rem;
-      transition: transform 0.2s, border-color 0.2s;
-    }
+        .header-logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .social-btn:hover {
-      transform: translateY(-2px);
-    }
+        .header-logo-container img {
+            max-height: 65px;
+            width: auto;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+        }
 
-    .btn-yt { border-right: 5px solid var(--yt-color); }
-    .btn-yt:hover { border-color: var(--yt-color); background: rgba(255, 0, 0, 0.05); }
+        /* Banner Section */
+        .banner-wrapper {
+            max-width: 320px;
+            height: 50px;
+            margin: 25px auto;
+            background: var(--bg-surface);
+            border: 1px solid var(--metal-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.9);
+        }
 
-    .btn-tg { border-right: 5px solid var(--tg-color); }
-    .btn-tg:hover { border-color: var(--tg-color); background: rgba(34, 158, 217, 0.05); }
+        /* Main Container */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px 20px 80px 20px;
+        }
 
-    .btn-fb { border-right: 5px solid var(--fb-color); }
-    .btn-fb:hover { border-color: var(--fb-color); background: rgba(24, 119, 242, 0.05); }
+        /* Grid Layout */
+        .mods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 35px;
+        }
 
-    .btn-sub {
-      font-size: 0.85rem;
-      padding: 6px 14px;
-      border-radius: 6px;
-      color: #fff;
-    }
+        /* Mod Card - Sharp Industrial Metal */
+        .mod-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--metal-border);
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+        }
 
-    .bg-yt { background: var(--yt-color); }
-    .bg-tg { background: var(--tg-color); }
-    .bg-fb { background: var(--fb-color); }
+        .mod-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--metal-sheen);
+            pointer-events: none;
+        }
 
-    footer {
-      margin-top: 40px;
-      color: var(--muted);
-      font-size: 0.8rem;
-    }
+        .mod-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-yellow);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.8), 0 0 15px var(--accent-yellow-glow);
+        }
 
-    .ad-container {
-      width: 100%;
-      margin: 20px auto;
-      text-align: center;
-    }
+        .mod-img-container {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+            background: #000;
+            border-bottom: 1px solid var(--metal-border);
+        }
 
-    .ad-container iframe {
-      border: 0;
-      width: 70%;
-      height: auto;
-      display: block;
-      margin: auto;
-    }
-  </style>
+        .mod-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .mod-card:hover .mod-img-container img {
+            transform: scale(1.06);
+        }
+
+        .mod-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            z-index: 1;
+        }
+
+        .mod-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .mod-tag {
+            background: rgba(255, 204, 0, 0.06);
+            color: var(--accent-yellow);
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            padding: 2px 8px;
+            font-size: 11px;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            border-radius: 2px;
+        }
+
+        .mod-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .mod-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .mod-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #181d28;
+            color: var(--accent-yellow);
+            border: 1px solid var(--accent-yellow);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+        }
+
+        .mod-btn:hover {
+            background: var(--accent-yellow);
+            color: #000;
+            box-shadow: 0 0 15px var(--accent-yellow-glow);
+        }
+
+        .mod-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* Load More Button Container */
+        .load-more-container {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .load-more-btn {
+            background: var(--bg-surface);
+            color: var(--text-main);
+            border: 2px solid var(--metal-border-bright);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 15px;
+            padding: 15px 45px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .load-more-btn::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: var(--metal-sheen);
+        }
+
+        .load-more-btn:hover {
+            border-color: var(--accent-yellow);
+            color: var(--accent-yellow);
+            box-shadow: 0 0 20px var(--accent-yellow-glow);
+        }
+
+        .load-more-btn.hidden {
+            display: none;
+        }
+
+        /* Modal Overlay for Search & Sidebar */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 5, 7, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--metal-border-bright);
+            width: 90%;
+            max-width: 600px;
+            padding: 30px;
+            border-radius: 4px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.25s ease;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 22px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: var(--accent-yellow);
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-yellow);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--bg-base);
+            border: 1px solid var(--metal-border-bright);
+            color: var(--text-main);
+            padding: 14px 18px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 15px;
+            border-radius: 2px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 10px var(--accent-yellow-glow);
+        }
+
+        .search-results {
+            margin-top: 15px;
+            max-height: 250px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .search-result-item {
+            background: var(--bg-card);
+            padding: 10px 15px;
+            border: 1px solid var(--metal-border);
+            border-radius: 2px;
+            color: var(--text-main);
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s;
+        }
+
+        .search-result-item:hover {
+            border-color: var(--accent-yellow);
+            background: var(--bg-card-hover);
+        }
+
+        /* Sidebar Content */
+        .sidebar-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-link {
+            background: var(--bg-card);
+            border: 1px solid var(--metal-border);
+            padding: 12px 18px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            border-radius: 2px;
+            transition: all 0.2s;
+        }
+
+        .sidebar-link:hover {
+            border-color: var(--accent-yellow);
+            color: var(--accent-yellow);
+            background: var(--bg-card-hover);
+        }
+    </style>
 </head>
 <body>
 
-<!-- BEGIN AADS AD UNIT 2452645 -->
+    <!-- الهيدر -->
+    <header>
+        <div class="header-content">
+            <!-- اليمين: 3 أشرطة للقائمة الجانبية -->
+            <div class="header-side">
+                <button class="icon-btn" id="sidebar-btn" title="القائمة الجانبية">
+                    <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                </button>
+            </div>
 
-<div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-          <iframe data-aa='2452645' src='//acceptable.a-ads.com/2452645/?size=Adaptive'
-                            style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+            <!-- المنتصف: الهيدر من الرابط الخارجي -->
+            <div class="header-logo-container">
+                <img src="https://attdes.online/header.png" alt="Header">
+            </div>
+
+            <!-- اليسار: مكبر للبحث -->
+            <div class="header-side">
+                <button class="icon-btn" id="search-btn" title="البحث">
+                    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                </button>
+            </div>
         </div>
+    </header>
 
-<!-- END AADS AD UNIT 2452645 -->
-  <div class="container">
-
-    <div class="logo-box">
-      <h1>ATTACK N' DESTROY</h1>
-      <p>تابعنا على منصات التواصل الاجتماعي للمزيد</p>
-      <span class="tag">@modslib</span>
+    <!-- إعلان البانر 320x50 -->
+    <div class="banner-wrapper">
+        <script src="https://modslib.attdes.online/320-50.js"></script>
     </div>
 
-    <div class="social-links">
-
-      <a href="https://youtube.com/@modslib" target="_blank" class="social-btn btn-yt">
-        <span>▶️ قناة اليوتيوب</span>
-        <span class="btn-sub bg-yt">اشتراك 🔔</span>
-      </a>
-
-      <a href="https://t.me/modslib" target="_blank" class="social-btn btn-tg">
-        <span>✈️ قناة التلغرام</span>
-        <span class="btn-sub bg-tg">انضمام 📢</span>
-      </a>
-
-      <a href="https://facebook.com/modslib" target="_blank" class="social-btn btn-fb">
-        <span>📘 صفحة الفيسبوك</span>
-        <span class="btn-sub bg-fb">متابعة 👍</span>
-      </a>
-
-    </div>
-
-    <footer>
-      &copy; 2026 ATT/DES. جميع الحقوق محفوظة.
-    </footer>
-
-  </div>
-
-  <!-- BEGIN AADS AD UNIT 2452645 -->
-
-<div id="frame" style="width: 100%;margin: auto;position: relative; z-index: 99998;">
-          <iframe data-aa='2452645' src='//acceptable.a-ads.com/2452645/?size=Adaptive'
-                            style='border:0; padding:0; width:70%; height:auto; overflow:hidden;display: block;margin: auto'></iframe>
+    <!-- المحتوى الرئيسي -->
+    <div class="container">
+        <div class="mods-grid" id="mods-container">
+            <!-- يتم تعبئة المودات ديناميكياً من index.json (عرض 10 في البداية) -->
         </div>
 
-<!-- END AADS AD UNIT 2452645 -->
+        <div class="load-more-container">
+            <button class="load-more-btn" id="load-more-btn">عرض المزيد</button>
+        </div>
+    </div>
 
+    <!-- واجهة منبثقة للبحث -->
+    <div class="modal-overlay" id="search-modal">
+        <div class="modal-box">
+            <button class="modal-close" data-close>&times;</button>
+            <div class="modal-title">البحث في المودات</div>
+            <input type="text" class="search-input" id="search-box-input" placeholder="اكتب اسم المود للبحث...">
+            <div class="search-results" id="search-results-container"></div>
+        </div>
+    </div>
+
+    <!-- واجهة منبثقة للقائمة الجانبية -->
+    <div class="modal-overlay" id="sidebar-modal">
+        <div class="modal-box">
+            <button class="modal-close" data-close>&times;</button>
+            <div class="modal-title">القائمة الرئيسية</div>
+            <div class="sidebar-links">
+                <a href="index.html" class="sidebar-link">الرئيسية</a>
+                <a href="#" class="sidebar-link">أحدث المودات</a>
+                <a href="#" class="sidebar-link">مودات سيرفايفل</a>
+                <a href="#" class="sidebar-link">الدعم الفني</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allMods = [];
+        let displayedCount = 10;
+        const ITEMS_PER_PAGE = 10;
+
+        async function initSite() {
+            try {
+                let response = await fetch('index.json');
+                allMods = await response.json();
+                renderMods();
+                
+                if (allMods.length <= displayedCount) {
+                    document.getElementById('load-more-btn').classList.add('hidden');
+                }
+            } catch (err) {
+                console.error("خطأ في جلب بيانات index.json:", err);
+                document.getElementById('mods-container').innerHTML = '<p style="color:var(--accent-yellow); grid-column: 1/-1; text-align:center;">تعذر تحميل بيانات المودات.</p>';
+                document.getElementById('load-more-btn').classList.add('hidden');
+            }
+        }
+
+        function renderMods() {
+            let container = document.getElementById('mods-container');
+            container.innerHTML = '';
+            
+            let currentItems = allMods.slice(0, displayedCount);
+            
+            currentItems.forEach((mod, index) => {
+                let tagsHtml = '';
+                if (mod.tags && Array.isArray(mod.tags)) {
+                    tagsHtml = mod.tags.map(t => `<span class="mod-tag">${t}</span>`).join('');
+                }
+
+                let card = document.createElement('div');
+                card.className = 'mod-card';
+                // التوجيه حصرياً إلى صفحة التحميل المستقلة عبر المعرف
+                let targetUrl = `tomod.html?id=${mod.id || index}`;
+                
+                card.innerHTML = `
+                    <div class="mod-img-container">
+                        <img src="${mod.image_url}" alt="${mod.title}">
+                    </div>
+                    <div class="mod-content">
+                        <div class="mod-tags">${tagsHtml}</div>
+                        <h2 class="mod-title">${mod.title}</h2>
+                        <p class="mod-desc">${mod.description}</p>
+                        <a href="${targetUrl}" class="mod-btn">
+                            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                            الانتقال لصفحة التحميل
+                        </a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            if (displayedCount >= allMods.length) {
+                document.getElementById('load-more-btn').classList.add('hidden');
+            }
+        }
+
+        // زر عرض المزيد
+        document.getElementById('load-more-btn').addEventListener('click', () => {
+            displayedCount += ITEMS_PER_PAGE;
+            renderMods();
+        });
+
+        // إدارة النوافذ المنبثقة (Modal)
+        const searchModal = document.getElementById('search-modal');
+        const sidebarModal = document.getElementById('sidebar-modal');
+
+        document.getElementById('search-btn').addEventListener('click', () => {
+            searchModal.classList.add('active');
+            document.getElementById('search-box-input').focus();
+        });
+
+        document.getElementById('sidebar-btn').addEventListener('click', () => {
+            sidebarModal.classList.add('active');
+        });
+
+        document.querySelectorAll('.modal-close, .modal-overlay').forEach(el => {
+            el.addEventListener('click', (e) => {
+                if (e.target === el || e.hasAttribute('data-close') || e.target.closest('[data-close]')) {
+                    searchModal.classList.remove('active');
+                    sidebarModal.classList.remove('active');
+                }
+            });
+        });
+
+        // نظام البحث الفوري داخل المودال
+        document.getElementById('search-box-input').addEventListener('input', (e) => {
+            let term = e.target.value.toLowerCase().trim();
+            let resultsContainer = document.getElementById('search-results-container');
+            resultsContainer.innerHTML = '';
+
+            if (term === '') return;
+
+            let filtered = allMods.filter(m => m.title.toLowerCase().includes(term) || (m.description && m.description.toLowerCase().includes(term)));
+
+            if (filtered.length === 0) {
+                resultsContainer.innerHTML = '<div style="color:var(--text-muted); font-size:13px; text-align:center; padding:10px;">لا توجد نتائج مطابقة</div>';
+                return;
+            }
+
+            filtered.forEach((mod, index) => {
+                let a = document.createElement('a');
+                a.href = `tomod.html?id=${mod.id || index}`;
+                a.className = 'search-result-item';
+                a.innerHTML = `<strong>${mod.title}</strong>`;
+                resultsContainer.appendChild(a);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', initSite);
+    </script>
 </body>
 </html>

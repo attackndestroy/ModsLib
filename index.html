@@ -38,7 +38,13 @@
             text-align: center; background: transparent;
         }
         .banner-320x50 iframe { max-width: 100%; height: auto; }
-        .banner-between { margin: 1.5rem 0; text-align: center; }
+        .banner-between {
+            margin: 1.5rem 0;
+            padding: 0.5rem 0;
+            text-align: center;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+        }
 
         /* ===== FEED CONTROLS ===== */
         .feed-controls {
@@ -59,7 +65,7 @@
         .btn-sort.active:hover { background: #e0b030; }
 
         /* ===== FEED & CARDS ===== */
-        .feed { display: flex; flex-direction: column; gap: 1.5rem; }
+        .feed { display: flex; flex-direction: column; gap: 0.5rem; }
         .mod-card {
             background: #1e1e1e; border-radius: 16px; overflow: hidden;
             box-shadow: 0 4px 16px rgba(0,0,0,0.6);
@@ -113,7 +119,7 @@
             .btn-sort { font-size: 0.9rem; padding: 0.4rem 0.8rem; min-width: 60px; }
         }
         @media (min-width: 600px) {
-            .feed { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+            .feed { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
             .banner-between { grid-column: 1 / -1; }
         }
         @media (min-width: 900px) {
@@ -209,7 +215,7 @@
                 return numeric.concat(text);
             }
 
-            // دالة لإضافة Banner 320x50 بطريقة تعمل
+            // ===== دالة إضافة Banner 320×50 بشكل موثوق =====
             function addBanner(container) {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'banner-between';
@@ -217,22 +223,26 @@
                 const bannerDiv = document.createElement('div');
                 bannerDiv.className = 'banner-320x50';
 
-                // تعريف atOptions في النطاق العام (window)
-                window.atOptions = {
-                    'key': '28d1f1f838ea883f1f7fc0d4733ebba6',
-                    'format': 'iframe',
-                    'height': 50,
-                    'width': 320,
-                    'params': {}
-                };
+                // 1. إنشاء script لتعريف atOptions
+                const scriptOpt = document.createElement('script');
+                scriptOpt.textContent = `
+                    window.atOptions = {
+                        'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                `;
+                bannerDiv.appendChild(scriptOpt);
 
-                // إنشاء script invoke
-                const script = document.createElement('script');
-                script.src = 'https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js';
-                script.async = true;
-                script.dataset.cfasync = 'false';
+                // 2. إنشاء script لتحميل invoke.js
+                const scriptInvoke = document.createElement('script');
+                scriptInvoke.src = 'https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js';
+                scriptInvoke.async = true;
+                scriptInvoke.dataset.cfasync = 'false';
+                bannerDiv.appendChild(scriptInvoke);
 
-                bannerDiv.appendChild(script);
                 wrapper.appendChild(bannerDiv);
                 container.appendChild(wrapper);
             }
@@ -247,10 +257,10 @@
                 }
 
                 const visible = items.slice(0, visibleCount);
-                feedEl.innerHTML = ''; // نمسح المحتوى السابق
+                feedEl.innerHTML = '';
 
                 visible.forEach(function(item, index) {
-                    // إضافة البطاقة
+                    // === بطاقة المود ===
                     const card = document.createElement('div');
                     card.className = 'mod-card';
 
@@ -283,7 +293,7 @@
 
                     feedEl.appendChild(card);
 
-                    // إضافة Banner بعد كل بطاقة باستثناء الأخيرة
+                    // === إضافة Banner بين كل بطاقتين (باستثناء بعد الأخيرة) ===
                     if (index < visible.length - 1) {
                         addBanner(feedEl);
                     }
@@ -319,6 +329,7 @@
                             statusEl.textContent = 'لا توجد بيانات.';
                             return;
                         }
+                        // تجنب التكرار: نأخذ آخر قيمة لكل مفتاح (لكن المفاتيح فريدة)
                         allItems = keys.map(key => {
                             const item = data[key];
                             return {
@@ -327,7 +338,7 @@
                                 image: item.image || ''
                             };
                         });
-                        // تصفية العناصر التي ليس لها عنوان (اختياري)
+                        // تصفية العناصر التي ليس لها عنوان
                         allItems = allItems.filter(item => item.title);
                         visibleCount = PAGE_SIZE;
                         applySortAndRender();

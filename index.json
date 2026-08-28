@@ -1,0 +1,18 @@
+[
+  {
+    "id": "mod-01",
+    "title": "Cyber Mech Overhaul",
+    "description": "مود ضخم يضيف أسلحة مستقبلية ودروع ميكانيكية متطورة مع نظام طاقة وقود فريد.",
+    "image_url": "https://images.unsplash.com/photo-1627856013091-fed6e4e30e79?auto=format&fit=crop&w=600&q=80",
+    "tags": ["مودات سيرفايفل", "تكنولوجيا"],
+    "date_time": "2026-06-06 20:30:00"
+  },
+  {
+    "id": "mod-02",
+    "title": "Infernal Dungeons & Bosses",
+    "description": "اكتشف زنزانات تحت الأرض مرعبة مليئة بزعماء جدد يمتلكون قدرات هائلة وغنائم أسطورية.",
+    "image_url": "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80",
+    "tags": ["مغامرات", "هاردكور"],
+    "date_time": "2026-06-05 14:15:00"
+  }
+]

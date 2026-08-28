@@ -1,0 +1,12 @@
+[
+  {
+    "type": "m",
+    "id": "mod-1",
+    "title": "Cyber Mech Overhaul",
+    "description": "مود ضخم يضيف أسلحة مستقبلية ودروع ميكانيكية متطورة لعالمك.",
+    "image_url": "https://images.unsplash.com/photo-1627856013091-fed6e4e30e79?auto=format&fit=crop&w=600&q=80",
+    "download_url": "https://example.com/download/cyber-mech-v1.zip",
+    "tags": ["مودات سيرفايفل", "تكنولوجيا"],
+    "date_time": "2026-06-06 20:30:00"
+  }
+]

@@ -32,18 +32,18 @@
         .native-banner-wrapper, .social-bar-wrapper { text-align: center; margin: 0.5rem 0; overflow: hidden; }
         .native-banner-wrapper iframe, .social-bar-wrapper iframe { max-width: 100%; }
 
-        /* ===== BANNER 320x50 ===== */
-        .banner-320x50 {
-            width: 100%; max-width: 320px; margin: 0 auto; overflow: hidden;
-            text-align: center; background: transparent;
-        }
-        .banner-320x50 iframe { max-width: 100%; height: auto; }
+        /* ===== BANNER 320x50 (بين المنشورات) ===== */
         .banner-between {
             margin: 1.5rem 0;
             padding: 0.5rem 0;
             text-align: center;
             background: rgba(255,255,255,0.02);
             border-radius: 8px;
+        }
+        .banner-between iframe {
+            max-width: 100%;
+            border: none;
+            overflow: hidden;
         }
 
         /* ===== FEED CONTROLS ===== */
@@ -215,35 +215,42 @@
                 return numeric.concat(text);
             }
 
-            // ===== دالة إضافة Banner 320×50 بشكل موثوق =====
+            // ===== إضافة Banner 320×50 باستخدام iframe معزول =====
             function addBanner(container) {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'banner-between';
 
-                const bannerDiv = document.createElement('div');
-                bannerDiv.className = 'banner-320x50';
-
-                // 1. إنشاء script لتعريف atOptions
-                const scriptOpt = document.createElement('script');
-                scriptOpt.textContent = `
-                    window.atOptions = {
-                        'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
-                        'format' : 'iframe',
-                        'height' : 50,
-                        'width' : 320,
-                        'params' : {}
-                    };
+                const iframe = document.createElement('iframe');
+                iframe.width = '320';
+                iframe.height = '50';
+                iframe.style.border = 'none';
+                iframe.style.overflow = 'hidden';
+                iframe.style.maxWidth = '100%';
+                iframe.scrolling = 'no';
+                iframe.srcdoc = `
+                    <html>
+                    <head>
+                        <style>
+                            body { margin: 0; padding: 0; background: transparent; overflow: hidden; }
+                            * { box-sizing: border-box; }
+                        </style>
+                    </head>
+                    <body>
+                        <script>
+                            window.atOptions = {
+                                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
+                                'format' : 'iframe',
+                                'height' : 50,
+                                'width' : 320,
+                                'params' : {}
+                            };
+                        <\/script>
+                        <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"><\/script>
+                    </body>
+                    </html>
                 `;
-                bannerDiv.appendChild(scriptOpt);
 
-                // 2. إنشاء script لتحميل invoke.js
-                const scriptInvoke = document.createElement('script');
-                scriptInvoke.src = 'https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js';
-                scriptInvoke.async = true;
-                scriptInvoke.dataset.cfasync = 'false';
-                bannerDiv.appendChild(scriptInvoke);
-
-                wrapper.appendChild(bannerDiv);
+                wrapper.appendChild(iframe);
                 container.appendChild(wrapper);
             }
 
@@ -329,7 +336,6 @@
                             statusEl.textContent = 'لا توجد بيانات.';
                             return;
                         }
-                        // تجنب التكرار: نأخذ آخر قيمة لكل مفتاح (لكن المفاتيح فريدة)
                         allItems = keys.map(key => {
                             const item = data[key];
                             return {
@@ -338,7 +344,6 @@
                                 image: item.image || ''
                             };
                         });
-                        // تصفية العناصر التي ليس لها عنوان
                         allItems = allItems.filter(item => item.title);
                         visibleCount = PAGE_SIZE;
                         applySortAndRender();

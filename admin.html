@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>لوحة التحكم — ModsLib</title>
+<link rel="icon" href="/fav.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<style>
+  .dash-section {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    margin-bottom: 26px;
+  }
+  .dash-section__title {
+    font-family: var(--font-display);
+    font-size: 17px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .field { margin-bottom: 16px; }
+  .field label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.3px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .field input, .field textarea {
+    width: 100%;
+    padding: 11px 13px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-strong);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    border-radius: var(--radius);
+    resize: vertical;
+  }
+  .field input:focus, .field textarea:focus { outline: none; border-color: var(--accent); }
+  .field input[readonly] { color: var(--text-muted); background: #0f0f0f; }
+  .field-hint { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
+  .form-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
+  .dash-toolbar {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 10px; margin-bottom: 20px;
+  }
+  .dash-toolbar__title { font-family: var(--font-display); font-size: 22px; color: var(--text-primary); margin: 0; }
+  .admin-list { display: flex; flex-direction: column; gap: 10px; }
+  .admin-row {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    padding: 12px; border-radius: var(--radius); flex-wrap: wrap;
+  }
+  .admin-row__thumb {
+    width: 64px; height: 36px; object-fit: cover; border-radius: 2px;
+    background: #000; flex-shrink: 0;
+  }
+  .admin-row__id {
+    font-family: var(--font-display); color: var(--accent); font-size: 13px;
+    min-width: 44px;
+  }
+  .admin-row__title { flex: 1; min-width: 140px; font-size: 14.5px; color: var(--text-primary); }
+  .admin-row__actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .json-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+  .json-output {
+    background: #050505; border: 1px solid var(--border-strong);
+    color: #d8d8d0; font-family: 'Courier New', monospace; font-size: 12.5px;
+    padding: 14px; max-height: 320px; overflow: auto; white-space: pre-wrap;
+    word-break: break-all; border-radius: var(--radius); direction: ltr; text-align: left;
+  }
+  .gate-wrap {
+    max-width: 460px; margin: 60px auto; text-align: center;
+  }
+  .gate-wrap p { color: var(--text-secondary); font-size: 14.5px; }
+  .badge {
+    display: inline-block; font-family: var(--font-display); font-size: 11px;
+    padding: 3px 8px; border: 1px solid var(--border-strong); color: var(--text-muted);
+    border-radius: var(--radius); margin-inline-start: 8px;
+  }
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 40px 16px; overflow-y: auto; z-index: 200;
+  }
+  .modal-overlay.is-open { display: flex; }
+  .modal-box {
+    background: var(--bg-secondary); border: 1px solid var(--accent-dim);
+    border-radius: var(--radius); padding: 24px; width: 100%; max-width: 520px;
+  }
+  .modal-box__title { font-family: var(--font-display); font-size: 18px; color: var(--accent); margin: 0 0 18px; }
+  .empty-hint { color: var(--text-muted); font-size: 14px; text-align: center; padding: 20px; }
+</style>
+</head>
+<body>
+
+<div id="header-mount"></div>
+
+<main class="container" style="padding-bottom: 60px;">
+
+  <!-- بوابة إدخال Token -->
+  <div id="token-gate" class="gate-wrap" style="display:none;">
+    <h1 class="page-hero__title" style="border:none; padding:0; margin-bottom:14px;">الدخول إلى لوحة التحكم</h1>
+    <p>أدخل GitHub API Token للوصول إلى إدارة المستودع. سيتم حفظه في متصفحك فقط ولن يُطلب منك مرة أخرى.</p>
+    <div class="field" style="text-align:right;">
+      <label for="token-input">GitHub API Token</label>
+      <input type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+    </div>
+    <div class="form-actions" style="justify-content:center;">
+      <button type="button" class="btn" id="token-save-btn">حفظ والدخول</button>
+    </div>
+  </div>
+
+  <!-- التطبيق الرئيسي -->
+  <div id="dashboard-app" style="display:none;">
+
+    <div class="dash-toolbar">
+      <h1 class="dash-toolbar__title">لوحة التحكم <span class="badge">attackndestroy/modslib</span></h1>
+      <button type="button" class="btn btn--outline btn--sm" id="clear-token-btn">مسح Token</button>
+    </div>
+
+    <div id="global-status" class="state-message" style="display:none;"></div>
+
+    <!-- نشر مود جديد -->
+    <section class="dash-section">
+      <h2 class="dash-section__title">نشر مود جديد</h2>
+      <form id="publish-form">
+        <div class="field">
+          <label>ID</label>
+          <input type="text" id="new-id" readonly>
+          <p class="field-hint">يُحسب تلقائياً بحسب أعلى ID موجود.</p>
+        </div>
+        <div class="field">
+          <label for="new-title">العنوان</label>
+          <input type="text" id="new-title" required>
+        </div>
+        <div class="field">
+          <label for="new-desc">الوصف</label>
+          <textarea id="new-desc" rows="3" required></textarea>
+        </div>
+        <div class="field">
+          <label for="new-image">رابط الصورة</label>
+          <input type="url" id="new-image" placeholder="https://..." required>
+        </div>
+        <div class="field">
+          <label for="new-download">الرابط النهائي (سيتم تشفيره تلقائياً Base64)</label>
+          <input type="url" id="new-download" placeholder="https://..." required>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn" id="publish-btn">نشر</button>
+        </div>
+        <div id="publish-result" style="margin-top:16px; display:none;">
+          <p class="field-hint" id="publish-link-label"></p>
+          <div class="form-actions">
+            <button type="button" class="btn btn--outline btn--sm" id="copy-new-link-btn">نسخ الرابط</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- قائمة المودات -->
+    <section class="dash-section">
+      <h2 class="dash-section__title">إدارة المودات</h2>
+      <div class="feed-toolbar" style="padding-top:0;">
+        <div class="feed-toolbar__sort">
+          <button type="button" class="chip is-active" id="admin-sort-newest">أحدث</button>
+          <button type="button" class="chip" id="admin-sort-oldest">أقدم</button>
+        </div>
+        <div class="search-box">
+          <input type="text" id="admin-search" placeholder="ابحث بالـ ID أو العنوان أو الوصف...">
+        </div>
+      </div>
+      <div id="admin-list" class="admin-list"></div>
+      <div id="admin-empty" class="empty-hint" style="display:none;">لا توجد مودات مطابقة.</div>
+    </section>
+
+    <!-- عرض JSON -->
+    <section class="dash-section">
+      <h2 class="dash-section__title">محتوى mods.json</h2>
+      <div class="json-tabs">
+        <button type="button" class="chip is-active" id="tab-unencrypted">غير مشفر</button>
+        <button type="button" class="chip" id="tab-encrypted">مشفر (كما هو مخزن)</button>
+      </div>
+      <div id="json-view" class="json-output"></div>
+      <div class="form-actions" style="margin-top:14px;">
+        <button type="button" class="btn btn--outline btn--sm" id="copy-json-btn">نسخ JSON</button>
+      </div>
+    </section>
+
+  </div>
+
+</main>
+
+<div id="footer-mount"></div>
+
+<!-- نافذة التعديل -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal-box">
+    <h3 class="modal-box__title">تعديل المود</h3>
+    <form id="edit-form">
+      <input type="hidden" id="edit-id">
+      <div class="field">
+        <label for="edit-title">العنوان</label>
+        <input type="text" id="edit-title" required>
+      </div>
+      <div class="field">
+        <label for="edit-desc">الوصف</label>
+        <textarea id="edit-desc" rows="3" required></textarea>
+      </div>
+      <div class="field">
+        <label for="edit-image">رابط الصورة</label>
+        <input type="url" id="edit-image" required>
+      </div>
+      <div class="field">
+        <label for="edit-download">الرابط النهائي</label>
+        <input type="url" id="edit-download" required>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn">حفظ التعديل</button>
+        <button type="button" class="btn btn--outline" id="edit-cancel-btn">إلغاء</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/stats.js"></script>
+<script src="/common.js"></script>
+
+<script>
+/* =========================================================
+   ModsLib — dashboard.js (مدمج)
+   إدارة لوحة التحكم: Token / CRUD عبر GitHub Contents API
+   ========================================================= */
+
+(function () {
+
+  const OWNER = 'attackndestroy';
+  const REPO = 'modslib';
+  const FILE_PATH = 'mods.json';
+  const TOKEN_KEY = 'modslib_gh_token';
+  const API_BASE = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`;
+
+  /* ---------------- Token storage ---------------- */
+
+  function getToken() {
+    try { return localStorage.getItem(TOKEN_KEY); } catch (e) { return null; }
+  }
+  function setToken(t) {
+    try { localStorage.setItem(TOKEN_KEY, t); } catch (e) { /* ignore */ }
+  }
+  function clearToken() {
+    try { localStorage.removeItem(TOKEN_KEY); } catch (e) { /* ignore */ }
+  }
+
+  /* ---------------- GitHub API layer ---------------- */
+
+  class GitHubApiError extends Error {
+    constructor(code, message) {
+      super(message);
+      this.code = code;
+    }
+  }
+
+  async function githubFetch(method, body) {
+    const token = getToken();
+    if (!token) throw new GitHubApiError('AUTH_MISSING', 'لا يوجد Token محفوظ.');
+    let res;
+    try {
+      res = await fetch(API_BASE, {
+        method,
+        headers: {
+          'Authorization': 'token ' + token,
+          'Accept': 'application/vnd.github+json',
+          'Content-Type': 'application/json'
+        },
+        body: body ? JSON.stringify(body) : undefined
+      });
+    } catch (e) {
+      throw new GitHubApiError('NETWORK', 'تعذر الاتصال بالإنترنت أو بخادم GitHub.');
+    }
+    return res;
+  }
+
+  function mapStatusToError(status, res) {
+    if (status === 401) return new GitHubApiError('UNAUTHORIZED', 'GitHub Token غير صحيح أو منتهي الصلاحية.');
+    if (status === 403) {
+      const remaining = res && res.headers ? res.headers.get('X-RateLimit-Remaining') : null;
+      if (remaining === '0') return new GitHubApiError('RATE_LIMIT', 'تم تجاوز الحد المسموح من طلبات GitHub API. حاول لاحقاً.');
+      return new GitHubApiError('FORBIDDEN', 'ليس لدى هذا الـ Token صلاحية كافية للوصول إلى المستودع.');
+    }
+    if (status === 404) return new GitHubApiError('NOT_FOUND', 'لم يتم العثور على الملف أو المستودع (تحقق من الاسم أو الصلاحيات).');
+    if (status === 409) return new GitHubApiError('CONFLICT', 'تعارض في تحديث الملف (SHA غير مطابق). تتم إعادة المحاولة تلقائياً.');
+    return new GitHubApiError('UNKNOWN', 'حدث خطأ غير متوقع من GitHub API (كود ' + status + ').');
+  }
+
+  async function fetchRemoteMods() {
+    const res = await githubFetch('GET');
+    if (!res.ok) throw mapStatusToError(res.status, res);
+    let data;
+    try {
+      data = await res.json();
+    } catch (e) {
+      throw new GitHubApiError('CORRUPT', 'استجابة GitHub غير صالحة.');
+    }
+    let jsonStr;
+    try {
+      const cleanB64 = String(data.content || '').replace(/\n/g, '');
+      jsonStr = decodeURIComponent(escape(atob(cleanB64)));
+    } catch (e) {
+      throw new GitHubApiError('CORRUPT', 'تعذر فك محتوى mods.json من GitHub.');
+    }
+    let parsed;
+    try {
+      parsed = JSON.parse(jsonStr);
+    } catch (e) {
+      throw new GitHubApiError('CORRUPT', 'ملف mods.json على GitHub تالف (JSON غير صالح).');
+    }
+    if (!Array.isArray(parsed)) throw new GitHubApiError('CORRUPT', 'تنسيق mods.json غير صحيح.');
+    return { mods: parsed, sha: data.sha };
+  }
+
+  async function pushRemoteMods(mods, sha, message) {
+    const jsonStr = JSON.stringify(mods, null, 2);
+    const content = btoa(unescape(encodeURIComponent(jsonStr)));
+    const res = await githubFetch('PUT', { message, content, sha });
+    if (!res.ok) throw mapStatusToError(res.status, res);
+    return await res.json();
+  }
+
+  /**
+   * ينفّذ عملية كتابة مع إعادة محاولة واحدة تلقائياً عند تعارض SHA (409).
+   * mutateFn(currentMods) -> newMods
+   */
+  async function writeWithRetry(mutateFn, message) {
+    let attempt = 0;
+    let lastErr = null;
+    while (attempt < 2) {
+      attempt++;
+      const { mods, sha } = await fetchRemoteMods();
+      const newMods = mutateFn(mods);
+      try {
+        await pushRemoteMods(newMods, sha, message);
+        return newMods;
+      } catch (e) {
+        lastErr = e;
+        if (e.code === 'CONFLICT' && attempt < 2) continue;
+        throw e;
+      }
+    }
+    throw lastErr;
+  }
+
+  /* ---------------- DOM refs ---------------- */
+
+  const tokenGate = document.getElementById('token-gate');
+  const dashboardApp = document.getElementById('dashboard-app');
+  const tokenInput = document.getElementById('token-input');
+  const tokenSaveBtn = document.getElementById('token-save-btn');
+  const clearTokenBtn = document.getElementById('clear-token-btn');
+  const globalStatus = document.getElementById('global-status');
+
+  const publishForm = document.getElementById('publish-form');
+  const newIdInput = document.getElementById('new-id');
+  const newTitleInput = document.getElementById('new-title');
+  const newDescInput = document.getElementById('new-desc');
+  const newImageInput = document.getElementById('new-image');
+  const newDownloadInput = document.getElementById('new-download');
+  const publishBtn = document.getElementById('publish-btn');
+  const publishResult = document.getElementById('publish-result');
+  const publishLinkLabel = document.getElementById('publish-link-label');
+  const copyNewLinkBtn = document.getElementById('copy-new-link-btn');
+
+  const adminList = document.getElementById('admin-list');
+  const adminEmpty = document.getElementById('admin-empty');
+  const adminSortNewest = document.getElementById('admin-sort-newest');
+  const adminSortOldest = document.getElementById('admin-sort-oldest');
+  const adminSearch = document.getElementById('admin-search');
+
+  const tabUnencrypted = document.getElementById('tab-unencrypted');
+  const tabEncrypted = document.getElementById('tab-encrypted');
+  const jsonView = document.getElementById('json-view');
+  const copyJsonBtn = document.getElementById('copy-json-btn');
+
+  const editModal = document.getElementById('edit-modal');
+  const editForm = document.getElementById('edit-form');
+  const editId = document.getElementById('edit-id');
+  const editTitle = document.getElementById('edit-title');
+  const editDesc = document.getElementById('edit-desc');
+  const editImage = document.getElementById('edit-image');
+  const editDownload = document.getElementById('edit-download');
+  const editCancelBtn = document.getElementById('edit-cancel-btn');
+
+  /* ---------------- State ---------------- */
+
+  const state = {
+    mods: [],
+    adminSort: 'desc',
+    adminQuery: '',
+    jsonTab: 'unencrypted',
+    lastNewLink: ''
+  };
+
+  /* ---------------- Helpers ---------------- */
+
+  function setBusy(el, busy, busyLabel, idleLabel) {
+    el.disabled = busy;
+    if (busyLabel) el.textContent = busy ? busyLabel : idleLabel;
+  }
+
+  function showGlobalStatus(msg, isError) {
+    globalStatus.style.display = 'block';
+    globalStatus.textContent = msg;
+    globalStatus.style.color = isError ? 'var(--danger)' : 'var(--text-secondary)';
+  }
+  function hideGlobalStatus() {
+    globalStatus.style.display = 'none';
+  }
+
+  function computeNewId(mods) {
+    return ModsLib.highestId(mods) + 1;
+  }
+
+  function isValidUrlInput(str) {
+    return ModsLib.isLikelyValidUrl(str);
+  }
+
+  /* ---------------- Rendering ---------------- */
+
+  function renderAll() {
+    newIdInput.value = computeNewId(state.mods);
+    renderAdminList();
+    renderJsonView();
+  }
+
+  function getFilteredAdminList() {
+    let list = state.adminSort === 'desc'
+      ? ModsLib.sortByIdDesc(state.mods)
+      : ModsLib.sortByIdAsc(state.mods);
+    const q = state.adminQuery.trim().toLowerCase();
+    if (q) {
+      list = list.filter(m =>
+        String(m.id).includes(q) ||
+        String(m.title || '').toLowerCase().includes(q) ||
+        String(m.description || '').toLowerCase().includes(q)
+      );
+    }
+    return list;
+  }
+
+  function renderAdminList() {
+    const list = getFilteredAdminList();
+    adminList.innerHTML = '';
+    adminEmpty.style.display = list.length ? 'none' : 'block';
+
+    list.forEach(mod => {
+      const row = document.createElement('div');
+      row.className = 'admin-row';
+      const img = ModsLib.escapeHtml(mod.image || '');
+      const title = ModsLib.escapeHtml(mod.title || 'بدون عنوان');
+      row.innerHTML = `
+        <img class="admin-row__thumb" src="${img}" alt="" onerror="this.style.opacity=0.15">
+        <span class="admin-row__id">#${ModsLib.escapeHtml(mod.id)}</span>
+        <span class="admin-row__title">${title}</span>
+        <div class="admin-row__actions">
+          <button type="button" class="btn btn--sm btn--outline" data-action="edit" data-id="${mod.id}">تعديل</button>
+          <button type="button" class="btn btn--sm btn--danger" data-action="delete" data-id="${mod.id}">حذف</button>
+          <button type="button" class="btn btn--sm btn--outline" data-action="copy" data-id="${mod.id}">نسخ الرابط</button>
+        </div>
+      `;
+      adminList.appendChild(row);
+    });
+  }
+
+  function renderJsonView() {
+    let displayMods;
+    if (state.jsonTab === 'unencrypted') {
+      displayMods = state.mods.map(m => ({
+        ...m,
+        download: ModsLib.resolveDownloadUrl(m) || m.download
+      }));
+    } else {
+      displayMods = state.mods;
+    }
+    jsonView.textContent = JSON.stringify(displayMods, null, 2);
+  }
+
+  /* ---------------- Data loading ---------------- */
+
+  async function loadFromGitHub() {
+    hideGlobalStatus();
+    showGlobalStatus('جاري تحميل البيانات من GitHub...', false);
+    try {
+      const { mods } = await fetchRemoteMods();
+      state.mods = mods;
+      hideGlobalStatus();
+      renderAll();
+    } catch (err) {
+      showGlobalStatus(err.message || 'حدث خطأ غير متوقع.', true);
+    }
+  }
+
+  /* ---------------- Publish ---------------- */
+
+  publishForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const title = newTitleInput.value.trim();
+    const desc = newDescInput.value.trim();
+    const image = newImageInput.value.trim();
+    const download = newDownloadInput.value.trim();
+
+    if (!title || !desc || !image || !download) {
+      ModsLib.showToast('يرجى تعبئة جميع الحقول.', 'error');
+      return;
+    }
+    if (!isValidUrlInput(image) || !isValidUrlInput(download)) {
+      ModsLib.showToast('رابط الصورة أو رابط التحميل غير صالح.', 'error');
+      return;
+    }
+
+    setBusy(publishBtn, true, 'جاري النشر...', 'نشر');
+    try {
+      let createdId = null;
+      const newMods = await writeWithRetry((currentMods) => {
+        const id = computeNewId(currentMods);
+        createdId = id;
+        const encodedDownload = ModsLib.b64Encode(download);
+        return [...currentMods, { id, title, description: desc, image, download: encodedDownload }];
+      }, `Add mod #${Date.now()}`);
+
+      state.mods = newMods;
+      renderAll();
+
+      const link = ModsLib.fullModUrl(createdId);
+      state.lastNewLink = link;
+      publishLinkLabel.textContent = 'تم النشر بنجاح — الرابط: ' + link;
+      publishResult.style.display = 'block';
+
+      publishForm.reset();
+      ModsLib.showToast('تم نشر المود بنجاح.', 'success');
+    } catch (err) {
+      ModsLib.showToast(err.message || 'فشل نشر المود.', 'error');
+    } finally {
+      setBusy(publishBtn, false, 'جاري النشر...', 'نشر');
+    }
+  });
+
+  copyNewLinkBtn.addEventListener('click', async () => {
+    if (!state.lastNewLink) return;
+    const ok = await ModsLib.copyToClipboard(state.lastNewLink);
+    ModsLib.showToast(ok ? 'تم نسخ الرابط.' : 'تعذر نسخ الرابط.', ok ? 'success' : 'error');
+  });
+
+  /* ---------------- Admin list actions (delegated) ---------------- */
+
+  adminList.addEventListener('click', async (e) => {
+    const btn = e.target.closest('button[data-action]');
+    if (!btn) return;
+    const action = btn.dataset.action;
+    const id = Number(btn.dataset.id);
+    const mod = state.mods.find(m => Number(m.id) === id);
+    if (!mod) return;
+
+    if (action === 'edit') {
+      openEditModal(mod);
+    } else if (action === 'delete') {
+      handleDelete(id, btn);
+    } else if (action === 'copy') {
+      const link = ModsLib.fullModUrl(id);
+      const ok = await ModsLib.copyToClipboard(link);
+      ModsLib.showToast(ok ? 'تم نسخ الرابط.' : 'تعذر نسخ الرابط.', ok ? 'success' : 'error');
+    }
+  });
+
+  async function handleDelete(id, btn) {
+    const confirmed = window.confirm('هل أنت متأكد من حذف هذا المود؟ لا يمكن التراجع عن هذا الإجراء.');
+    if (!confirmed) return;
+
+    setBusy(btn, true, 'جاري الحذف...', 'حذف');
+    try {
+      const newMods = await writeWithRetry((currentMods) => {
+        return currentMods.filter(m => Number(m.id) !== id);
+      }, `Delete mod #${id}`);
+      state.mods = newMods;
+      renderAll();
+      ModsLib.showToast('تم حذف المود.', 'success');
+    } catch (err) {
+      ModsLib.showToast(err.message || 'فشل حذف المود.', 'error');
+    } finally {
+      setBusy(btn, false, 'جاري الحذف...', 'حذف');
+    }
+  }
+
+  /* ---------------- Edit modal ---------------- */
+
+  function openEditModal(mod) {
+    editId.value = mod.id;
+    editTitle.value = mod.title || '';
+    editDesc.value = mod.description || '';
+    editImage.value = mod.image || '';
+    editDownload.value = ModsLib.resolveDownloadUrl(mod) || '';
+    editModal.classList.add('is-open');
+  }
+
+  function closeEditModal() {
+    editModal.classList.remove('is-open');
+    editForm.reset();
+  }
+
+  editCancelBtn.addEventListener('click', closeEditModal);
+  editModal.addEventListener('click', (e) => {
+    if (e.target === editModal) closeEditModal();
+  });
+
+  editForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = Number(editId.value);
+    const title = editTitle.value.trim();
+    const desc = editDesc.value.trim();
+    const image = editImage.value.trim();
+    const download = editDownload.value.trim();
+
+    if (!title || !desc || !image || !download) {
+      ModsLib.showToast('يرجى تعبئة جميع الحقول.', 'error');
+      return;
+    }
+    if (!isValidUrlInput(image) || !isValidUrlInput(download)) {
+      ModsLib.showToast('رابط الصورة أو رابط التحميل غير صالح.', 'error');
+      return;
+    }
+
+    const submitBtn = editForm.querySelector('button[type="submit"]');
+    setBusy(submitBtn, true, 'جاري الحفظ...', 'حفظ التعديل');
+    try {
+      const newMods = await writeWithRetry((currentMods) => {
+        return currentMods.map(m => {
+          if (Number(m.id) !== id) return m;
+          return {
+            ...m,
+            title,
+            description: desc,
+            image,
+            download: ModsLib.b64Encode(download)
+          };
+        });
+      }, `Edit mod #${id}`);
+      state.mods = newMods;
+      renderAll();
+      closeEditModal();
+      ModsLib.showToast('تم حفظ التعديل.', 'success');
+    } catch (err) {
+      ModsLib.showToast(err.message || 'فشل حفظ التعديل.', 'error');
+    } finally {
+      setBusy(submitBtn, false, 'جاري الحفظ...', 'حفظ التعديل');
+    }
+  });
+
+  /* ---------------- Admin list controls ---------------- */
+
+  adminSortNewest.addEventListener('click', () => {
+    if (state.adminSort === 'desc') return;
+    state.adminSort = 'desc';
+    adminSortNewest.classList.add('is-active');
+    adminSortOldest.classList.remove('is-active');
+    renderAdminList();
+  });
+  adminSortOldest.addEventListener('click', () => {
+    if (state.adminSort === 'asc') return;
+    state.adminSort = 'asc';
+    adminSortOldest.classList.add('is-active');
+    adminSortNewest.classList.remove('is-active');
+    renderAdminList();
+  });
+  adminSearch.addEventListener('input', (e) => {
+    state.adminQuery = e.target.value;
+    renderAdminList();
+  });
+
+  /* ---------------- JSON view tabs ---------------- */
+
+  tabUnencrypted.addEventListener('click', () => {
+    state.jsonTab = 'unencrypted';
+    tabUnencrypted.classList.add('is-active');
+    tabEncrypted.classList.remove('is-active');
+    renderJsonView();
+  });
+  tabEncrypted.addEventListener('click', () => {
+    state.jsonTab = 'encrypted';
+    tabEncrypted.classList.add('is-active');
+    tabUnencrypted.classList.remove('is-active');
+    renderJsonView();
+  });
+  copyJsonBtn.addEventListener('click', async () => {
+    const ok = await ModsLib.copyToClipboard(jsonView.textContent);
+    ModsLib.showToast(ok ? 'تم نسخ JSON.' : 'تعذر النسخ.', ok ? 'success' : 'error');
+  });
+
+  /* ---------------- Token gate ---------------- */
+
+  function showApp() {
+    tokenGate.style.display = 'none';
+    dashboardApp.style.display = 'block';
+    loadFromGitHub();
+  }
+
+  function showGate() {
+    dashboardApp.style.display = 'none';
+    tokenGate.style.display = 'block';
+  }
+
+  tokenSaveBtn.addEventListener('click', () => {
+    const val = tokenInput.value.trim();
+    if (!val) {
+      ModsLib.showToast('يرجى إدخال Token صالح.', 'error');
+      return;
+    }
+    setToken(val);
+    tokenInput.value = '';
+    showApp();
+  });
+
+  tokenInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      tokenSaveBtn.click();
+    }
+  });
+
+  clearTokenBtn.addEventListener('click', () => {
+    const confirmed = window.confirm('هل تريد مسح GitHub Token المحفوظ من هذا المتصفح؟');
+    if (!confirmed) return;
+    clearToken();
+    ModsLib.showToast('تم مسح Token.', 'success');
+    showGate();
+  });
+
+  /* ---------------- Init ---------------- */
+
+  function init() {
+    ModsLib.renderHeader('#header-mount');
+    ModsLib.renderFooter('#footer-mount');
+    ModsLib.ensureFavicon();
+    ModsLib.injectGlobalAdScripts();
+
+    if (getToken()) {
+      showApp();
+    } else {
+      showGate();
+    }
+  }
+
+  init();
+})();
+</script>
+
+</body>
+</html>

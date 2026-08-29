@@ -1,178 +1,348 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحة التحميل - ATTACK N' DESTROY</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #0a0a0a;
-            --card-dark: #141414;
-            --accent-yellow: #ffde00;
-            --text-main: #ffffff;
-            --text-muted: #aaaaaa;
-            --border-color: #262626;
-        }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'Cairo', sans-serif;
-            overflow-x: hidden;
-            background-image: repeating-linear-gradient(45deg, rgba(255, 222, 0, 0.01) 0, rgba(255, 222, 0, 0.01) 1px, transparent 0, transparent 50px);
-        }
-        h1, h2, h3, .oswald-font {
-            font-family: 'Oswald', sans-serif;
-            letter-spacing: 1px;
-        }
-        .main-header {
-            width: 100%;
-            max-height: 400px;
-            overflow: hidden;
-            border-bottom: 3px solid var(--accent-yellow);
-        }
-        .main-header img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            display: block;
-        }
-        .ad-container {
-            width: 100%;
-            text-align: center;
-            margin: 20px 0;
-            padding: 10px;
-            background: var(--card-dark);
-            border: 1px dashed var(--border-color);
-        }
-        .download-container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        .download-card {
-            background: var(--card-dark);
-            border: 1px solid var(--border-color);
-            padding: 40px 30px;
-            text-align: center;
-            clip-path: polygon(0 0, 100% 0, 100% 98%, 98% 100%, 0 100%);
-        }
-        .mod-title {
-            font-size: 36px;
-            color: var(--accent-yellow);
-            margin-bottom: 20px;
-        }
-        .mod-desc {
-            font-size: 18px;
-            color: var(--text-muted);
-            line-height: 1.8;
-            margin-bottom: 40px;
-        }
-        .download-btn {
-            background: var(--accent-yellow);
-            color: var(--bg-dark);
-            border: none;
-            padding: 18px 50px;
-            font-family: 'Oswald', sans-serif;
-            font-size: 22px;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
-            transition: 0.3s;
-        }
-        .download-btn:hover {
-            opacity: 0.9;
-            box-shadow: 0 0 25px rgba(255, 222, 0, 0.6);
-            transform: translateY(-2px);
-        }
-        footer {
-            background: #050505;
-            border-top: 2px solid var(--border-color);
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 50px;
-        }
-        footer p {
-            color: var(--text-muted);
-            margin: 5px 0;
-            font-size: 15px;
-        }
-        .highlight-brand {
-            color: var(--accent-yellow);
-            font-weight: bold;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>تحميل الـ Mod - ATTACK N' DESTROY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --card:#141414;
+    --yellow:#ffde00;
+    --text:#e9e9e9;
+    --muted:#9a9a9a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{overflow-x:hidden;max-width:100%;}
+  body{
+    background-color:var(--bg);
+    color:var(--text);
+    font-family:'Cairo', sans-serif;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(255,222,0,0.02) 0px, rgba(255,222,0,0.02) 2px, transparent 2px, transparent 40px),
+      radial-gradient(circle at 15% 10%, rgba(255,222,0,0.06), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(255,222,0,0.05), transparent 45%);
+    min-height:100vh;
+  }
+  h1,h2,h3,button,.btn{font-family:'Oswald', sans-serif;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+
+  header.site-header{
+    width:100%;
+    background:#000;
+    border-bottom:2px solid var(--yellow);
+  }
+  header.site-header img{
+    width:100%;
+    height:auto;
+    aspect-ratio:1600/600;
+    object-fit:cover;
+    display:block;
+  }
+
+  .container{
+    width:100%;
+    max-width:760px;
+    margin:0 auto;
+    padding:16px;
+  }
+
+  /* إصلاح الإعلانات: منعها من التقاط النقرات */
+  .ad-banner-slot,
+  .ad-320-wrap {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .ad-banner-slot iframe,
+  .ad-320-wrap iframe {
+    pointer-events: none !important;
+    touch-action: none;
+  }
+
+  .ad-banner-slot{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:14px 0;
+    overflow:hidden;
+  }
+
+  .ad-320-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    margin:18px 0;
+  }
+  .ad-320-wrap iframe{
+    max-width:320px;
+    width:100%;
+    border:0;
+    display:block;
+  }
+
+  .mod-card{
+    background:var(--card);
+    border:1px solid #232323;
+    padding:26px 22px;
+    text-align:center;
+    margin:18px 0;
+  }
+  .mod-card h1{
+    font-size:24px;
+    font-weight:700;
+    color:#fff;
+    margin-bottom:16px;
+    line-height:1.4;
+    word-break:break-word;
+  }
+  .mod-card .desc{
+    font-size:16px;
+    color:var(--text);
+    line-height:1.9;
+    margin-bottom:24px;
+    text-align:right;
+    white-space:pre-wrap;
+    word-break:break-word;
+  }
+  .mod-card .desc:empty{display:none;}
+
+  /* ===== إصلاح مشكلة الضغطتين ===== */
+  .btn{
+    display:inline-block;
+    background:var(--card);
+    color:var(--yellow);
+    border:1px solid var(--yellow);
+    padding:15px 30px;
+    font-weight:600;
+    font-size:16px;
+    letter-spacing:.5px;
+    cursor:pointer;
+    text-align:center;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    transition: background .2s ease, color .2s ease, box-shadow .2s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* تأثير التحويم (Hover) يظهر فقط على أجهزة الماوس */
+  @media (hover: hover) {
+    .btn:hover {
+      background:var(--yellow);
+      color:#0a0a0a;
+      box-shadow:0 0 16px rgba(255,222,0,0.55);
+      transform:translateY(-1px);
+    }
+  }
+
+  /* تأثير الضغط (Active) - بدون أي إزاحة أو تغيير في الحجم لمنع إعادة التخطيط */
+  .btn:active {
+    background:var(--yellow);
+    color:#0a0a0a;
+    box-shadow:0 0 20px rgba(255,222,0,0.7);
+    transform: none !important;
+  }
+  /* ==================================== */
+
+  #errorBox{
+    display:none;
+    text-align:center;
+    padding:40px 16px;
+    color:var(--muted);
+    font-size:16px;
+  }
+
+  footer{
+    text-align:center;
+    padding:26px 16px 34px;
+    color:var(--muted);
+    font-size:14px;
+    border-top:1px solid #1e1e1e;
+    margin-top:20px;
+  }
+  footer .accent{color:#ffde00;font-weight:700;}
+  footer p{margin:4px 0;}
+
+  @media (min-width:600px){
+    .mod-card h1{font-size:28px;}
+  }
+</style>
 </head>
 <body>
 
-    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
-    <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
+<header class="site-header">
+  <img src="/header.png" alt="ATTACK N' DESTROY">
+</header>
 
-    <header class="main-header">
-        <img src="header.png" alt="ATTACK N' DESTROY Header" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1600&q=80'">
-    </header>
+<!-- Banner ad under header -->
+<div class="ad-banner-slot" id="bannerAdSlot"></div>
 
-    <div class="download-container" id="downloadWrapper">
-        </div>
+<div class="container">
 
-    <footer>
-        <p>Copyright: <span class="highlight-brand">ATTACK N' DESTROY</span></p>
-        <p>Powered By: <span class="highlight-brand">ATTACK N' DESTROY</span></p>
-    </footer>
+  <div class="ad-320-wrap" id="ad1"></div>
 
-    <script src="stats.js"></script>
+  <div id="modContent"></div>
 
-    <script>
-        async function loadDownloadPage() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const modId = parseInt(urlParams.get('id'));
-            const container = document.getElementById('downloadWrapper');
+  <div id="ad2mid" class="ad-320-wrap" style="display:none;"></div>
 
-            if (!modId) {
-                container.innerHTML = '<p style="text-align:center; color:#ffde00; font-size:20px;">معرّف المود غير موجود!</p>';
-                return;
-            }
+  <div id="errorBox">لم يتم العثور على الملف المطلوب.</div>
 
-            try {
-                const response = await fetch('mods.json');
-                const data = await response.json();
-                const mod = data.find(m => m.id === modId);
+  <div class="ad-320-wrap" id="ad3"></div>
 
-                if (!mod) {
-                    container.innerHTML = '<p style="text-align:center; color:#ffde00; font-size:20px;">عذراً، الملف المطلوب غير متوفر.</p>';
-                    return;
-                }
+</div>
 
-                container.innerHTML = `
-                    <div class="download-card">
-                        <h1 class="mod-title">${mod.title}</h1>
-                        <p class="mod-desc">${mod.description}</p>
-                        
-                        <div class="ad-container"><script src="/320-50.js"><\/script></div>
+<footer>
+  <p>Copyright: <span class="accent">ATTACK N' DESROY</span></p>
+  <p>Powered By: <span class="accent">ATTACK N' DESTROY</span></p>
+</footer>
 
-                        <div style="margin: 35px 0;">
-                            <a href="${mod.downloadLink}" class="download-btn" target="_blank">تحميل الملف الآن</a>
-                        </div>
+<script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
+<script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
+<script src="/stats.js"></script>
 
-                        <div class="ad-container"><script src="/320-50.js"><\/script></div>
+<script>
+(function(){
+  "use strict";
 
-                        <div class="ad-container"><script src="/320-50.js"><\/script></div>
-                    </div>
-                `;
-            } catch (error) {
-                console.error("Error loading download link:", error);
-                container.innerHTML = '<p style="text-align:center; color:#ffde00;">حدث خطأ أثناء تحميل بيانات الملف.</p>';
-            }
+  function injectDynamicAd(container){
+    var iframe = document.createElement('iframe');
+    iframe.style.width = '100%';
+    iframe.style.maxWidth = '320px';
+    iframe.style.height = '50px';
+    iframe.style.border = '0';
+    iframe.style.overflow = 'hidden';
+    iframe.style.pointerEvents = 'none'; // منع التقاط النقر
+    iframe.setAttribute('scrolling', 'no');
+    container.appendChild(iframe);
+    try{
+      var doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write('<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;background:transparent;overflow:hidden;}</style></head><body><script src="/320-50.js"><\/script></body></html>');
+      doc.close();
+      var resize = function(){
+        try{
+          var h = doc.body.scrollHeight;
+          if (h && h > 10){ iframe.style.height = h + 'px'; }
+        }catch(e){}
+      };
+      iframe.onload = resize;
+      setTimeout(resize, 700);
+      setTimeout(resize, 1600);
+      setTimeout(resize, 3000);
+    }catch(e){}
+  }
+
+  function injectBannerAd(){
+    var slot = document.getElementById('bannerAdSlot');
+    var div = document.createElement('div');
+    div.id = 'container-2d6b46676c10234a8731ba94f0111059';
+    slot.appendChild(div);
+    var s = document.createElement('script');
+    s.async = true;
+    s.setAttribute('data-cfasync', 'false');
+    s.src = 'https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js';
+    slot.appendChild(s);
+  }
+
+  function getIdFromUrl(){
+    var params = new URLSearchParams(window.location.search);
+    var id = params.get('id');
+    if (id === null) return null;
+    var n = Number(id);
+    return isNaN(n) ? id : n;
+  }
+
+  function showError(){
+    document.getElementById('errorBox').style.display = 'block';
+    document.getElementById('modContent').style.display = 'none';
+    document.getElementById('ad2mid').style.display = 'none';
+  }
+
+  // The final download link is stored base64-encoded in mods.json; decode it
+  // without altering or shortening the underlying URL in any way.
+  function decodeDownloadLink(raw){
+    try{
+      return decodeURIComponent(escape(window.atob(raw)));
+    }catch(e){
+      try{
+        return window.atob(raw);
+      }catch(e2){
+        return raw;
+      }
+    }
+  }
+
+  function render(post){
+    var wrap = document.getElementById('modContent');
+    var card = document.createElement('div');
+    card.className = 'mod-card';
+
+    var h1 = document.createElement('h1');
+    h1.textContent = post.title || '';
+    card.appendChild(h1);
+
+    var desc = document.createElement('div');
+    desc.className = 'desc';
+    desc.textContent = post.description || '';
+    card.appendChild(desc);
+
+    var finalUrl = decodeDownloadLink(post.download || '');
+
+    var btn = document.createElement('a');
+    btn.className = 'btn';
+    btn.href = finalUrl;
+    btn.textContent = 'تحميل الملف';
+    btn.setAttribute('rel', 'nofollow');
+
+    // منع انتشار الأحداث احتياطياً
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+    btn.addEventListener('touchstart', function(e) {
+      e.stopPropagation();
+    }, { passive: true });
+
+    card.appendChild(btn);
+    wrap.appendChild(card);
+
+    var ad2 = document.getElementById('ad2mid');
+    ad2.style.display = 'flex';
+    injectDynamicAd(ad2);
+  }
+
+  var id = getIdFromUrl();
+  if (id === null){
+    showError();
+  } else {
+    fetch('/mods.json')
+      .then(function(res){ return res.json(); })
+      .then(function(data){
+        var list = Array.isArray(data) ? data : [];
+        var post = list.find(function(p){ return String(p.id) === String(id); });
+        if (!post || !post.download){
+          showError();
+        } else {
+          render(post);
         }
+      })
+      .catch(function(){
+        showError();
+      });
+  }
 
-        window.addEventListener('DOMContentLoaded', loadDownloadPage);
-    </script>
+  injectBannerAd();
+  injectDynamicAd(document.getElementById('ad1'));
+  injectDynamicAd(document.getElementById('ad3'));
+
+})();
+</script>
+
 </body>
 </html>

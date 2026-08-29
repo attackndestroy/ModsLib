@@ -1,352 +1,210 @@
 <!DOCTYPE html>
-<html lang="ar" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>ATT/DES — تحميل المود</title>
-    
-    <!-- أيقونة المتصفح -->
-    <link rel="icon" type="image/x-icon" href="https://attdes.online/fav.ico" />
-    <link rel="shortcut icon" type="image/x-icon" href="https://attdes.online/fav.ico" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تحميل المود – Attack N' Destroy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
     <style>
-        :root {
-            --metal-yellow: #ffde00;
-            --metal-yellow-glow: rgba(255, 222, 0, 0.4);
-            --metal-dark: #0a0a0a;
-            --metal-card: #141414;
-            --metal-border: #282828;
-            --metal-gray: #888888;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { overflow-x: hidden; font-size: 16px; scroll-behavior: smooth; }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: var(--metal-dark);
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(255, 222, 0, 0.05) 0%, transparent 60%),
-                repeating-linear-gradient(45deg, rgba(0,0,0,0.2) 0, rgba(0,0,0,0.2) 2px, transparent 0, transparent 4px);
-            color: #f0f0f0;
-            font-family: 'Cairo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            line-height: 1.6; overflow-x: hidden; min-height: 100vh;
-            display: flex; flex-direction: column;
+            background: #0a0a0a;
+            color: #eee;
+            font-family: 'Cairo', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-
-        a { color: var(--metal-yellow); text-decoration: none; transition: 0.2s; }
-        a:hover { text-shadow: 0 0 10px var(--metal-yellow-glow); }
-        :focus-visible { outline: 2px solid var(--metal-yellow); outline-offset: 2px; }
-
-        .site-header {
-            background: #000000;
-            padding: 1.2rem 1rem;
-            text-align: center;
-            border-bottom: 3px solid var(--metal-yellow);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
-            position: relative;
+        a { text-decoration: none; color: inherit; }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex: 1;
+            width: 100%;
         }
-        .site-header::after {
+        body::before {
             content: '';
-            position: absolute;
-            bottom: -6px; left: 0; right: 0;
-            height: 3px;
-            background: repeating-linear-gradient(90deg, var(--metal-yellow) 0, var(--metal-yellow) 10px, transparent 10px, transparent 20px);
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,222,0,0.02) 20px, rgba(255,222,0,0.02) 21px),
+                radial-gradient(circle at 30% 40%, #1a1a1a, #0a0a0a 80%);
+            pointer-events: none;
+            z-index: -1;
         }
-        .header-logo { 
-            max-width: 100%; height: auto; max-height: 90px; width: auto; 
-            display: inline-block;
-            filter: drop-shadow(0 2px 8px rgba(255, 222, 0, 0.2));
-            transition: transform 0.3s ease;
-        }
-        .header-logo:hover { transform: scale(1.03); }
-
-        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; width: 100%; flex: 1; }
-
-        .native-banner-wrapper, .social-bar-wrapper { text-align: center; margin: 1rem 0; overflow: hidden; }
-        .native-banner-wrapper iframe, .social-bar-wrapper iframe { max-width: 100%; }
-
-        /* تعديل حاوية البانر لتلائم الحجم تلقائياً بدون فراغات */
-        .banner-320x50 {
-            width: 100%; max-width: 320px; margin: 1.5rem auto; overflow: hidden;
-            text-align: center; background: transparent;
-            display: flex; justify-content: center; align-items: center;
-        }
-        .banner-320x50 iframe {
-            width: 320px;
-            height: 50px;
-            max-width: 100%;
-            border: none;
-            overflow: hidden;
+        .header-img {
+            width: 100%;
+            max-height: 600px;
+            object-fit: cover;
             display: block;
+            border-bottom: 2px solid #ffde00;
         }
-
-        .mod-download {
-            background: var(--metal-card); 
-            border: 1px solid var(--metal-border);
-            border-radius: 4px; 
-            padding: 2.5rem 1.5rem;
-            margin-bottom: 2rem; 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.7); 
+        .ad-under-header {
             text-align: center;
-            position: relative;
+            padding: 10px 0;
+            background: #141414;
+            border-bottom: 1px solid #333;
         }
-        .mod-download::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
-            background: var(--metal-yellow);
-            box-shadow: 0 0 10px var(--metal-yellow);
+        .download-card {
+            background: #141414;
+            border: 1px solid #333;
+            padding: 30px;
+            margin: 30px 0;
+            clip-path: polygon(0% 0%, 98% 0%, 100% 5%, 100% 100%, 2% 100%, 0% 95%);
         }
-
-        .download-card { max-width: 500px; margin: 0 auto; }
-        
-        .download-title {
-            font-size: 2.2rem; 
-            font-weight: 900; 
-            color: #fff;
-            margin-top: 0; 
-            margin-bottom: 0.5rem; 
-            line-height: 1.3;
-            font-family: 'Oswald', 'Cairo', sans-serif;
-            letter-spacing: 0.5px;
-        }
-        
-        .download-ready {
-            font-size: 1.2rem; 
-            color: var(--metal-yellow); 
-            margin: 0.8rem 0 1.5rem;
+        .download-card h1 {
             font-family: 'Oswald', sans-serif;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            font-size: 2rem;
+            color: #ffde00;
+            margin-bottom: 15px;
         }
-        
-        .download-btn {
-            display: inline-block; 
-            background: var(--metal-yellow); 
-            color: #000;
-            font-weight: 900; 
-            padding: 0.9rem 2.8rem; 
-            border-radius: 0px;
-            text-decoration: none; 
-            font-size: 1.2rem; 
-            transition: all 0.2s ease;
-            border: none; 
-            cursor: pointer; 
-            min-height: 50px; min-width: 180px;
-            text-align: center; 
-            line-height: 1.4; 
-            margin: 0.5rem 0;
-            font-family: 'Oswald', 'Cairo', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+        .download-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ccc;
+            margin-bottom: 30px;
         }
-        .download-btn:hover { 
-            background: #fff; 
-            color: #000;
-            box-shadow: 0 0 25px var(--metal-yellow-glow);
-            transform: translateY(-2px); 
-        }
-        .download-btn:active { transform: scale(0.96); }
-        
-        .download-note { color: var(--metal-gray); font-size: 0.95rem; margin-top: 1.2rem; }
-
-        .mod-banner { margin: 1.5rem auto; max-width: 320px; overflow: hidden; text-align: center; }
-
-        .error-box {
-            background: var(--metal-card); 
-            border: 1px solid var(--metal-yellow); 
-            border-radius: 4px;
-            padding: 2.5rem 1.5rem; 
-            text-align: center; 
-            max-width: 600px; 
-            margin: 2rem auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-        }
-        .error-box h2 { color: var(--metal-yellow); font-size: 1.8rem; margin-bottom: 0.5rem; font-family: 'Oswald', sans-serif; }
-        .error-box p { color: #ccc; margin-bottom: 1.5rem; font-size: 1.1rem; }
-        .error-box .mod-card-btn {
-            display: inline-block; background: var(--metal-yellow); color: #000;
-            font-weight: 900; padding: 0.7rem 2rem; border-radius: 0px;
-            text-decoration: none; transition: all 0.2s;
-            min-height: 44px; min-width: 140px; text-align: center; line-height: 1.4;
-            margin: 0.5rem auto;
+        .btn-download-final {
+            display: inline-block;
+            background: #ffde00;
+            color: #0a0a0a;
+            padding: 14px 40px;
             font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+            font-weight: 700;
+            font-size: 1.5rem;
+            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            text-align: center;
         }
-        .error-box .mod-card-btn:hover { background: #fff; box-shadow: 0 0 15px var(--metal-yellow-glow); }
+        .btn-download-final:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(255,222,0,0.5);
+        }
 
-        .download-status { text-align: center; padding: 2rem; color: var(--metal-gray); font-size: 1.1rem; font-family: 'Oswald', sans-serif; letter-spacing: 1px; }
+        .ad-incontent {
+            text-align: center;
+            padding: 15px 0;
+            margin: 20px 0;
+            background: #0f0f0f;
+            border: 1px solid #2a2a2a;
+        }
+        .ad-incontent iframe {
+            border: none;
+            max-width: 320px;
+            width: 100%;
+            height: 50px;
+            display: inline-block;
+        }
 
-        @media (max-width: 360px) {
-            .container { padding: 0.6rem; }
-            .download-title { font-size: 1.6rem; }
-            .download-btn { font-size: 1.1rem; padding: 0.7rem 2rem; min-width: 150px; }
+        footer {
+            background: #0a0a0a;
+            border-top: 2px solid #ffde00;
+            padding: 25px 20px;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            color: #aaa;
+            margin-top: 30px;
         }
-        @media (min-width: 900px) {
-            .mod-download { padding: 3rem; }
-            .download-title { font-size: 2.5rem; }
-            .header-logo { max-height: 110px; }
+        footer .highlight {
+            color: #ffde00;
+            font-weight: 700;
+            font-family: 'Oswald', sans-serif;
         }
-        img, iframe, video { max-width: 100%; height: auto; }
-        * { max-width: 100%; }
+
+        @media (max-width: 600px) {
+            .download-card { padding: 15px; }
+            .download-card h1 { font-size: 1.5rem; }
+            .btn-download-final { font-size: 1.2rem; padding: 12px 25px; }
+        }
     </style>
-    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
-    <script src="https://modslib.attdes.online/analytics.js"></script>
 </head>
 <body>
 
-    <header class="site-header">
-        <a href="index.html"><img src="https://attdes.online/header.png" alt="ATT/DES Logo" class="header-logo" /></a>
+    <!-- ===== الهيدر ===== -->
+    <header>
+        <img src="/header.png" alt="Attack N' Destroy" class="header-img" />
     </header>
 
-    <div class="native-banner-wrapper">
+    <!-- ===== إعلان تحت الهيدر ===== -->
+    <div class="ad-under-header">
         <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js"></script>
         <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
     </div>
 
-    <div class="social-bar-wrapper">
-        <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
-    </div>
-
-    <main class="container mod-container">
-        <div id="mod-download" class="mod-download"></div>
-        <div class="banner-320x50 mod-banner">
-            <script>
-                atOptions = {
-                    'key': '28d1f1f838ea883f1f7fc0d4733ebba6',
-                    'format': 'iframe',
-                    'height': 50,
-                    'width': 320,
-                    'params': {}
-                };
-            </script>
-            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"></script>
+    <!-- ===== المحتوى ===== -->
+    <main class="container">
+        <div id="downloadContainer">
+            <!-- سيتم تعبئته بواسطة JS -->
         </div>
-        <div id="download-status" class="download-status"></div>
+
+        <!-- إعلانات عامة -->
+        <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
+        <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
     </main>
+
+    <!-- ===== الفوتر ===== -->
+    <footer>
+        <div>Copyright: <span class="highlight">ATTACK N' DESTROY</span></div>
+        <div>Powered By: <span class="highlight">ATTACK N' DESTROY</span></div>
+    </footer>
+
+    <script src="/stats.js"></script>
 
     <script>
         (function() {
-            'use strict';
-
-            function getUrlParam(param) {
-                const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get(param);
-            }
-
-            function escapeHtml(str) {
-                if (!str) return '';
-                return String(str).replace(/[&<>"]/g, function(m) {
-                    if (m === '&') return '&amp;';
-                    if (m === '<') return '&lt;';
-                    if (m === '>') return '&gt;';
-                    if (m === '"') return '&quot;';
-                    return m;
-                });
-            }
-
-            const id = getUrlParam('id');
-            const downloadEl = document.getElementById('mod-download');
-            const statusEl = document.getElementById('download-status');
+            const container = document.getElementById('downloadContainer');
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
 
             if (!id) {
-                downloadEl.innerHTML = '';
-                statusEl.innerHTML = `
-                    <div class="error-box">
-                        <h2>لم يتم تحديد المود</h2>
-                        <p>الرجاء استخدام رابط صحيح.</p>
-                        <a href="index.html" class="mod-card-btn">العودة للرئيسية</a>
-                    </div>
-                `;
+                container.innerHTML = `<p style="color:#ff4444; padding:30px;">⚠️ لم يتم تحديد المود.</p>`;
                 return;
             }
 
-            const accessKey = 'download_access_' + id;
-            let hasAccess = false;
-            try {
-                hasAccess = (sessionStorage.getItem(accessKey) === 'true');
-            } catch(e) {}
-
-            if (!hasAccess) {
-                downloadEl.innerHTML = '';
-                statusEl.innerHTML = `
-                    <div class="error-box">
-                        <h2>لحظة يا بطل 😂</h2>
-                        <p>المود لن يهرب منك، لكن عليك المرور من الصفحة السابقة أولًا.</p>
-                        <a href="tomod.html?id=${encodeURIComponent(id)}" class="mod-card-btn">الذهاب إلى صفحة المود</a>
-                    </div>
-                `;
-                return;
-            }
-
-            function showError(title, msg) {
-                downloadEl.innerHTML = '';
-                statusEl.innerHTML = `
-                    <div class="error-box">
-                        <h2>${escapeHtml(title)}</h2>
-                        <p>${escapeHtml(msg)}</p>
-                        <a href="index.html" class="mod-card-btn">العودة للرئيسية</a>
-                    </div>
-                `;
-                try { sessionStorage.removeItem(accessKey); } catch(e) {}
-            }
-
-            function renderDownload(item) {
-                const downloadUrl = item.download || '';
-                if (!downloadUrl) {
-                    showError('رابط التحميل غير متوفر', 'هذا المود لا يحتوي على رابط تحميل صالح.');
-                    return;
-                }
-
-                let realUrl = downloadUrl;
+            async function loadDownload() {
                 try {
-                    const decoded = atob(downloadUrl);
-                    if (decoded.startsWith('http://') || decoded.startsWith('https://')) {
-                        realUrl = decoded;
+                    const res = await fetch('/mods.json');
+                    if (!res.ok) throw new Error('فشل التحميل');
+                    const data = await res.json();
+                    const post = data.find(p => p.id == id);
+
+                    if (!post) {
+                        container.innerHTML = `<p style="color:#ffaa00; padding:30px;">❌ المود غير موجود.</p>`;
+                        return;
                     }
-                } catch(e) {}
 
-                downloadEl.innerHTML = `
-                    <div class="download-card">
-                        <h1 class="download-title">${escapeHtml(item.title || 'تحميل المود')}</h1>
-                        <p class="download-ready">المود جاهز للتحميل ✅</p>
-                        <a href="${escapeHtml(realUrl)}" target="_blank" rel="noopener noreferrer" class="download-btn">تحميل المود</a>
-                        <p class="download-note">سيتم فتح رابط التحميل في نافذة جديدة.</p>
-                    </div>
-                `;
-                statusEl.innerHTML = '';
+                    // رابط التحميل النهائي – نفترض أن الحقل اسمه "download" أو "downloadUrl"
+                    const downloadLink = post.download || post.downloadUrl || '#';
+
+                    let html = `
+                        <div class="download-card">
+                            <h1>${post.title}</h1>
+                            <p>${post.description || 'لا يوجد وصف.'}</p>
+                            <a href="${downloadLink}" class="btn-download-final" target="_blank">تحميل المود</a>
+                        </div>
+                    `;
+
+                    // 3 إعلانات 320×50 داخل المحتوى (وليس في الفوتر)
+                    for (let i = 0; i < 3; i++) {
+                        html += `
+                            <div class="ad-incontent">
+                                <iframe src="/320-50.js" style="width:100%; max-width:320px; height:50px; display:inline-block;"></iframe>
+                            </div>
+                        `;
+                    }
+
+                    container.innerHTML = html;
+
+                } catch (err) {
+                    container.innerHTML = `<p style="color:#ff4444; padding:30px;">⚠️ خطأ: ${err.message}</p>`;
+                }
             }
 
-            function fetchData() {
-                statusEl.textContent = 'جاري تجهيز التحميل…';
-                fetch('/mods.json')
-                    .then(res => {
-                        if (!res.ok) throw new Error('HTTP ' + res.status);
-                        return res.json();
-                    })
-                    .then(data => {
-                        if (typeof data !== 'object' || data === null) throw new Error('JSON غير صالح');
-                        const item = data[id];
-                        if (!item) {
-                            showError('المود غير موجود', 'لم نعثر على بيانات التحميل.');
-                            return;
-                        }
-                        renderDownload(item);
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        showError('خطأ في التحميل', 'تعذر تحميل البيانات. تأكد من وجود /mods.json.');
-                    });
-            }
-
-            fetchData();
+            loadDownload();
         })();
     </script>
 

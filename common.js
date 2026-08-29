@@ -102,12 +102,12 @@ const ModsLib = (() => {
   }
 
   function modUrl(id) {
-    return 'tomod.html?id=' + encodeURIComponent(id);
+    return '/mod.html?id=' + encodeURIComponent(id);
   }
 
   function fullModUrl(id) {
     try {
-      return window.location.origin + '/' + modUrl(id);
+      return window.location.origin + modUrl(id);
     } catch (e) {
       return modUrl(id);
     }

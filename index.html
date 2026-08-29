@@ -1,438 +1,282 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Attack N' Destroy – مودات ماينكرافت</title>
-    <!-- الخطوط -->
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATTACK N' DESTROY - الرهيب</title>
+    <link rel="icon" href="/fav.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <script src="/stats.js" async></script>
+    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
+    <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
     <style>
-        /* ===== الأساسيات ===== */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #141414;
+            --accent: #ffde00;
+            --text: #ffffff;
+            --gray: #888888;
+            --border: #222222;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background: #0a0a0a;
-            color: #eee;
+            background-color: var(--bg-color);
+            color: var(--text);
             font-family: 'Cairo', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0, rgba(255,255,255,0.01) 1px, transparent 0, transparent 50px);
         }
-        a { text-decoration: none; color: inherit; }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            flex: 1;
-        }
-
-        /* ===== الخلفية المميزة ===== */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: 
-                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,222,0,0.02) 20px, rgba(255,222,0,0.02) 21px),
-                radial-gradient(circle at 30% 40%, #1a1a1a, #0a0a0a 80%);
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* ===== الهيدر ===== */
-        .header-img {
+        header {
             width: 100%;
-            max-height: 600px;
+            border-bottom: 2px solid var(--accent);
+            background: var(--card-bg);
+            text-align: center;
+        }
+        header img {
+            width: 100%;
+            max-height: 250px;
             object-fit: cover;
             display: block;
-            background: #141414;
-            border-bottom: 2px solid #ffde00;
         }
-
-        /* ===== الإعلان تحت الهيدر ===== */
-        .ad-under-header {
+        .ad-banner-top {
             text-align: center;
-            padding: 10px 0;
-            background: #141414;
-            border-bottom: 1px solid #333;
+            margin: 15px auto;
         }
-
-        /* ===== أدوات التحكم (ترتيب - بحث) ===== */
+        .container {
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
         .controls {
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
             justify-content: space-between;
             align-items: center;
-            padding: 25px 0 15px;
-            border-bottom: 1px solid #333;
+            margin-bottom: 25px;
+            gap: 15px;
+            flex-wrap: wrap;
         }
-        .controls .sort-btns {
-            display: flex;
-            gap: 10px;
-        }
-        .controls .sort-btns button {
-            background: transparent;
-            border: 1px solid #555;
-            color: #ccc;
-            padding: 6px 18px;
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .controls .sort-btns button:hover,
-        .controls .sort-btns button.active {
-            background: #ffde00;
-            color: #0a0a0a;
-            border-color: #ffde00;
-            box-shadow: 0 0 15px rgba(255,222,0,0.3);
-        }
-        .search-box input {
-            background: #141414;
-            border: 1px solid #444;
-            color: #fff;
-            padding: 8px 20px;
-            border-radius: 0;
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 12px 20px;
+            color: var(--text);
             font-family: 'Cairo', sans-serif;
-            clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%);
-            width: 220px;
-            transition: 0.3s;
-        }
-        .search-box input:focus {
-            border-color: #ffde00;
             outline: none;
-            box-shadow: 0 0 10px rgba(255,222,0,0.2);
-        }
-
-        /* ===== شبكة البطاقات ===== */
-        .feed {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            padding: 30px 0;
-        }
-        .card {
-            background: #141414;
-            border: 1px solid #333;
-            clip-path: polygon(0% 0%, 98% 0%, 100% 5%, 100% 100%, 2% 100%, 0% 95%);
+            clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
             transition: 0.3s;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
         }
-        .card:hover {
-            transform: translateY(-6px);
-            border-color: #ffde00;
-            box-shadow: 0 8px 25px rgba(255,222,0,0.15);
+        .search-box:focus { border-color: var(--accent); }
+        .btn-sort {
+            background: var(--card-bg);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 10px 20px;
+            font-family: 'Oswald', sans-serif;
+            cursor: pointer;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            transition: 0.3s;
         }
-        .card img {
+        .btn-sort:hover { background: var(--accent); color: var(--bg-color); }
+        .feed-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .post-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 15px;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 95%, 97% 100%, 0 100%);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .post-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        .post-img-container {
             width: 100%;
             aspect-ratio: 16/9;
-            object-fit: cover;
-            display: block;
-            border-bottom: 2px solid #ffde00;
+            overflow: hidden;
+            background: #000;
         }
-        .card .content {
-            padding: 18px 16px 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .card .content h3 {
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: 1.3rem;
-            color: #fff;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-        .card .content .btn-detail {
-            margin-top: auto;
-            background: transparent;
-            border: 1px solid #ffde00;
-            color: #ffde00;
-            padding: 8px 0;
-            text-align: center;
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
-            cursor: pointer;
-            transition: 0.3s;
+        .post-img-container img {
             width: 100%;
-            background: rgba(255,222,0,0.05);
+            height: 100%;
+            object-fit: cover;
         }
-        .card .content .btn-detail:hover {
-            background: #ffde00;
-            color: #0a0a0a;
-            box-shadow: 0 0 20px rgba(255,222,0,0.4);
+        .post-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            color: var(--text);
+            margin: 15px 0 10px 0;
         }
-
-        /* ===== زر إظهار المزيد ===== */
-        .load-more {
+        .btn-details {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--bg-color);
+            padding: 8px 25px;
+            font-family: 'Oswald', sans-serif;
+            text-decoration: none;
+            font-weight: bold;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            transition: 0.3s;
+        }
+        .btn-details:hover { opacity: 0.85; transform: scale(1.02); }
+        .load-more-container {
             text-align: center;
-            padding: 20px 0 40px;
+            margin: 40px 0;
         }
-        .load-more button {
+        .btn-load-more {
             background: transparent;
-            border: 2px solid #ffde00;
-            color: #ffde00;
+            color: var(--accent);
+            border: 2px solid var(--accent);
             padding: 12px 40px;
             font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: 1.2rem;
-            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+            font-size: 1.1rem;
             cursor: pointer;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
             transition: 0.3s;
         }
-        .load-more button:hover {
-            background: #ffde00;
-            color: #0a0a0a;
-            box-shadow: 0 0 30px rgba(255,222,0,0.3);
-        }
-
-        /* ===== إعلانات 320×50 المضمنة ===== */
-        .ad-infeed {
+        .btn-load-more:hover { background: var(--accent); color: var(--bg-color); }
+        .dynamic-banner {
+            margin: 20px 0;
             text-align: center;
-            padding: 15px 0;
-            background: #0f0f0f;
-            border-top: 1px solid #2a2a2a;
-            border-bottom: 1px solid #2a2a2a;
-            margin: 10px 0;
+            width: 100%;
         }
-        .ad-infeed iframe {
-            border: none;
-            max-width: 100%;
-        }
-
-        /* ===== الفوتر ===== */
         footer {
-            background: #0a0a0a;
-            border-top: 2px solid #ffde00;
-            padding: 25px 20px;
+            background: var(--card-bg);
+            border-top: 2px solid var(--border);
             text-align: center;
-            font-family: 'Cairo', sans-serif;
-            font-size: 1rem;
-            color: #aaa;
-            margin-top: 30px;
-        }
-        footer .highlight {
-            color: #ffde00;
-            font-weight: 700;
+            padding: 20px;
+            margin-top: 50px;
             font-family: 'Oswald', sans-serif;
         }
-
-        /* استجابة */
-        @media (max-width: 600px) {
-            .controls { flex-direction: column; align-items: stretch; }
-            .search-box input { width: 100%; }
-            .feed { grid-template-columns: 1fr; }
-        }
+        footer span { color: var(--accent); }
     </style>
 </head>
 <body>
 
-    <!-- ===== الهيدر ===== -->
     <header>
-        <img src="/header.png" alt="Attack N' Destroy" class="header-img" />
+        <img src="/header.png" alt="Header Banner" onerror="this.src='https://via.placeholder.com/1200x250/141414/ffde00?text=ATTACK+N+DESTROY'">
     </header>
 
-    <!-- ===== إعلان تحت الهيدر ===== -->
-    <div class="ad-under-header">
+    <div class="ad-banner-top">
         <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js"></script>
         <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
     </div>
 
-    <!-- ===== المحتوى الرئيسي ===== -->
-    <main class="container">
+    <div class="container">
+        <div class="dynamic-banner">
+            <script src="/320-50.js"></script>
+        </div>
 
-        <!-- أدوات التحكم -->
         <div class="controls">
-            <div class="sort-btns">
-                <button id="sortNewest" class="active">أحدث</button>
-                <button id="sortOldest">أقدم</button>
-            </div>
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="ابحث عن مود..." />
-            </div>
+            <input type="text" id="searchInput" class="search-box" placeholder="ابحث عن المودات...">
+            <button id="sortBtn" class="btn-sort">ترتيب: الأحدث</button>
         </div>
 
-        <!-- شبكة البطاقات + الإعلانات المضمنة -->
-        <div id="feedContainer">
-            <!-- يتم إنشاء البطاقات بواسطة JavaScript -->
+        <div id="feedGrid" class="feed-grid"></div>
+
+        <div class="load-more-container">
+            <button id="loadMoreBtn" class="btn-load-more" style="display: none;">إظهار المزيد</button>
         </div>
+    </div>
 
-        <!-- زر إظهار المزيد -->
-        <div class="load-more">
-            <button id="loadMoreBtn">إظهار المزيد</button>
-        </div>
-
-        <!-- إعلانات عامة (موجودة في جميع الصفحات) -->
-        <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
-        <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
-    </main>
-
-    <!-- ===== الفوتر ===== -->
     <footer>
-        <div>Copyright: <span class="highlight">ATTACK N' DESTROY</span></div>
-        <div>Powered By: <span class="highlight">ATTACK N' DESTROY</span></div>
+        Copyright: <span id="footerBrand">ATTACK N' DESTROY</span><br>
+        Powered By: <span id="footerBrand2">ATTACK N' DESTROY</span>
     </footer>
 
-    <!-- ===== إحصائيات ===== -->
-    <script src="/stats.js"></script>
-
-    <!-- ===== كود index الخاص ===== -->
     <script>
-        (function() {
-            // الحالة
-            let allPosts = [];
-            let displayedCount = 10;    // عدد المعروض حالياً
-            let currentSort = 'newest'; // 'newest' أو 'oldest'
-            let searchTerm = '';
+        let allPosts = [];
+        let displayedCount = 10;
+        let sortOrder = 'desc'; // desc = newest, asc = oldest
 
-            // عناصر DOM
-            const feedContainer = document.getElementById('feedContainer');
-            const loadMoreBtn = document.getElementById('loadMoreBtn');
-            const sortNewest = document.getElementById('sortNewest');
-            const sortOldest = document.getElementById('sortOldest');
-            const searchInput = document.getElementById('searchInput');
-
-            // دالة لجلب البيانات
-            async function fetchPosts() {
-                try {
-                    const res = await fetch('/mods.json');
-                    if (!res.ok) throw new Error('فشل تحميل البيانات');
-                    const data = await res.json();
-                    // نتأكد أنها مصفوفة
-                    allPosts = Array.isArray(data) ? data : [];
-                    // ترتيب مبدئي حسب id تنازلي (أحدث)
-                    allPosts.sort((a, b) => b.id - a.id);
-                    render();
-                } catch (err) {
-                    feedContainer.innerHTML = `<p style="color:#ff4444; padding:30px;">⚠️ حدث خطأ في تحميل المودات: ${err.message}</p>`;
-                }
+        async function fetchPosts() {
+            try {
+                const res = await fetch('/mods.json');
+                const data = await res.json();
+                allPosts = data.map(item => ({
+                    id: item.id,
+                    title: atob(item.title),
+                    description: atob(item.description),
+                    image: atob(item.image),
+                    download: atob(item.download)
+                }));
+                // Sort by ID descending by default
+                sortPostsData();
+                renderFeed();
+            } catch (e) {
+                console.error("Error loading mods.json", e);
             }
+        }
 
-            // دالة الحصول على البيانات بعد تطبيق الترتيب والبحث
-            function getFilteredAndSorted() {
-                let result = [...allPosts];
+        function sortPostsData() {
+            allPosts.sort((a, b) => {
+                let idA = parseInt(a.id) || 0;
+                let idB = parseInt(b.id) || 0;
+                return sortOrder === 'desc' ? idB - idA : idA - idB;
+            });
+        }
 
-                // بحث
-                if (searchTerm.trim() !== '') {
-                    const term = searchTerm.trim().toLowerCase();
-                    result = result.filter(p => p.title.toLowerCase().includes(term));
-                }
+        function renderFeed() {
+            const grid = document.getElementById('feedGrid');
+            grid.innerHTML = '';
+            
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allPosts.filter(p => p.title.toLowerCase().includes(query) || p.description.toLowerCase().includes(query));
+            
+            const slice = filtered.slice(0, displayedCount);
 
-                // ترتيب
-                if (currentSort === 'newest') {
-                    result.sort((a, b) => b.id - a.id);
-                } else {
-                    result.sort((a, b) => a.id - b.id);
-                }
-
-                return result;
-            }
-
-            // دالة عرض البطاقات مع الإعلانات المضمنة
-            function render() {
-                const filtered = getFilteredAndSorted();
-                const total = filtered.length;
-                const toShow = Math.min(displayedCount, total);
-                const shownPosts = filtered.slice(0, toShow);
-
-                let html = '';
-
-                // الإعلان الأول (قبل أول منشور) – باستخدام iframe ديناميكي
-                html += `
-                    <div class="ad-infeed">
-                        <iframe src="/320-50.js" style="width:100%; max-width:320px; height:50px; display:inline-block;"></iframe>
+            slice.forEach((post, index) => {
+                const card = document.createElement('div');
+                card.className = 'post-card';
+                card.innerHTML = `
+                    <div class="post-img-container">
+                        <img src="${post.image}" alt="${post.title}" loading="lazy">
                     </div>
+                    <h2 class="post-title">${post.title}</h2>
+                    <a href="/tomod.html?id=${post.id}" class="btn-details">عرض التفاصيل</a>
                 `;
+                grid.appendChild(card);
 
-                // عرض البطاقات مع إعلان بعد كل منشور
-                shownPosts.forEach((post, index) => {
-                    html += `
-                        <div class="card" data-id="${post.id}">
-                            <img src="${post.image}" alt="${post.title}" loading="lazy" />
-                            <div class="content">
-                                <h3>${post.title}</h3>
-                                <a href="/tomod.html?id=${post.id}" class="btn-detail">عرض التفاصيل</a>
-                            </div>
-                        </div>
-                    `;
-
-                    // إعلان 320×50 بعد كل منشور (باستثناء آخر واحد؟ حسب الطلب "بعد كل منشور")
-                    // نضعه بعد كل منشور بما في ذلك الأخير
-                    html += `
-                        <div class="ad-infeed">
-                            <iframe src="/320-50.js" style="width:100%; max-width:320px; height:50px; display:inline-block;"></iframe>
-                        </div>
-                    `;
-                });
-
-                // إذا لم توجد نتائج
-                if (shownPosts.length === 0) {
-                    html = `<p style="padding:40px; text-align:center; color:#aaa;">لا توجد مودات مطابقة للبحث.</p>`;
+                // Dynamic responsive 320x50 ad iframe after every post in feed
+                if (index < slice.length - 1) {
+                    const adDiv = document.createElement('div');
+                    adDiv.className = 'dynamic-banner';
+                    adDiv.innerHTML = `<iframe src="/320-50.js" style="width:100%; height:50px; border:none; overflow:hidden;" scrolling="no"></iframe>`;
+                    grid.appendChild(adDiv);
                 }
-
-                feedContainer.innerHTML = html;
-
-                // إظهار أو إخفاء زر "إظهار المزيد"
-                if (toShow >= total) {
-                    loadMoreBtn.style.display = 'none';
-                } else {
-                    loadMoreBtn.style.display = 'block';
-                }
-            }
-
-            // تحديث الـ displayedCount وإعادة العرض
-            function loadMore() {
-                const filtered = getFilteredAndSorted();
-                if (displayedCount < filtered.length) {
-                    displayedCount += 10;
-                    render();
-                }
-            }
-
-            // تغيير الترتيب
-            function setSort(sortType) {
-                currentSort = sortType;
-                // تحديث شكل الأزرار
-                sortNewest.classList.toggle('active', sortType === 'newest');
-                sortOldest.classList.toggle('active', sortType === 'oldest');
-                // إعادة تعيين العدد المعروض إلى 10 (لأن الترتيب تغير)
-                displayedCount = 10;
-                render();
-            }
-
-            // ربط الأحداث
-            loadMoreBtn.addEventListener('click', loadMore);
-
-            sortNewest.addEventListener('click', function() {
-                if (currentSort !== 'newest') setSort('newest');
-            });
-            sortOldest.addEventListener('click', function() {
-                if (currentSort !== 'oldest') setSort('oldest');
             });
 
-            // البحث – مع تأخير بسيط
-            let searchTimeout;
-            searchInput.addEventListener('input', function() {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    searchTerm = this.value;
-                    displayedCount = 10; // إعادة ضبط العدد
-                    render();
-                }, 300);
-            });
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (displayedCount < filtered.length) {
+                loadMoreBtn.style.display = 'inline-block';
+            } else {
+                loadMoreBtn.style.display = 'none';
+            }
+        }
 
-            // بدء التطبيق
-            fetchPosts();
+        document.getElementById('loadMoreBtn').addEventListener('click', () => {
+            displayedCount += 10;
+            renderFeed();
+        });
 
-            // إعادة تعيين displayedCount بعد أي تغيير في البحث أو الترتيب (تم تضمينه)
-        })();
+        document.getElementById('searchInput').addEventListener('input', () => {
+            displayedCount = 10;
+            renderFeed();
+        });
+
+        document.getElementById('sortBtn').addEventListener('click', () => {
+            sortOrder = sortOrder === 'desc' ? 'asc' : 'desc';
+            document.getElementById('sortBtn').innerText = `ترتيب: ${sortOrder === 'desc' ? 'الأحدث' : 'الأقدم'}`;
+            sortPostsData();
+            renderFeed();
+        });
+
+        fetchPosts();
     </script>
-
 </body>
 </html>

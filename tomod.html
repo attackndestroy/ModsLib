@@ -1,250 +1,184 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>تفاصيل المود — ModsLib</title>
-
-<link rel="icon" href="/fav.ico">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المود - ATTACK N' DESTROY</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --card-dark: #141414;
+            --accent-yellow: #ffde00;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --border-color: #262626;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Cairo', sans-serif;
+            overflow-x: hidden;
+            background-image: repeating-linear-gradient(45deg, rgba(255, 222, 0, 0.01) 0, rgba(255, 222, 0, 0.01) 1px, transparent 0, transparent 50px);
+        }
+        h1, h2, h3, .oswald-font {
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 1px;
+        }
+        .main-header {
+            width: 100%;
+            max-height: 400px;
+            overflow: hidden;
+            border-bottom: 3px solid var(--accent-yellow);
+        }
+        .main-header img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+        .ad-container {
+            width: 100%;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background: var(--card-dark);
+            border: 1px dashed var(--border-color);
+        }
+        .details-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .mod-details-card {
+            background: var(--card-dark);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            clip-path: polygon(0 0, 100% 0, 100% 98%, 98% 100%, 0 100%);
+        }
+        .mod-img {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            margin-bottom: 25px;
+        }
+        .mod-title {
+            font-size: 32px;
+            color: var(--accent-yellow);
+            margin-bottom: 20px;
+        }
+        .mod-desc {
+            font-size: 18px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        .action-btn {
+            background: var(--accent-yellow);
+            color: var(--bg-dark);
+            border: none;
+            padding: 15px 40px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+            transition: 0.3s;
+        }
+        .action-btn:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 20px rgba(255, 222, 0, 0.6);
+        }
+        footer {
+            background: #050505;
+            border-top: 2px solid var(--border-color);
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+        footer p {
+            color: var(--text-muted);
+            margin: 5px 0;
+            font-size: 15px;
+        }
+        .highlight-brand {
+            color: var(--accent-yellow);
+            font-weight: bold;
+        }
+    </style>
 </head>
-
 <body>
 
-<div id="header-mount"></div>
+    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
+    <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
 
-<main class="container">
-  <div id="page-body">
-    <div class="state-message">
-      <div class="spinner"></div>
-    </div>
-  </div>
-</main>
+    <header class="main-header">
+        <img src="header.png" alt="ATTACK N' DESTROY Header" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1600&q=80'">
+    </header>
 
-<div id="footer-mount"></div>
-
-<script src="/stats.js"></script>
-<script src="/common.js"></script>
-
-<script>
-(function () {
-  'use strict';
-
-  const pageBody = document.getElementById('page-body');
-
-  /* =========================
-     الموقع العام
-  ========================= */
-
-  ModsLib.renderHeader('#header-mount');
-  ModsLib.renderFooter('#footer-mount');
-  ModsLib.ensureFavicon();
-  ModsLib.injectGlobalAdScripts();
-
-
-  /* =========================
-     404
-  ========================= */
-
-  function renderNotFound() {
-    pageBody.innerHTML = `
-      <div class="error-page">
-        <p class="error-page__code">404</p>
-        <p class="error-page__msg">المود غير موجود</p>
-
-        <a class="btn" href="/index.html">
-          العودة إلى الصفحة الرئيسية
-        </a>
-      </div>
-    `;
-  }
-
-
-  /* =========================
-     عرض المود
-  ========================= */
-
-  function renderMod(mod) {
-
-    const id = Number(mod.id);
-
-    const title = ModsLib.escapeHtml(
-      mod.title || 'بدون عنوان'
-    );
-
-    const desc = ModsLib.escapeHtml(
-      mod.description || 'لا يوجد وصف.'
-    );
-
-    const img = ModsLib.escapeHtml(
-      mod.image || ''
-    );
-
-
-    pageBody.innerHTML = `
-      <div id="ad-slot-1"></div>
-
-      <article class="detail-card">
-
-        <div class="detail-card__media">
-          <img
-            src="${img}"
-            alt="${title}"
-            onerror="this.style.opacity=0.15"
-          >
+    <div class="details-container" id="detailsWrapper">
         </div>
 
-        <div class="detail-card__body">
+    <footer>
+        <p>Copyright: <span class="highlight-brand">ATTACK N' DESTROY</span></p>
+        <p>Powered By: <span class="highlight-brand">ATTACK N' DESTROY</span></p>
+    </footer>
 
-          <p class="detail-card__eyebrow">
-            تفاصيل المود
-          </p>
+    <script src="stats.js"></script>
 
-          <h1 class="detail-card__title">
-            ${title}
-          </h1>
+    <script>
+        async function loadModDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const modId = parseInt(urlParams.get('id'));
+            const container = document.getElementById('detailsWrapper');
 
-          <p class="detail-card__desc">
-            ${desc}
-          </p>
+            if (!modId) {
+                container.innerHTML = '<p style="text-align:center; color:#ffde00; font-size:20px;">معرّف المود غير موجود!</p>';
+                return;
+            }
 
-          <div id="ad-slot-2"></div>
+            try {
+                const response = await fetch('mods.json');
+                const data = await response.json();
+                const mod = data.find(m => m.id === modId);
 
-          <div class="detail-card__actions">
-            <a
-              class="btn"
-              id="goto-download"
-              href="/mod.html?id=${encodeURIComponent(id)}"
-            >
-              انتقال لصفحة التحميل
-            </a>
-          </div>
+                if (!mod) {
+                    container.innerHTML = '<p style="text-align:center; color:#ffde00; font-size:20px;">عذراً، هذا المود غير متوفر حالياً.</p>';
+                    return;
+                }
 
-        </div>
+                container.innerHTML = `
+                    <div class="mod-details-card">
+                        <img src="${mod.image}" alt="${mod.title}" class="mod-img">
+                        <h1 class="mod-title">${mod.title}</h1>
+                        <p class="mod-desc">${mod.description}</p>
+                        
+                        <div class="ad-container"><script src="/320-50.js"><\/script></div>
 
-      </article>
+                        <div style="margin: 30px 0; text-align: center;">
+                            <a href="mod.html?id=${mod.id}" class="action-btn">إنتقال لصفحة التحميل</a>
+                        </div>
 
-      <div id="ad-slot-3"></div>
-    `;
+                        <div class="ad-container"><script src="/320-50.js"><\/script></div>
 
+                        <div class="ad-container"><script src="/320-50.js"><\/script></div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error("Error loading mod details:", error);
+                container.innerHTML = '<p style="text-align:center; color:#ffde00;">حدث خطأ أثناء تحميل البيانات.</p>';
+            }
+        }
 
-    /* =========================
-       الإعلانات
-    ========================= */
-
-    const ad1 = document.getElementById('ad-slot-1');
-    const ad2 = document.getElementById('ad-slot-2');
-    const ad3 = document.getElementById('ad-slot-3');
-
-    if (ad1) {
-      ad1.appendChild(
-        ModsLib.makeAdSlotWrap()
-      );
-    }
-
-    if (ad2) {
-      ad2.appendChild(
-        ModsLib.makeAdSlotWrap()
-      );
-    }
-
-    if (ad3) {
-      ad3.appendChild(
-        ModsLib.makeAdSlotWrap()
-      );
-    }
-
-
-    /* =========================
-       السماح بالانتقال إلى mod.html
-       
-       يجب أن يتم قبل ضغط الزر.
-    ========================= */
-
-    ModsLib.markAllowed(id);
-
-
-    /* =========================
-       تثبيت الرابط مرة أخرى
-       للتأكد من استخدام نفس الـ ID
-    ========================= */
-
-    const gotoBtn =
-      document.getElementById('goto-download');
-
-    if (gotoBtn) {
-      gotoBtn.href = ModsLib.modUrl(id);
-    }
-  }
-
-
-  /* =========================
-     تشغيل الصفحة
-  ========================= */
-
-  async function init() {
-
-    const id = ModsLib.getValidId();
-
-    /* لا يوجد ID أو ID غير صالح */
-    if (id === null) {
-      renderNotFound();
-      return;
-    }
-
-
-    try {
-
-      /* تحميل mods.json */
-      const mods = await ModsLib.fetchMods();
-
-      /* البحث عن المود */
-      const mod = mods.find(
-        m => Number(m.id) === id
-      );
-
-
-      /* المود غير موجود */
-      if (!mod) {
-        renderNotFound();
-        return;
-      }
-
-
-      /* عرض المود */
-      renderMod(mod);
-
-    } catch (err) {
-
-      pageBody.innerHTML = `
-        <div class="error-page">
-
-          <p class="error-page__msg">
-            ${ModsLib.escapeHtml(
-              err.message || 'حدث خطأ غير متوقع.'
-            )}
-          </p>
-
-          <a class="btn" href="/index.html">
-            العودة إلى الصفحة الرئيسية
-          </a>
-
-        </div>
-      `;
-    }
-  }
-
-
-  /* تشغيل */
-  init();
-
-})();
-</script>
-
+        window.addEventListener('DOMContentLoaded', loadModDetails);
+    </script>
 </body>
 </html>

@@ -37,7 +37,7 @@
             display: flex; flex-direction: column;
         }
 
-        a { color: var(--metal-yellow); text-decoration: none; transition: 0.2s; }
+        a { color: var(--metal-yellow); text-decoration: none; transition: 0.2s; pointer-events: auto; }
         a:hover { text-shadow: 0 0 10px var(--metal-yellow-glow); }
         :focus-visible { outline: 2px solid var(--metal-yellow); outline-offset: 2px; }
 
@@ -69,7 +69,6 @@
         .native-banner-wrapper, .social-bar-wrapper { text-align: center; margin: 1rem 0; overflow: hidden; }
         .native-banner-wrapper iframe, .social-bar-wrapper iframe { max-width: 100%; }
 
-        /* تعديل حاوية البانر لتلائم حجمه تماماً بدون فراغات */
         .banner-between {
             margin: 1.5rem 0;
             text-align: center;
@@ -108,6 +107,7 @@
             font-weight: 700; 
             min-height: 48px; min-width: 100px;
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            pointer-events: auto;
         }
         .btn-sort:hover { 
             background: #252525; 
@@ -204,6 +204,9 @@
             letter-spacing: 1px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
             clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+            pointer-events: auto;
+            position: relative;
+            z-index: 2;
         }
         .mod-card-btn:hover { 
             background: #fff; 
@@ -229,6 +232,7 @@
             min-height: 50px; min-width: 180px;
             font-weight: 700;
             clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+            pointer-events: auto;
         }
         .btn-load-more:hover { 
             background: var(--metal-yellow); 
@@ -303,17 +307,6 @@
             let currentSort = 'newest';
             let visibleCount = 6;
             const PAGE_SIZE = 6;
-
-            function escapeHtml(str) {
-                if (!str) return '';
-                return String(str).replace(/[&<>"]/g, function(m) {
-                    if (m === '&') return '&amp;';
-                    if (m === '<') return '&lt;';
-                    if (m === '>') return '&gt;';
-                    if (m === '"') return '&quot;';
-                    return m;
-                });
-            }
 
             function isNumericId(id) {
                 if (typeof id === 'number') return true;

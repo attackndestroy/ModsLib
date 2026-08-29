@@ -4,19 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>تفاصيل المود — ModsLib</title>
+
 <link rel="icon" href="/fav.ico">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
 
 <div id="header-mount"></div>
 
 <main class="container">
   <div id="page-body">
-    <div class="state-message"><div class="spinner"></div></div>
+    <div class="state-message">
+      <div class="spinner"></div>
+    </div>
   </div>
 </main>
 
@@ -24,93 +30,219 @@
 
 <script src="/stats.js"></script>
 <script src="/common.js"></script>
+
 <script>
 (function () {
+  'use strict';
+
   const pageBody = document.getElementById('page-body');
+
+  /* =========================
+     الموقع العام
+  ========================= */
 
   ModsLib.renderHeader('#header-mount');
   ModsLib.renderFooter('#footer-mount');
   ModsLib.ensureFavicon();
   ModsLib.injectGlobalAdScripts();
 
-  function adSlotHtmlTarget() {
-    const wrap = document.createElement('div');
-    wrap.style.display = 'flex';
-    wrap.style.justifyContent = 'center';
-    wrap.appendChild(ModsLib.makeAdSlotWrap());
-    return wrap.outerHTML;
-  }
+
+  /* =========================
+     404
+  ========================= */
 
   function renderNotFound() {
     pageBody.innerHTML = `
       <div class="error-page">
         <p class="error-page__code">404</p>
         <p class="error-page__msg">المود غير موجود</p>
-        <a class="btn" href="/index.html">العودة إلى الصفحة الرئيسية</a>
+
+        <a class="btn" href="/index.html">
+          العودة إلى الصفحة الرئيسية
+        </a>
       </div>
     `;
   }
 
+
+  /* =========================
+     عرض المود
+  ========================= */
+
   function renderMod(mod) {
-    const title = ModsLib.escapeHtml(mod.title || 'بدون عنوان');
-    const desc = ModsLib.escapeHtml(mod.description || 'لا يوجد وصف.');
-    const img = ModsLib.escapeHtml(mod.image || '');
+
+    const id = Number(mod.id);
+
+    const title = ModsLib.escapeHtml(
+      mod.title || 'بدون عنوان'
+    );
+
+    const desc = ModsLib.escapeHtml(
+      mod.description || 'لا يوجد وصف.'
+    );
+
+    const img = ModsLib.escapeHtml(
+      mod.image || ''
+    );
+
 
     pageBody.innerHTML = `
       <div id="ad-slot-1"></div>
+
       <article class="detail-card">
+
         <div class="detail-card__media">
-          <img src="${img}" alt="${title}" onerror="this.style.opacity=0.15">
+          <img
+            src="${img}"
+            alt="${title}"
+            onerror="this.style.opacity=0.15"
+          >
         </div>
+
         <div class="detail-card__body">
-          <p class="detail-card__eyebrow">تفاصيل المود</p>
-          <h1 class="detail-card__title">${title}</h1>
-          <p class="detail-card__desc">${desc}</p>
+
+          <p class="detail-card__eyebrow">
+            تفاصيل المود
+          </p>
+
+          <h1 class="detail-card__title">
+            ${title}
+          </h1>
+
+          <p class="detail-card__desc">
+            ${desc}
+          </p>
+
           <div id="ad-slot-2"></div>
+
           <div class="detail-card__actions">
-            <a class="btn" id="goto-download" href="#">انتقال لصفحة التحميل</a>
+            <a
+              class="btn"
+              id="goto-download"
+              href="/mod.html?id=${encodeURIComponent(id)}"
+            >
+              انتقال لصفحة التحميل
+            </a>
           </div>
+
         </div>
+
       </article>
+
       <div id="ad-slot-3"></div>
     `;
 
-    document.getElementById('ad-slot-1').appendChild(ModsLib.makeAdSlotWrap());
-    document.getElementById('ad-slot-2').appendChild(ModsLib.makeAdSlotWrap());
-    document.getElementById('ad-slot-3').appendChild(ModsLib.makeAdSlotWrap());
 
-    // تسجيل السماح لهذا الـ ID تحديداً قبل الانتقال لصفحة التحميل
-    ModsLib.markAllowed(mod.id);
+    /* =========================
+       الإعلانات
+    ========================= */
 
-    const gotoBtn = document.getElementById('goto-download');
-    gotoBtn.href = ModsLib.modUrl(mod.id);
+    const ad1 = document.getElementById('ad-slot-1');
+    const ad2 = document.getElementById('ad-slot-2');
+    const ad3 = document.getElementById('ad-slot-3');
+
+    if (ad1) {
+      ad1.appendChild(
+        ModsLib.makeAdSlotWrap()
+      );
+    }
+
+    if (ad2) {
+      ad2.appendChild(
+        ModsLib.makeAdSlotWrap()
+      );
+    }
+
+    if (ad3) {
+      ad3.appendChild(
+        ModsLib.makeAdSlotWrap()
+      );
+    }
+
+
+    /* =========================
+       السماح بالانتقال إلى mod.html
+       
+       يجب أن يتم قبل ضغط الزر.
+    ========================= */
+
+    ModsLib.markAllowed(id);
+
+
+    /* =========================
+       تثبيت الرابط مرة أخرى
+       للتأكد من استخدام نفس الـ ID
+    ========================= */
+
+    const gotoBtn =
+      document.getElementById('goto-download');
+
+    if (gotoBtn) {
+      gotoBtn.href = ModsLib.modUrl(id);
+    }
   }
 
+
+  /* =========================
+     تشغيل الصفحة
+  ========================= */
+
   async function init() {
+
     const id = ModsLib.getValidId();
+
+    /* لا يوجد ID أو ID غير صالح */
     if (id === null) {
       renderNotFound();
       return;
     }
+
+
     try {
+
+      /* تحميل mods.json */
       const mods = await ModsLib.fetchMods();
-      const mod = mods.find(m => Number(m.id) === id);
+
+      /* البحث عن المود */
+      const mod = mods.find(
+        m => Number(m.id) === id
+      );
+
+
+      /* المود غير موجود */
       if (!mod) {
         renderNotFound();
         return;
       }
+
+
+      /* عرض المود */
       renderMod(mod);
+
     } catch (err) {
+
       pageBody.innerHTML = `
         <div class="error-page">
-          <p class="error-page__msg">${ModsLib.escapeHtml(err.message || 'حدث خطأ غير متوقع.')}</p>
-          <a class="btn" href="/index.html">العودة إلى الصفحة الرئيسية</a>
+
+          <p class="error-page__msg">
+            ${ModsLib.escapeHtml(
+              err.message || 'حدث خطأ غير متوقع.'
+            )}
+          </p>
+
+          <a class="btn" href="/index.html">
+            العودة إلى الصفحة الرئيسية
+          </a>
+
         </div>
       `;
     }
   }
 
+
+  /* تشغيل */
   init();
+
 })();
 </script>
 

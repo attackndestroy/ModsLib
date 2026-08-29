@@ -80,7 +80,7 @@
     word-break: break-all; border-radius: var(--radius); direction: ltr; text-align: left;
   }
   .gate-wrap {
-    max-width: 460px; margin: 60px auto; text-align: center;
+    max-width: 460px; margin: 40px auto; text-align: center;
   }
   .gate-wrap p { color: var(--text-secondary); font-size: 14.5px; }
   .badge {
@@ -107,24 +107,34 @@
 <div id="header-mount"></div>
 <main class="container" style="padding-bottom: 60px;">
 
-  <!-- بوابة إدخال الـ Tokens -->
+  <!-- بوابة إدخال الـ Tokens والـ APIs -->
   <div id="token-gate" class="gate-wrap" style="display:none;">
     <h1 class="page-hero__title" style="border:none; padding:0; margin-bottom:14px;">إعدادات لوحة التحكم</h1>
-    <p>أدخل بيانات الاعتماد الخاصة بـ GitHub و Cloudinary للبدء. سيتم حفظها في متصفحك محلياً.</p>
+    <p>أدخل بيانات الاعتماد وصلاحيات الـ API للربط مع GitHub و Cloudinary.</p>
     
     <div class="field" style="text-align:right;">
-      <label for="token-input">GitHub API Token</label>
+      <label for="token-input">GitHub API Token (تأكد من تفعيل صلاحية repo)</label>
       <input type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
     </div>
     
     <div class="field" style="text-align:right;">
       <label for="cloud-name-input">Cloudinary Cloud Name</label>
-      <input type="text" id="cloud-name-input" placeholder="اسم الحساب الخاص بك" autocomplete="off">
+      <input type="text" id="cloud-name-input" placeholder="اسم الحساب" autocomplete="off">
+    </div>
+
+    <div class="field" style="text-align:right;">
+      <label for="cloudinary-key-input">Cloudinary API Key</label>
+      <input type="text" id="cloudinary-key-input" placeholder="أدخل الـ API Key" autocomplete="off">
+    </div>
+
+    <div class="field" style="text-align:right;">
+      <label for="cloudinary-secret-input">Cloudinary API Secret</label>
+      <input type="password" id="cloudinary-secret-input" placeholder="أدخل الـ API Secret" autocomplete="off">
     </div>
 
     <div class="field" style="text-align:right;">
       <label for="upload-preset-input">Cloudinary Upload Preset</label>
-      <input type="text" id="upload-preset-input" placeholder="اسم الـ Preset المخصص للرفع" autocomplete="off">
+      <input type="text" id="upload-preset-input" placeholder="modslib1" autocomplete="off">
     </div>
 
     <div class="form-actions" style="justify-content:center;">
@@ -164,7 +174,7 @@
           <img id="upload-preview" class="upload-preview" alt="معاينة الصورة">
         </div>
         <div class="field">
-          <label for="new-image">رابط الصورة (يتم تعبئته تلقائياً بعد الرفع أو أدخله يدوياً)</label>
+          <label for="new-image">رابط الصورة (يتم تعبئته تلقئياً بعد الرفع)</label>
           <input type="url" id="new-image" placeholder="https://..." required>
         </div>
         <div class="field">
@@ -183,7 +193,7 @@
       </form>
     </section>
 
-    <!-- عرض JSON (متقدم قبل اللفتات والخيارات) -->
+    <!-- عرض JSON -->
     <section class="dash-section">
       <h2 class="dash-section__title">محتوى mods.json</h2>
       <div id="json-view" class="json-output"></div>
@@ -263,18 +273,24 @@
   
   const TOKEN_KEY = 'modslib_gh_token';
   const CLOUD_NAME_KEY = 'modslib_cloud_name';
+  const CLOUD_KEY_KEY = 'modslib_cloud_key';
+  const CLOUD_SECRET_KEY = 'modslib_cloud_secret';
   const UPLOAD_PRESET_KEY = 'modslib_upload_preset';
   
   const API_BASE = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`;
 
   function getToken() { try { return localStorage.getItem(TOKEN_KEY); } catch (e) { return null; } }
   function getCloudName() { try { return localStorage.getItem(CLOUD_NAME_KEY); } catch (e) { return null; } }
+  function getCloudKey() { try { return localStorage.getItem(CLOUD_KEY_KEY); } catch (e) { return null; } }
+  function getCloudSecret() { try { return localStorage.getItem(CLOUD_SECRET_KEY); } catch (e) { return null; } }
   function getUploadPreset() { try { return localStorage.getItem(UPLOAD_PRESET_KEY); } catch (e) { return null; } }
   
-  function saveCredentials(token, cloudName, preset) {
+  function saveCredentials(token, cloudName, cloudKey, cloudSecret, preset) {
     try {
       localStorage.setItem(TOKEN_KEY, token);
       localStorage.setItem(CLOUD_NAME_KEY, cloudName);
+      localStorage.setItem(CLOUD_KEY_KEY, cloudKey);
+      localStorage.setItem(CLOUD_SECRET_KEY, cloudSecret);
       localStorage.setItem(UPLOAD_PRESET_KEY, preset);
     } catch (e) {}
   }
@@ -283,6 +299,8 @@
     try {
       localStorage.removeItem(TOKEN_KEY);
       localStorage.removeItem(CLOUD_NAME_KEY);
+      localStorage.removeItem(CLOUD_KEY_KEY);
+      localStorage.removeItem(CLOUD_SECRET_KEY);
       localStorage.removeItem(UPLOAD_PRESET_KEY);
     } catch (e) {}
   }
@@ -311,9 +329,9 @@
     return res;
   }
 
-  function mapStatusToError(status, res) {
+  function mapStatusToError(status) {
     if (status === 401) return new GitHubApiError('UNAUTHORIZED', 'GitHub Token غير صحيح.');
-    if (status === 403) return new GitHubApiError('FORBIDDEN', 'صلاحيات غير كافية أو تجاوز للحد المسموح.');
+    if (status === 403) return new GitHubApiError('FORBIDDEN', 'صلاحيات غير كافية (تأكد من تفعيل صلاحية repo في الـ Token).');
     if (status === 404) return new GitHubApiError('NOT_FOUND', 'لم يتم العثور على الملف.');
     if (status === 409) return new GitHubApiError('CONFLICT', 'تعارض في التحديث، تتم إعادة المحاولة.');
     return new GitHubApiError('UNKNOWN', 'حدث خطأ من GitHub API (' + status + ').');
@@ -321,7 +339,7 @@
 
   async function fetchRemoteMods() {
     const res = await githubFetch('GET');
-    if (!res.ok) throw mapStatusToError(res.status, res);
+    if (!res.ok) throw mapStatusToError(res.status);
     const data = await res.json();
     const cleanB64 = String(data.content || '').replace(/\n/g, '');
     const jsonStr = decodeURIComponent(escape(atob(cleanB64)));
@@ -334,7 +352,7 @@
     const jsonStr = JSON.stringify(mods, null, 2);
     const content = btoa(unescape(encodeURIComponent(jsonStr)));
     const res = await githubFetch('PUT', { message, content, sha });
-    if (!res.ok) throw mapStatusToError(res.status, res);
+    if (!res.ok) throw mapStatusToError(res.status);
     return await res.json();
   }
 
@@ -385,6 +403,8 @@
   const dashboardApp = document.getElementById('dashboard-app');
   const tokenInput = document.getElementById('token-input');
   const cloudNameInput = document.getElementById('cloud-name-input');
+  const cloudinaryKeyInput = document.getElementById('cloudinary-key-input');
+  const cloudinarySecretInput = document.getElementById('cloudinary-secret-input');
   const uploadPresetInput = document.getElementById('upload-preset-input');
   const tokenSaveBtn = document.getElementById('token-save-btn');
   const clearTokenBtn = document.getElementById('clear-token-btn');
@@ -639,12 +659,14 @@
   tokenSaveBtn.addEventListener('click', () => {
     const t = tokenInput.value.trim();
     const cn = cloudNameInput.value.trim();
+    const ck = cloudinaryKeyInput.value.trim();
+    const cs = cloudinarySecretInput.value.trim();
     const up = uploadPresetInput.value.trim();
     if (!t || !cn || !up) {
-      ModsLib.showToast('يرجى تعبئة كافة الحقول المطلوبة.', 'error');
+      ModsLib.showToast('يرجى تعبئة الحقول الأساسية (Token و Cloud Name و Preset).', 'error');
       return;
     }
-    saveCredentials(t, cn, up);
+    saveCredentials(t, cn, ck, cs, up);
     showApp();
   });
 
@@ -660,6 +682,8 @@
     tokenGate.style.display = 'block'; 
     tokenInput.value = getToken() || '';
     cloudNameInput.value = getCloudName() || '';
+    cloudinaryKeyInput.value = getCloudKey() || '';
+    cloudinarySecretInput.value = getCloudSecret() || '';
     uploadPresetInput.value = getUploadPreset() || '';
   }
 

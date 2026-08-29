@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>ModsLib</title>
+<title>ATTACK N' DESTROY - Mods</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
@@ -53,29 +53,19 @@
     padding:16px;
   }
 
-  /* Ads */
-  .ad-banner-slot{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:14px 0;
-    overflow:hidden;
+  /* الإعلانات تبقى شفافة للنقر كما هي */
+  .ad-banner-slot,
+  .ad-320-wrap {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
   }
-  .ad-320-wrap{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    margin:16px 0;
-  }
-  .ad-320-wrap iframe{
-    max-width:320px;
-    width:100%;
-    border:0;
-    display:block;
+  .ad-banner-slot iframe,
+  .ad-320-wrap iframe {
+    pointer-events: none !important;
+    touch-action: none;
   }
 
-  /* Controls */
   .controls-bar{
     display:flex;
     flex-wrap:wrap;
@@ -115,25 +105,45 @@
     cursor:pointer;
     text-align:center;
     clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-    transition: all .2s ease;
+    transition: background .2s ease, color .2s ease, box-shadow .2s ease; /* إزالة transform من الانتقال */
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation; /* تحسين اللمس */
+    position: relative;
+    z-index: 10;
   }
-  .btn:hover, .btn:active{
+
+  /* ===== إصلاح مشكلة الضغطتين: فصل تأثير الماوس عن اللمس ===== */
+  /* 1. تأثيرات الـ Hover والـ Active للماوس فقط (أجهزة الكمبيوتر) */
+  @media (hover: hover) {
+    .btn:hover {
+      background:var(--yellow);
+      color:#0a0a0a;
+      box-shadow:0 0 16px rgba(255,222,0,0.55);
+      transform:translateY(-1px); /* حركة أنيقة تظهر فقط عند التحويم بالماوس */
+    }
+  }
+
+  /* 2. تأثير الـ Active (الضغط) يكون بسيطاً جداً ومباشراً للأجهزة اللمسية */
+  .btn:active {
     background:var(--yellow);
     color:#0a0a0a;
-    box-shadow:0 0 16px rgba(255,222,0,0.55);
-    transform:translateY(-1px);
+    box-shadow:0 0 20px rgba(255,222,0,0.7);
+    /* نزيل أي transform أو translateY نهائياً هنا حتى لا يسبب إعادة تخطيط */ 
+    transform: none !important; 
   }
+
+  /* 3. ضمان أن الزر لا يتغير شكله أو حجمه أثناء النقر على الهاتف */
   .btn.active{
     background:var(--yellow);
     color:#0a0a0a;
   }
+  /* ====================================================== */
+
   .order-btns{
     display:flex;
     gap:8px;
   }
 
-  /* Feed */
   #feed{
     display:flex;
     flex-direction:column;
@@ -217,7 +227,6 @@
 
 <div class="container">
 
-  <!-- Banner ad: before first post -->
   <div class="ad-banner-slot" id="bannerAdSlot"></div>
 
   <div class="controls-bar">
@@ -230,7 +239,6 @@
     </div>
   </div>
 
-  <!-- 320x50 ad before first post -->
   <div class="ad-320-wrap" id="adBeforeFirst"></div>
 
   <div id="feed"></div>
@@ -258,7 +266,7 @@
 
   var BATCH_SIZE = 10;
   var allPosts = [];
-  var currentOrder = 'desc'; // 'desc' = أحدث, 'asc' = أقدم
+  var currentOrder = 'desc';
   var searchTerm = '';
   var renderedCount = 0;
   var activeList = [];
@@ -278,6 +286,7 @@
     iframe.style.height = '50px';
     iframe.style.border = '0';
     iframe.style.overflow = 'hidden';
+    iframe.style.pointerEvents = 'none';
     iframe.setAttribute('scrolling', 'no');
     container.appendChild(iframe);
     try{
@@ -305,7 +314,6 @@
     return wrap;
   }
 
-  // Banner ad (invoke.js) - injected once before first post
   function injectBannerAd(){
     var slot = document.getElementById('bannerAdSlot');
     var div = document.createElement('div');
@@ -350,8 +358,16 @@
     btn.className = 'btn';
     btn.href = '/tomod.html?id=' + encodeURIComponent(post.id);
     btn.textContent = 'عرض التفاصيل';
-    body.appendChild(btn);
 
+    // منع انتشار الحدث كإجراء احتياطي (للإعلانات)
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+    btn.addEventListener('touchstart', function(e) {
+      e.stopPropagation();
+    }, { passive: true });
+
+    body.appendChild(btn);
     card.appendChild(body);
     return card;
   }
@@ -363,7 +379,6 @@
       list = list.filter(function(p){
         return (p.title || '').toLowerCase().indexOf(term) !== -1;
       });
-      // Search results always newest -> oldest
       list.sort(function(a,b){ return b.id - a.id; });
     } else {
       list.sort(function(a,b){

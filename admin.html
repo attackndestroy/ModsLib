@@ -183,7 +183,7 @@
       </form>
     </section>
 
-    <!-- عرض JSON (تم نقله ليصبح قبل اللفتات والخيارات حسب الطلب) -->
+    <!-- عرض JSON (متقدم قبل اللفتات والخيارات) -->
     <section class="dash-section">
       <h2 class="dash-section__title">محتوى mods.json</h2>
       <div id="json-view" class="json-output"></div>
@@ -371,8 +371,12 @@
       method: 'POST',
       body: formData
     });
-    if (!res.ok) throw new Error('فشل رفع الصورة إلى Cloudinary.');
+    
     const data = await res.json();
+    if (!res.ok) {
+      console.error("Cloudinary Detailed Error:", data);
+      throw new Error(data.error?.message || 'فشل رفع الصورة إلى Cloudinary.');
+    }
     return data.secure_url;
   }
 

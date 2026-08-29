@@ -1,116 +1,335 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
 <title>تحميل المود — ModsLib</title>
+
 <link rel="icon" href="/fav.ico">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
 
 <div id="header-mount"></div>
 
 <main class="container">
+
   <div id="page-body">
-    <div class="state-message"><div class="spinner"></div></div>
+    <div class="state-message">
+      <div class="spinner"></div>
+    </div>
   </div>
+
 </main>
 
 <div id="footer-mount"></div>
 
 <script src="/stats.js"></script>
 <script src="/common.js"></script>
+
 <script>
 (function () {
-  const pageBody = document.getElementById('page-body');
 
+  const pageBody =
+    document.getElementById('page-body');
+
+  /*
+   * نجهز الواجهة فقط بعد تحميل common.js
+   */
   ModsLib.renderHeader('#header-mount');
   ModsLib.renderFooter('#footer-mount');
   ModsLib.ensureFavicon();
   ModsLib.injectGlobalAdScripts();
 
+
+  /* =========================
+     404
+     ========================= */
+
   function renderNotFound() {
+
     pageBody.innerHTML = `
       <div class="error-page">
-        <p class="error-page__code">404</p>
-        <p class="error-page__msg">المود غير موجود</p>
-        <a class="btn" href="/index.html">العودة إلى الصفحة الرئيسية</a>
+
+        <p class="error-page__code">
+          404
+        </p>
+
+        <p class="error-page__msg">
+          المود غير موجود
+        </p>
+
+        <a
+          class="btn"
+          href="/index.html"
+        >
+          العودة إلى الصفحة الرئيسية
+        </a>
+
       </div>
     `;
   }
 
+
+  /* =========================
+     Download page
+     ========================= */
+
   function renderDownload(mod) {
-    const title = ModsLib.escapeHtml(mod.title || 'بدون عنوان');
-    const desc = ModsLib.escapeHtml(mod.description || '');
+
+    const title =
+      ModsLib.escapeHtml(
+        mod.title || 'بدون عنوان'
+      );
+
+    const desc =
+      ModsLib.escapeHtml(
+        mod.description || ''
+      );
 
     pageBody.innerHTML = `
+
       <div id="ad-slot-1"></div>
+
       <section class="download-panel">
-        <p class="detail-card__eyebrow">صفحة التحميل</p>
-        <h1 class="download-panel__title">${title}</h1>
-        <p class="download-panel__desc">${desc}</p>
+
+        <p class="detail-card__eyebrow">
+          صفحة التحميل
+        </p>
+
+        <h1 class="download-panel__title">
+          ${title}
+        </h1>
+
+        <p class="download-panel__desc">
+          ${desc}
+        </p>
+
         <div id="ad-slot-2"></div>
-        <button type="button" class="btn" id="download-btn">تحميل الملف</button>
-        <p id="download-error" class="error-page__msg" style="display:none; margin-top:18px; font-size:14px;"></p>
+
+        <button
+          type="button"
+          class="btn"
+          id="download-btn"
+        >
+          تحميل الملف
+        </button>
+
+        <p
+          id="download-error"
+          class="error-page__msg"
+          style="
+            display:none;
+            margin-top:18px;
+            font-size:14px;
+          "
+        ></p>
+
       </section>
+
       <div id="ad-slot-3"></div>
     `;
 
-    document.getElementById('ad-slot-1').appendChild(ModsLib.makeAdSlotWrap());
-    document.getElementById('ad-slot-2').appendChild(ModsLib.makeAdSlotWrap());
-    document.getElementById('ad-slot-3').appendChild(ModsLib.makeAdSlotWrap());
 
-    const btn = document.getElementById('download-btn');
-    const errEl = document.getElementById('download-error');
+    /*
+     * الإعلانات
+     */
 
-    btn.addEventListener('click', () => {
-      const url = ModsLib.resolveDownloadUrl(mod);
-      if (!url) {
-        errEl.textContent = 'تعذر فك رابط التحميل أو أنه غير صالح.';
-        errEl.style.display = 'block';
-        return;
-      }
-      errEl.style.display = 'none';
-      window.open(url, '_blank', 'noopener,noreferrer');
-    }, { once: false });
+    document
+      .getElementById('ad-slot-1')
+      .appendChild(
+        ModsLib.makeAdSlotWrap()
+      );
+
+    document
+      .getElementById('ad-slot-2')
+      .appendChild(
+        ModsLib.makeAdSlotWrap()
+      );
+
+    document
+      .getElementById('ad-slot-3')
+      .appendChild(
+        ModsLib.makeAdSlotWrap()
+      );
+
+
+    /* =========================
+       Download button
+       ========================= */
+
+    const btn =
+      document.getElementById(
+        'download-btn'
+      );
+
+    const errEl =
+      document.getElementById(
+        'download-error'
+      );
+
+
+    btn.addEventListener(
+      'click',
+      function (event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        const url =
+          ModsLib.resolveDownloadUrl(
+            mod
+          );
+
+        if (!url) {
+
+          errEl.textContent =
+            'تعذر فك رابط التحميل أو أنه غير صالح.';
+
+          errEl.style.display =
+            'block';
+
+          return;
+        }
+
+        errEl.style.display =
+          'none';
+
+
+        /*
+         * استخدام location.href
+         * بدل window.open يمنع مشكلة
+         * الضغط مرتين في المتصفحات التي
+         * تمنع النوافذ الجديدة.
+         */
+        window.location.href = url;
+
+      },
+      false
+    );
   }
 
+
+  /* =========================
+     Init
+     ========================= */
+
   async function init() {
-    const id = ModsLib.getValidId();
+
+    const id =
+      ModsLib.getValidId();
+
+
+    /* ID غير صالح */
+
     if (id === null) {
+
       renderNotFound();
+
       return;
     }
 
-    // الحماية: يجب المرور بصفحة tomod.html لنفس الـ ID أولاً
+
+    /*
+     * الحماية:
+     *
+     * إذا دخل الزائر مباشرة إلى:
+     *
+     * /mod.html?id=123
+     *
+     * ولم يمر بـ tomod.html
+     *
+     * نرسله إلى:
+     *
+     * /tomod.html?id=123
+     */
+
     if (!ModsLib.isAllowed(id)) {
-      window.location.replace(ModsLib.modUrl(id));
+
+      const target =
+        '/tomod.html?id=' +
+        encodeURIComponent(id);
+
+      /*
+       * حماية إضافية من أي حلقة تحويل
+       */
+      if (
+        window.location.pathname !==
+        '/tomod.html'
+      ) {
+
+        window.location.replace(
+          target
+        );
+      }
+
       return;
     }
+
+
+    /* =========================
+       Load mod
+       ========================= */
 
     try {
-      const mods = await ModsLib.fetchMods();
-      const mod = mods.find(m => Number(m.id) === id);
+
+      const mods =
+        await ModsLib.fetchMods();
+
+      const mod =
+        mods.find(
+          m => Number(m.id) === id
+        );
+
+
       if (!mod) {
+
         renderNotFound();
+
         return;
       }
+
+
       renderDownload(mod);
+
     } catch (err) {
+
       pageBody.innerHTML = `
+
         <div class="error-page">
-          <p class="error-page__msg">${ModsLib.escapeHtml(err.message || 'حدث خطأ غير متوقع.')}</p>
-          <a class="btn" href="/index.html">العودة إلى الصفحة الرئيسية</a>
+
+          <p class="error-page__msg">
+            ${ModsLib.escapeHtml(
+              err.message ||
+              'حدث خطأ غير متوقع.'
+            )}
+          </p>
+
+          <a
+            class="btn"
+            href="/index.html"
+          >
+            العودة إلى الصفحة الرئيسية
+          </a>
+
         </div>
+
       `;
     }
   }
 
+
   init();
+
 })();
 </script>
 

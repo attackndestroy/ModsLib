@@ -1,21 +1,16 @@
-/* =========================================================
-   ModsLib — common.js
-   الوظائف المشتركة بين جميع صفحات الموقع
-   ========================================================= */
-
 const ModsLib = (() => {
 
   const DATA_URL = '/mods.json';
   const HEADER_IMG = '/header.png';
   const FAVICON = '/fav.ico';
 
-  /* =========================================================
-     Base64 — UTF-8 آمن
-     ========================================================= */
+  /* =========================
+     Base64 UTF-8
+     ========================= */
 
   function b64Encode(str) {
     try {
-      return btoa(unescape(encodeURIComponent(String(str))));
+      return btoa(unescape(encodeURIComponent(str)));
     } catch (e) {
       console.error('B64 encode failed', e);
       return '';
@@ -24,27 +19,23 @@ const ModsLib = (() => {
 
   function b64Decode(str) {
     try {
-      return decodeURIComponent(escape(atob(String(str))));
+      return decodeURIComponent(escape(atob(str)));
     } catch (e) {
       console.error('B64 decode failed', e);
       return '';
     }
   }
 
-  /* =========================================================
-     URL Validation
-     ========================================================= */
+  /* =========================
+     URL
+     ========================= */
 
   function isLikelyValidUrl(str) {
     if (!str || typeof str !== 'string') return false;
 
     try {
       const u = new URL(str);
-
-      return (
-        u.protocol === 'http:' ||
-        u.protocol === 'https:'
-      );
+      return u.protocol === 'http:' || u.protocol === 'https:';
     } catch (e) {
       return false;
     }
@@ -62,12 +53,11 @@ const ModsLib = (() => {
     return decoded;
   }
 
-  /* =========================================================
-     جلب mods.json
-     ========================================================= */
+  /* =========================
+     JSON
+     ========================= */
 
   async function fetchMods() {
-
     let res;
 
     try {
@@ -76,7 +66,7 @@ const ModsLib = (() => {
       });
     } catch (e) {
       throw new Error(
-        'تعذر الاتصال بالخادم لتحميل قائمة المودات. تحقق من اتصالك بالإنترنت.'
+        'تعذر الاتصال بالخادم لتحميل قائمة المودات.'
       );
     }
 
@@ -109,10 +99,6 @@ const ModsLib = (() => {
     );
   }
 
-  /* =========================================================
-     ترتيب المودات
-     ========================================================= */
-
   function sortByIdDesc(list) {
     return [...list].sort(
       (a, b) => Number(b.id) - Number(a.id)
@@ -126,21 +112,18 @@ const ModsLib = (() => {
   }
 
   function highestId(list) {
-    if (!Array.isArray(list) || !list.length) {
-      return 0;
-    }
+    if (!list.length) return 0;
 
     return Math.max(
       ...list.map(m => Number(m.id) || 0)
     );
   }
 
-  /* =========================================================
-     قراءة ID من الرابط
-     ========================================================= */
+  /* =========================
+     ID
+     ========================= */
 
   function getValidId() {
-
     const params = new URLSearchParams(
       window.location.search
     );
@@ -151,113 +134,74 @@ const ModsLib = (() => {
       return null;
     }
 
-    const clean = raw.trim();
-
-    if (!/^\d+$/.test(clean)) {
+    if (!/^\d+$/.test(raw.trim())) {
       return null;
     }
 
-    const id = parseInt(clean, 10);
+    const n = parseInt(raw, 10);
 
-    if (!Number.isFinite(id) || id <= 0) {
+    if (!Number.isFinite(n) || n <= 0) {
       return null;
     }
 
-    return id;
+    return n;
   }
 
-  /* =========================================================
-     روابط الموقع
-     
-     مهم:
-     toTomodUrl() = صفحة التفاصيل
-     toModUrl()   = صفحة التحميل
-     ========================================================= */
+  /* =========================
+     Navigation
+     ========================= */
 
-  function toTomodUrl(id) {
-    return '/tomod.html?id=' +
-      encodeURIComponent(id);
-  }
-
-  function toModUrl(id) {
+  // من tomod.html إلى mod.html
+  function modUrl(id) {
     return '/mod.html?id=' +
       encodeURIComponent(id);
   }
 
-  function fullTomodUrl(id) {
-    try {
-      return window.location.origin +
-        toTomodUrl(id);
-    } catch (e) {
-      return toTomodUrl(id);
-    }
-  }
-
+  // رابط كامل للمود
   function fullModUrl(id) {
-    try {
-      return window.location.origin +
-        toModUrl(id);
-    } catch (e) {
-      return toModUrl(id);
-    }
+    return window.location.origin +
+      modUrl(id);
   }
 
-  /* =========================================================
-     حماية صفحة mod.html
-     ========================================================= */
+  // من mod.html إلى tomod.html
+  function toModDetailsUrl(id) {
+    return '/tomod.html?id=' +
+      encodeURIComponent(id);
+  }
+
+  /* =========================
+     Session Gate
+     ========================= */
 
   function markAllowed(id) {
     try {
       sessionStorage.setItem(
-        'allowed_mod_' + id,
+        'allowed_mod_' + String(id),
         'true'
       );
     } catch (e) {
-      /* local/session storage غير متاح */
+      console.warn(
+        'Unable to save session permission',
+        e
+      );
     }
   }
 
   function isAllowed(id) {
     try {
       return sessionStorage.getItem(
-        'allowed_mod_' + id
+        'allowed_mod_' + String(id)
       ) === 'true';
     } catch (e) {
       return false;
     }
   }
 
-  /*
-     هذه الدالة تستخدمها mod.html.
-
-     إذا لم يمر الزائر من tomod.html
-     يتم إرساله مباشرة إلى tomod.html بنفس ID.
-  */
-
-  function protectDownloadPage(id) {
-
-    if (!id) {
-      window.location.replace('/index.html');
-      return false;
-    }
-
-    if (!isAllowed(id)) {
-      window.location.replace(
-        toTomodUrl(id)
-      );
-
-      return false;
-    }
-
-    return true;
-  }
-
-  /* =========================================================
+  /* =========================
      Header
-     ========================================================= */
+     ========================= */
 
   function renderHeader(targetSelector) {
-
     const target =
       document.querySelector(targetSelector);
 
@@ -265,26 +209,20 @@ const ModsLib = (() => {
 
     target.innerHTML = `
       <header class="site-header">
-
         <div class="site-header__inner">
-
           <a
             href="/index.html"
             class="site-header__link"
             aria-label="ModsLib"
           >
-
             <img
               src="${HEADER_IMG}"
               alt="ModsLib"
               class="site-header__img"
               onerror="this.style.display='none'"
             >
-
           </a>
-
         </div>
-
       </header>
 
       <div
@@ -294,18 +232,11 @@ const ModsLib = (() => {
     `;
 
     injectHeaderAd(
-      document.getElementById(
-        'header-ad-slot'
-      )
+      document.getElementById('header-ad-slot')
     );
   }
 
-  /* =========================================================
-     إعلان تحت الهيدر
-     ========================================================= */
-
   function injectHeaderAd(container) {
-
     if (!container) return;
 
     if (
@@ -320,7 +251,6 @@ const ModsLib = (() => {
       document.createElement('script');
 
     script.async = true;
-
     script.setAttribute(
       'data-cfasync',
       'false'
@@ -339,15 +269,13 @@ const ModsLib = (() => {
     container.appendChild(div);
   }
 
-  /* =========================================================
-     الإعلانات العامة
-     ========================================================= */
+  /* =========================
+     Global Ads
+     ========================= */
 
   function injectGlobalAdScripts() {
-
-    if (!document.body) return;
-
     if (
+      !document.body ||
       document.body.dataset.globalAdsInjected === 'true'
     ) {
       return;
@@ -357,34 +285,26 @@ const ModsLib = (() => {
       'true';
 
     const srcs = [
-
       'https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js',
-
       'https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js'
-
     ];
 
     srcs.forEach(src => {
-
       const script =
         document.createElement('script');
 
       script.src = src;
+      script.async = true;
 
       document.body.appendChild(script);
-
     });
   }
 
-  /* =========================================================
-     إعلان 320×50
-     
-     يتم تحميل /320-50.js داخل iframe
-     والـ iframe قابل لتغيير الارتفاع حسب المحتوى.
-     ========================================================= */
+  /* =========================
+     Dynamic 320x50
+     ========================= */
 
   function createDynamicAd320() {
-
     const iframe =
       document.createElement('iframe');
 
@@ -404,17 +324,11 @@ const ModsLib = (() => {
     );
 
     iframe.style.width = '100%';
-
     iframe.style.maxWidth = '336px';
-
     iframe.style.minHeight = '50px';
-
     iframe.style.height = '50px';
-
     iframe.style.border = '0';
-
     iframe.style.display = 'block';
-
     iframe.style.margin = '0 auto';
 
     iframe.srcdoc =
@@ -438,29 +352,19 @@ const ModsLib = (() => {
     iframe.addEventListener(
       'load',
       () => {
-
         try {
-
           const doc =
             iframe.contentDocument;
 
-          if (!doc || !doc.body) {
-            return;
-          }
+          if (!doc || !doc.body) return;
 
           const resize = () => {
+            const h =
+              doc.body.scrollHeight;
 
-            const height =
-              Math.max(
-                doc.body.scrollHeight,
-                doc.documentElement
-                  ? doc.documentElement.scrollHeight
-                  : 0
-              );
-
-            if (height > 10) {
+            if (h > 10) {
               iframe.style.height =
-                height + 'px';
+                h + 'px';
             }
           };
 
@@ -468,17 +372,10 @@ const ModsLib = (() => {
 
           setTimeout(resize, 400);
           setTimeout(resize, 1200);
-          setTimeout(resize, 2500);
 
         } catch (e) {
-
-          /*
-             في حال تعذر الوصول لمحتوى iframe
-             يبقى الارتفاع الافتراضي 50px.
-          */
-
+          // تجاهل
         }
-
       }
     );
 
@@ -486,7 +383,6 @@ const ModsLib = (() => {
   }
 
   function makeAdSlotWrap() {
-
     const wrap =
       document.createElement('div');
 
@@ -508,21 +404,18 @@ const ModsLib = (() => {
     return wrap;
   }
 
-  /* =========================================================
+  /* =========================
      Footer
-     ========================================================= */
+     ========================= */
 
   function renderFooter(targetSelector) {
-
     const target =
       document.querySelector(targetSelector);
 
     if (!target) return;
 
     target.innerHTML = `
-
       <footer class="site-footer">
-
         <p class="site-footer__line">
           Copyright:
           <span class="site-footer__brand">
@@ -536,18 +429,15 @@ const ModsLib = (() => {
             ATTACK N' DESTROY
           </span>
         </p>
-
       </footer>
-
     `;
   }
 
-  /* =========================================================
+  /* =========================
      Favicon
-     ========================================================= */
+     ========================= */
 
   function ensureFavicon() {
-
     if (
       document.querySelector(
         'link[rel="icon"]'
@@ -560,74 +450,61 @@ const ModsLib = (() => {
       document.createElement('link');
 
     link.rel = 'icon';
-
     link.href = FAVICON;
 
     document.head.appendChild(link);
   }
 
-  /* =========================================================
+  /* =========================
      Toast
-     ========================================================= */
+     ========================= */
 
   let toastTimer = null;
 
   function showToast(message, type) {
-
     let el =
       document.getElementById(
         'mlib-toast'
       );
 
     if (!el) {
-
       el =
         document.createElement('div');
 
-      el.id =
-        'mlib-toast';
-
-      el.className =
-        'toast';
+      el.id = 'mlib-toast';
+      el.className = 'toast';
 
       document.body.appendChild(el);
     }
 
     el.textContent = message;
 
-    let className =
-      'toast is-visible';
-
-    if (type === 'error') {
-      className += ' is-error';
-    }
-
-    if (type === 'success') {
-      className += ' is-success';
-    }
-
-    el.className = className;
+    el.className =
+      'toast is-visible' +
+      (
+        type === 'error'
+          ? ' is-error'
+          : type === 'success'
+            ? ' is-success'
+            : ''
+      );
 
     clearTimeout(toastTimer);
 
     toastTimer =
       setTimeout(() => {
-
         el.classList.remove(
           'is-visible'
         );
-
       }, 3200);
   }
 
-  /* =========================================================
+  /* =========================
      Clipboard
-     ========================================================= */
+     ========================= */
 
   async function copyToClipboard(text) {
-
     try {
-
       await navigator.clipboard.writeText(
         text
       );
@@ -637,49 +514,36 @@ const ModsLib = (() => {
     } catch (e) {
 
       try {
-
-        const textarea =
+        const ta =
           document.createElement(
             'textarea'
           );
 
-        textarea.value = text;
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
 
-        textarea.style.position =
-          'fixed';
+        document.body.appendChild(ta);
 
-        textarea.style.opacity =
-          '0';
+        ta.select();
 
-        document.body.appendChild(
-          textarea
-        );
+        document.execCommand('copy');
 
-        textarea.select();
-
-        document.execCommand(
-          'copy'
-        );
-
-        document.body.removeChild(
-          textarea
-        );
+        document.body.removeChild(ta);
 
         return true;
 
       } catch (e2) {
-
         return false;
       }
     }
   }
 
-  /* =========================================================
+  /* =========================
      HTML Escape
-     ========================================================= */
+     ========================= */
 
   function escapeHtml(str) {
-
     if (
       str === null ||
       typeof str === 'undefined'
@@ -688,82 +552,51 @@ const ModsLib = (() => {
     }
 
     return String(str)
-      .replaceAll(
-        '&',
-        '&amp;'
-      )
-      .replaceAll(
-        '<',
-        '&lt;'
-      )
-      .replaceAll(
-        '>',
-        '&gt;'
-      )
-      .replaceAll(
-        '"',
-        '&quot;'
-      )
-      .replaceAll(
-        "'",
-        '&#039;'
-      );
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
   }
 
-  /* =========================================================
+  /* =========================
      Public API
-     ========================================================= */
+     ========================= */
 
   return {
-
-    /* Base64 */
     b64Encode,
     b64Decode,
 
-    /* URL */
     isLikelyValidUrl,
     resolveDownloadUrl,
 
-    /* Data */
     fetchMods,
     sortByIdDesc,
     sortByIdAsc,
     highestId,
 
-    /* ID */
     getValidId,
 
-    /* Page URLs */
-    toTomodUrl,
-    toModUrl,
-    fullTomodUrl,
+    modUrl,
     fullModUrl,
+    toModDetailsUrl,
 
-    /* Download protection */
     markAllowed,
     isAllowed,
-    protectDownloadPage,
 
-    /* Header */
     renderHeader,
     injectHeaderAd,
-
-    /* Ads */
     injectGlobalAdScripts,
+
     createDynamicAd320,
     makeAdSlotWrap,
 
-    /* Footer */
     renderFooter,
-
-    /* Favicon */
     ensureFavicon,
 
-    /* UI */
     showToast,
     copyToClipboard,
     escapeHtml
-
   };
 
 })();

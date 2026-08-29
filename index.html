@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>ATT/DES — Minecraft Mods (72 Seasons Edition)</title>
     
-    <!-- أيقونة المتصفح المضافة -->
     <link rel="icon" type="image/x-icon" href="https://attdes.online/fav.ico" />
     <link rel="shortcut icon" type="image/x-icon" href="https://attdes.online/fav.ico" />
 
@@ -70,18 +69,24 @@
         .native-banner-wrapper, .social-bar-wrapper { text-align: center; margin: 1rem 0; overflow: hidden; }
         .native-banner-wrapper iframe, .social-bar-wrapper iframe { max-width: 100%; }
 
+        /* تعديل حاوية البانر لتلائم حجمه تماماً بدون فراغات */
         .banner-between {
-            margin: 2rem 0;
-            padding: 0.8rem 0;
+            margin: 1.5rem 0;
             text-align: center;
-            background: rgba(0,0,0,0.4);
-            border: 1px dashed #333;
-            border-radius: 4px;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            overflow: hidden;
         }
         .banner-between iframe {
+            width: 320px;
+            height: 50px;
             max-width: 100%;
             border: none;
             overflow: hidden;
+            display: block;
         }
 
         .feed-controls {
@@ -349,7 +354,7 @@
                     <html>
                     <head>
                         <style>
-                            body { margin: 0; padding: 0; background: transparent; overflow: hidden; }
+                            body { margin: 0; padding: 0; background: transparent; overflow: hidden; display: flex; justify-content: center; align-items: center; }
                             * { box-sizing: border-box; }
                         </style>
                     </head>

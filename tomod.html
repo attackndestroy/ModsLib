@@ -1,164 +1,118 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تفاصيل المود - ATTACK N' DESTROY</title>
-    <link rel="icon" href="/fav.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
-    <script src="/stats.js" async></script>
-    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
-    <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
-    <style>
-        :root {
-            --bg-color: #0a0a0a;
-            --card-bg: #141414;
-            --accent: #ffde00;
-            --text: #ffffff;
-            --gray: #888888;
-            --border: #222222;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text);
-            font-family: 'Cairo', sans-serif;
-            background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0, rgba(255,255,255,0.01) 1px, transparent 0, transparent 50px);
-        }
-        header {
-            width: 100%;
-            border-bottom: 2px solid var(--accent);
-            background: var(--card-bg);
-            text-align: center;
-        }
-        header img {
-            width: 100%;
-            max-height: 250px;
-            object-fit: cover;
-            display: block;
-        }
-        .ad-banner-top {
-            text-align: center;
-            margin: 15px auto;
-        }
-        .container {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 0 15px;
-        }
-        .content-box {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 25px;
-            clip-path: polygon(0 0, 100% 0, 100% 98%, 98% 100%, 0 100%);
-        }
-        .post-img {
-            width: 100%;
-            aspect-ratio: 16/9;
-            object-fit: cover;
-            margin-bottom: 20px;
-            background: #000;
-        }
-        h1 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: var(--accent);
-        }
-        p {
-            color: #cccccc;
-            line-height: 1.8;
-            margin-bottom: 25px;
-        }
-        .btn-download-page {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--bg-color);
-            padding: 12px 35px;
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.2rem;
-            text-decoration: none;
-            font-weight: bold;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-            transition: 0.3s;
-        }
-        .btn-download-page:hover { opacity: 0.85; transform: scale(1.02); }
-        .in-content-ad {
-            margin: 25px 0;
-            text-align: center;
-        }
-        footer {
-            background: var(--card-bg);
-            border-top: 2px solid var(--border);
-            text-align: center;
-            padding: 20px;
-            margin-top: 50px;
-            font-family: 'Oswald', sans-serif;
-        }
-        footer span { color: var(--accent); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>تفاصيل المود — ModsLib</title>
+<link rel="icon" href="/fav.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-    <header>
-        <img src="/header.png" alt="Header Banner" onerror="this.src='https://via.placeholder.com/1200x250/141414/ffde00?text=ATTACK+N+DESTROY'">
-    </header>
+<div id="header-mount"></div>
 
-    <div class="ad-banner-top">
-        <script async="async" data-cfasync="false" src="https://pl30972436.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js"></script>
-        <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
-    </div>
+<main class="container">
+  <div id="page-body">
+    <div class="state-message"><div class="spinner"></div></div>
+  </div>
+</main>
 
-    <div class="container" id="detailsContainer">
-        <h2 style="text-align:center;">جاري التحميل...</h2>
-    </div>
+<div id="footer-mount"></div>
 
-    <footer>
-        Copyright: <span style="color: var(--accent);">ATTACK N' DESTROY</span><br>
-        Powered By: <span style="color: var(--accent);">ATTACK N' DESTROY</span>
-    </footer>
+<script src="/stats.js"></script>
+<script src="/common.js"></script>
+<script>
+(function () {
+  const pageBody = document.getElementById('page-body');
 
-    <script>
-        async function loadDetails() {
-            const params = new URLSearchParams(window.location.search);
-            const id = params.get('id');
-            
-            try {
-                const res = await fetch('/mods.json');
-                const data = await res.json();
-                const post = data.find(p => p.id === id);
+  ModsLib.renderHeader('#header-mount');
+  ModsLib.renderFooter('#footer-mount');
+  ModsLib.ensureFavicon();
+  ModsLib.injectGlobalAdScripts();
 
-                const container = document.getElementById('detailsContainer');
-                if(!post) {
-                    container.innerHTML = '<h1 style="text-align:center; color:red;">المود غير موجود!</h1>';
-                    return;
-                }
+  function adSlotHtmlTarget() {
+    const wrap = document.createElement('div');
+    wrap.style.display = 'flex';
+    wrap.style.justifyContent = 'center';
+    wrap.appendChild(ModsLib.makeAdSlotWrap());
+    return wrap.outerHTML;
+  }
 
-                const title = atob(post.title);
-                const desc = atob(post.description);
-                const img = atob(post.image);
+  function renderNotFound() {
+    pageBody.innerHTML = `
+      <div class="error-page">
+        <p class="error-page__code">404</p>
+        <p class="error-page__msg">المود غير موجود</p>
+        <a class="btn" href="/index.html">العودة إلى الصفحة الرئيسية</a>
+      </div>
+    `;
+  }
 
-                container.innerHTML = `
-                    <div class="content-box">
-                        <img src="${img}" alt="${title}" class="post-img">
-                        <h1>${title}</h1>
-                        
-                        <div class="in-content-ad"><script src="/320-50.js"></script></div>
+  function renderMod(mod) {
+    const title = ModsLib.escapeHtml(mod.title || 'بدون عنوان');
+    const desc = ModsLib.escapeHtml(mod.description || 'لا يوجد وصف.');
+    const img = ModsLib.escapeHtml(mod.image || '');
 
-                        <p>${desc}</p>
-                        
-                        <div class="in-content-ad"><script src="/320-50.js"></script></div>
+    pageBody.innerHTML = `
+      <div id="ad-slot-1"></div>
+      <article class="detail-card">
+        <div class="detail-card__media">
+          <img src="${img}" alt="${title}" onerror="this.style.opacity=0.15">
+        </div>
+        <div class="detail-card__body">
+          <p class="detail-card__eyebrow">تفاصيل المود</p>
+          <h1 class="detail-card__title">${title}</h1>
+          <p class="detail-card__desc">${desc}</p>
+          <div id="ad-slot-2"></div>
+          <div class="detail-card__actions">
+            <a class="btn" id="goto-download" href="#">انتقال لصفحة التحميل</a>
+          </div>
+        </div>
+      </article>
+      <div id="ad-slot-3"></div>
+    `;
 
-                        <a href="/mod.html?id=${post.id}" class="btn-download-page">إنتقال لصفحة التحميل</a>
-                        
-                        <div class="in-content-ad"><script src="/320-50.js"></script></div>
-                    </div>
-                `;
-            } catch(e) {
-                console.error(e);
-            }
-        }
-        loadDetails();
-    </script>
+    document.getElementById('ad-slot-1').appendChild(ModsLib.makeAdSlotWrap());
+    document.getElementById('ad-slot-2').appendChild(ModsLib.makeAdSlotWrap());
+    document.getElementById('ad-slot-3').appendChild(ModsLib.makeAdSlotWrap());
+
+    // تسجيل السماح لهذا الـ ID تحديداً قبل الانتقال لصفحة التحميل
+    ModsLib.markAllowed(mod.id);
+
+    const gotoBtn = document.getElementById('goto-download');
+    gotoBtn.href = ModsLib.modUrl(mod.id);
+  }
+
+  async function init() {
+    const id = ModsLib.getValidId();
+    if (id === null) {
+      renderNotFound();
+      return;
+    }
+    try {
+      const mods = await ModsLib.fetchMods();
+      const mod = mods.find(m => Number(m.id) === id);
+      if (!mod) {
+        renderNotFound();
+        return;
+      }
+      renderMod(mod);
+    } catch (err) {
+      pageBody.innerHTML = `
+        <div class="error-page">
+          <p class="error-page__msg">${ModsLib.escapeHtml(err.message || 'حدث خطأ غير متوقع.')}</p>
+          <a class="btn" href="/index.html">العودة إلى الصفحة الرئيسية</a>
+        </div>
+      `;
+    }
+  }
+
+  init();
+})();
+</script>
+
 </body>
 </html>

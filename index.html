@@ -1,282 +1,898 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATTACK N' DESTROY - الرهيب</title>
-    <link rel="icon" href="/fav.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
-    <script src="/stats.js" async></script>
-    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
-    <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATTACK N' DESTROY - المكتبة</title>
+    <link rel="icon" href="/fav.ico" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet" />
     <style>
+        /* ===== RESET & BASE ===== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            --bg-color: #0a0a0a;
-            --card-bg: #141414;
-            --accent: #ffde00;
-            --text: #ffffff;
-            --gray: #888888;
-            --border: #222222;
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-card: #1a1a1a;
+            --yellow: #ffde00;
+            --yellow-glow: rgba(255, 222, 0, 0.25);
+            --border-dark: #2a2a2a;
+            --text-primary: #f0f0f0;
+            --text-secondary: #b0b0b0;
+            --font-heading: 'Oswald', sans-serif;
+            --font-body: 'Cairo', sans-serif;
+            --header-height: 80px;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            background-color: var(--bg-color);
-            color: var(--text);
-            font-family: 'Cairo', sans-serif;
-            background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0, rgba(255,255,255,0.01) 1px, transparent 0, transparent 50px);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            background-image:
+                repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(255, 222, 0, 0.015) 40px,
+                    rgba(255, 222, 0, 0.015) 41px),
+                radial-gradient(circle at 20% 30%, rgba(255, 222, 0, 0.04) 0%, transparent 60%),
+                radial-gradient(circle at 80% 70%, rgba(255, 222, 0, 0.03) 0%, transparent 50%);
+            background-attachment: fixed;
         }
-        header {
-            width: 100%;
-            border-bottom: 2px solid var(--accent);
-            background: var(--card-bg);
-            text-align: center;
+
+        a {
+            text-decoration: none;
+            color: inherit;
         }
-        header img {
-            width: 100%;
-            max-height: 250px;
-            object-fit: cover;
+        img {
             display: block;
+            max-width: 100%;
         }
-        .ad-banner-top {
-            text-align: center;
-            margin: 15px auto;
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-        .container {
-            max-width: 1100px;
-            margin: 20px auto;
-            padding: 0 15px;
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
         }
-        .controls {
+        ::-webkit-scrollbar-thumb {
+            background: var(--yellow);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e6c800;
+        }
+
+        /* ===== HEADER ===== */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--border-dark);
+            padding: 12px 24px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
-            gap: 15px;
+            justify-content: center;
+            min-height: var(--header-height);
+        }
+
+        .site-header .header-img {
+            max-height: 60px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 12px rgba(255, 222, 0, 0.15));
+            transition: filter 0.3s;
+        }
+        .site-header .header-img:hover {
+            filter: drop-shadow(0 0 24px rgba(255, 222, 0, 0.30));
+        }
+
+        /* ===== AD BANNER (under header) ===== */
+        .ad-banner-top {
+            background: rgba(20, 20, 20, 0.6);
+            padding: 8px 0;
+            display: flex;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-dark);
+            min-height: 90px;
+            align-items: center;
+        }
+        .ad-banner-top>div {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 20px 60px;
+        }
+
+        /* ===== FEED CONTROLS ===== */
+        .feed-controls {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 32px;
+            background: var(--bg-secondary);
+            padding: 16px 24px;
+            border-radius: 0;
+            clip-path: polygon(0 0, 100% 0, 97% 100%, 3% 100%);
+            border: 1px solid var(--border-dark);
+            border-left: 4px solid var(--yellow);
+        }
+
+        .feed-controls .sort-group {
+            display: flex;
+            gap: 10px;
             flex-wrap: wrap;
         }
-        .search-box {
-            flex: 1;
-            min-width: 250px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 12px 20px;
-            color: var(--text);
-            font-family: 'Cairo', sans-serif;
-            outline: none;
-            clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
-            transition: 0.3s;
-        }
-        .search-box:focus { border-color: var(--accent); }
-        .btn-sort {
-            background: var(--card-bg);
-            color: var(--accent);
-            border: 1px solid var(--accent);
-            padding: 10px 20px;
-            font-family: 'Oswald', sans-serif;
+
+        .feed-controls .sort-group button {
+            background: transparent;
+            border: 1px solid var(--border-dark);
+            color: var(--text-secondary);
+            padding: 6px 18px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.9rem;
             cursor: pointer;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-            transition: 0.3s;
+            transition: all 0.25s;
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
-        .btn-sort:hover { background: var(--accent); color: var(--bg-color); }
+        .feed-controls .sort-group button:hover,
+        .feed-controls .sort-group button.active {
+            background: var(--yellow);
+            color: #000;
+            border-color: var(--yellow);
+            box-shadow: 0 0 20px var(--yellow-glow);
+            transform: translateY(-2px);
+        }
+
+        .feed-controls .search-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-dark);
+            padding: 4px 12px 4px 4px;
+            clip-path: polygon(0 0, 100% 0, 97% 100%, 3% 100%);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            flex: 1 1 240px;
+            max-width: 340px;
+        }
+        .feed-controls .search-box:focus-within {
+            border-color: var(--yellow);
+            box-shadow: 0 0 16px var(--yellow-glow);
+        }
+        .feed-controls .search-box input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            padding: 8px 10px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            width: 100%;
+        }
+        .feed-controls .search-box input::placeholder {
+            color: var(--text-secondary);
+        }
+        .feed-controls .search-box button {
+            background: var(--yellow);
+            border: none;
+            color: #000;
+            width: 36px;
+            height: 36px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+            font-weight: 700;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .feed-controls .search-box button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--yellow-glow);
+        }
+
+        /* ===== FEED GRID ===== */
         .feed-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 28px;
+            margin-bottom: 40px;
         }
+
+        /* ===== POST CARD ===== */
         .post-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            padding: 15px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-dark);
+            clip-path: polygon(0 0, 100% 0, 97% 100%, 3% 100%);
+            overflow: hidden;
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.35s ease,
+                border-color 0.35s ease;
             position: relative;
-            clip-path: polygon(0 0, 100% 0, 100% 95%, 97% 100%, 0 100%);
-            transition: transform 0.3s, border-color 0.3s;
+            display: flex;
+            flex-direction: column;
         }
         .post-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-3px);
+            transform: translateY(-6px);
+            border-color: var(--yellow);
+            box-shadow: 0 12px 40px rgba(255, 222, 0, 0.08), 0 0 0 1px rgba(255, 222, 0, 0.1);
         }
-        .post-img-container {
-            width: 100%;
-            aspect-ratio: 16/9;
+
+        .post-card .card-image {
+            aspect-ratio: 16 / 9;
+            background: var(--bg-secondary);
             overflow: hidden;
-            background: #000;
+            position: relative;
+            border-bottom: 1px solid var(--border-dark);
         }
-        .post-img-container img {
+        .post-card .card-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s ease;
         }
-        .post-title {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.5rem;
-            color: var(--text);
-            margin: 15px 0 10px 0;
+        .post-card:hover .card-image img {
+            transform: scale(1.03);
         }
-        .btn-details {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--bg-color);
-            padding: 8px 25px;
-            font-family: 'Oswald', sans-serif;
-            text-decoration: none;
-            font-weight: bold;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-            transition: 0.3s;
+
+        .post-card .card-body {
+            padding: 18px 20px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
-        .btn-details:hover { opacity: 0.85; transform: scale(1.02); }
-        .load-more-container {
-            text-align: center;
-            margin: 40px 0;
+
+        .post-card .card-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
-        .btn-load-more {
+        .post-card .card-title .highlight {
+            color: var(--yellow);
+        }
+
+        .post-card .card-desc {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 16px;
+            flex: 1;
+        }
+
+        .post-card .card-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: auto;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .btn-detail {
             background: transparent;
-            color: var(--accent);
-            border: 2px solid var(--accent);
-            padding: 12px 40px;
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.1rem;
+            border: 1px solid var(--yellow);
+            color: var(--yellow);
+            padding: 8px 28px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             cursor: pointer;
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 92% 100%, 8% 100%);
+            background: rgba(255, 222, 0, 0.04);
+            position: relative;
         }
-        .btn-load-more:hover { background: var(--accent); color: var(--bg-color); }
-        .dynamic-banner {
-            margin: 20px 0;
+        .btn-detail:hover {
+            background: var(--yellow);
+            color: #000;
+            box-shadow: 0 0 32px var(--yellow-glow);
+            transform: translateY(-2px) scale(1.02);
+        }
+        .btn-detail:active {
+            transform: scale(0.96);
+        }
+
+        /* ===== SHOW MORE ===== */
+        .show-more-wrap {
+            display: flex;
+            justify-content: center;
+            padding: 12px 0 20px;
+        }
+        .btn-show-more {
+            background: transparent;
+            border: 1px solid var(--border-dark);
+            color: var(--text-secondary);
+            padding: 12px 48px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+            background: var(--bg-secondary);
+        }
+        .btn-show-more:hover {
+            border-color: var(--yellow);
+            color: var(--yellow);
+            box-shadow: 0 0 30px var(--yellow-glow);
+            transform: translateY(-3px);
+        }
+        .btn-show-more:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            background: var(--bg-secondary);
+            border-top: 2px solid var(--border-dark);
+            padding: 28px 24px 24px;
             text-align: center;
+            margin-top: 20px;
+            font-family: var(--font-body);
+        }
+        .site-footer .footer-line {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+        }
+        .site-footer .footer-line .brand {
+            color: var(--yellow);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .site-footer .footer-line .brand-glow {
+            color: var(--yellow);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(255, 222, 0, 0.25);
+        }
+
+        /* ===== STATUS / EMPTY ===== */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            border: 1px dashed var(--border-dark);
+            clip-path: polygon(0 0, 100% 0, 97% 100%, 3% 100%);
+        }
+        .empty-state span {
+            color: var(--yellow);
+            font-family: var(--font-heading);
+            font-weight: 600;
+        }
+
+        /* ===== AD IN FEED (320x50) ===== */
+        .ad-feed-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(20, 20, 20, 0.5);
+            border: 1px dashed var(--border-dark);
+            border-radius: 0;
+            clip-path: polygon(0 0, 100% 0, 97% 100%, 3% 100%);
+            padding: 8px 4px;
+            min-height: 60px;
+            margin: 4px 0 12px;
             width: 100%;
         }
-        footer {
-            background: var(--card-bg);
-            border-top: 2px solid var(--border);
-            text-align: center;
-            padding: 20px;
-            margin-top: 50px;
-            font-family: 'Oswald', sans-serif;
+        .ad-feed-item iframe {
+            border: none;
+            max-width: 100%;
+            min-height: 50px;
+            width: 320px;
+            height: 50px;
         }
-        footer span { color: var(--accent); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 700px) {
+            .feed-controls {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 14px 16px;
+            }
+            .feed-controls .search-box {
+                max-width: 100%;
+                flex: 1;
+            }
+            .feed-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .site-header {
+                padding: 8px 16px;
+                min-height: 60px;
+            }
+            .site-header .header-img {
+                max-height: 44px;
+            }
+            .ad-banner-top {
+                min-height: 60px;
+                padding: 4px 0;
+            }
+            .post-card .card-body {
+                padding: 14px 16px 16px;
+            }
+            .btn-detail {
+                padding: 6px 20px;
+                font-size: 0.8rem;
+            }
+            .feed-controls .sort-group button {
+                padding: 4px 12px;
+                font-size: 0.8rem;
+            }
+            .container {
+                padding: 16px 12px 40px;
+            }
+            .ad-feed-item iframe {
+                width: 100%;
+                max-width: 320px;
+                height: 50px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .feed-grid {
+                gap: 16px;
+            }
+            .post-card .card-title {
+                font-size: 1.05rem;
+            }
+            .btn-show-more {
+                padding: 10px 28px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* ===== UTILITY ===== */
+        .hidden {
+            display: none !important;
+        }
+        .text-yellow {
+            color: var(--yellow);
+        }
+        .mt-8 {
+            margin-top: 8px;
+        }
+
+        /* ===== LOADING SHIMMER ===== */
+        .loading-shimmer {
+            animation: shimmer 1.2s infinite linear;
+            background: linear-gradient(90deg, var(--bg-card) 30%, var(--bg-secondary) 50%, var(--bg-card) 70%);
+            background-size: 200% 100%;
+            border-radius: 0;
+            clip-path: polygon(0 0, 100% 0, 97% 100%, 3% 100%);
+        }
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <img src="/header.png" alt="Header Banner" onerror="this.src='https://via.placeholder.com/1200x250/141414/ffde00?text=ATTACK+N+DESTROY'">
+    <!-- ===== HEADER ===== -->
+    <header class="site-header">
+        <img src="/header.png" alt="ATTACK N' DESTROY" class="header-img" />
     </header>
 
+    <!-- ===== AD BANNER (under header) ===== -->
     <div class="ad-banner-top">
-        <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js"></script>
         <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
     </div>
 
-    <div class="container">
-        <div class="dynamic-banner">
-            <script src="/320-50.js"></script>
+    <!-- ===== MAIN CONTAINER ===== -->
+    <div class="container" id="app">
+
+        <!-- Feed Controls -->
+        <div class="feed-controls">
+            <div class="sort-group">
+                <button id="sortNewest" class="active" data-sort="newest">أحدث</button>
+                <button id="sortOldest" data-sort="oldest">أقدم</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="بحث في المكتبة..." />
+                <button id="searchBtn" aria-label="بحث">🔍</button>
+            </div>
         </div>
 
-        <div class="controls">
-            <input type="text" id="searchInput" class="search-box" placeholder="ابحث عن المودات...">
-            <button id="sortBtn" class="btn-sort">ترتيب: الأحدث</button>
-        </div>
-
+        <!-- Feed Grid -->
         <div id="feedGrid" class="feed-grid"></div>
 
-        <div class="load-more-container">
-            <button id="loadMoreBtn" class="btn-load-more" style="display: none;">إظهار المزيد</button>
+        <!-- Show More -->
+        <div class="show-more-wrap">
+            <button id="showMoreBtn" class="btn-show-more">اظهار المزيد</button>
+        </div>
+
+        <!-- Empty state (hidden by default) -->
+        <div id="emptyState" class="empty-state hidden">
+            لا توجد منشورات متطابقة مع <span>بحثك</span>
         </div>
     </div>
 
-    <footer>
-        Copyright: <span id="footerBrand">ATTACK N' DESTROY</span><br>
-        Powered By: <span id="footerBrand2">ATTACK N' DESTROY</span>
+    <!-- ===== FOOTER ===== -->
+    <footer class="site-footer">
+        <div class="footer-line">
+            حقوق النشر &copy; <span class="brand">ATTACK N' DESTROY</span>
+        </div>
+        <div class="footer-line mt-8">
+            تشغيل بواسطة <span class="brand-glow">ATTACK N' DESTROY</span>
+        </div>
+        <!-- stats.js -->
+        <script src="/stats.js"></script>
     </footer>
 
-    <script>
-        let allPosts = [];
-        let displayedCount = 10;
-        let sortOrder = 'desc'; // desc = newest, asc = oldest
-
-        async function fetchPosts() {
-            try {
-                const res = await fetch('/mods.json');
-                const data = await res.json();
-                allPosts = data.map(item => ({
-                    id: item.id,
-                    title: atob(item.title),
-                    description: atob(item.description),
-                    image: atob(item.image),
-                    download: atob(item.download)
-                }));
-                // Sort by ID descending by default
-                sortPostsData();
-                renderFeed();
-            } catch (e) {
-                console.error("Error loading mods.json", e);
-            }
-        }
-
-        function sortPostsData() {
-            allPosts.sort((a, b) => {
-                let idA = parseInt(a.id) || 0;
-                let idB = parseInt(b.id) || 0;
-                return sortOrder === 'desc' ? idB - idA : idA - idB;
-            });
-        }
-
-        function renderFeed() {
-            const grid = document.getElementById('feedGrid');
-            grid.innerHTML = '';
-            
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allPosts.filter(p => p.title.toLowerCase().includes(query) || p.description.toLowerCase().includes(query));
-            
-            const slice = filtered.slice(0, displayedCount);
-
-            slice.forEach((post, index) => {
-                const card = document.createElement('div');
-                card.className = 'post-card';
-                card.innerHTML = `
-                    <div class="post-img-container">
-                        <img src="${post.image}" alt="${post.title}" loading="lazy">
-                    </div>
-                    <h2 class="post-title">${post.title}</h2>
-                    <a href="/tomod.html?id=${post.id}" class="btn-details">عرض التفاصيل</a>
-                `;
-                grid.appendChild(card);
-
-                // Dynamic responsive 320x50 ad iframe after every post in feed
-                if (index < slice.length - 1) {
-                    const adDiv = document.createElement('div');
-                    adDiv.className = 'dynamic-banner';
-                    adDiv.innerHTML = `<iframe src="/320-50.js" style="width:100%; height:50px; border:none; overflow:hidden;" scrolling="no"></iframe>`;
-                    grid.appendChild(adDiv);
-                }
-            });
-
-            const loadMoreBtn = document.getElementById('loadMoreBtn');
-            if (displayedCount < filtered.length) {
-                loadMoreBtn.style.display = 'inline-block';
-            } else {
-                loadMoreBtn.style.display = 'none';
-            }
-        }
-
-        document.getElementById('loadMoreBtn').addEventListener('click', () => {
-            displayedCount += 10;
-            renderFeed();
-        });
-
-        document.getElementById('searchInput').addEventListener('input', () => {
-            displayedCount = 10;
-            renderFeed();
-        });
-
-        document.getElementById('sortBtn').addEventListener('click', () => {
-            sortOrder = sortOrder === 'desc' ? 'asc' : 'desc';
-            document.getElementById('sortBtn').innerText = `ترتيب: ${sortOrder === 'desc' ? 'الأحدث' : 'الأقدم'}`;
-            sortPostsData();
-            renderFeed();
-        });
-
-        fetchPosts();
+    <!-- ===== AD SCRIPTS (all pages) ===== -->
+    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js">
     </script>
+    <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js">
+    </script>
+    <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js">
+    </script>
+
+    <!-- ============================================================ -->
+    <!-- ===== INDEX LOGIC ===== -->
+    <!-- ============================================================ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ---------- state ----------
+            let allMods = [];
+            let filteredMods = [];
+            let currentPage = 0;
+            const PER_PAGE = 10;
+            let currentSort = 'newest'; // 'newest' | 'oldest'
+            let searchQuery = '';
+
+            // DOM refs
+            const grid = document.getElementById('feedGrid');
+            const showMoreBtn = document.getElementById('showMoreBtn');
+            const sortNewest = document.getElementById('sortNewest');
+            const sortOldest = document.getElementById('sortOldest');
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+            const emptyState = document.getElementById('emptyState');
+
+            // ---------- helpers ----------
+            function decodeBase64(str) {
+                try {
+                    return atob(str);
+                } catch (_) { return str; }
+            }
+
+            function formatId(id) {
+                return String(id).padStart(3, '0');
+            }
+
+            // ---------- render ----------
+            function render() {
+                const start = currentPage * PER_PAGE;
+                const end = start + PER_PAGE;
+                const pageItems = filteredMods.slice(start, end);
+
+                // if first page and no items, show empty
+                if (currentPage === 0 && filteredMods.length === 0) {
+                    grid.innerHTML = '';
+                    emptyState.classList.remove('hidden');
+                    showMoreBtn.disabled = true;
+                    showMoreBtn.textContent = 'لا توجد منشورات';
+                    return;
+                }
+                emptyState.classList.add('hidden');
+
+                // clear if first page
+                if (currentPage === 0) {
+                    grid.innerHTML = '';
+                }
+
+                // Build cards
+                let html = '';
+                let adCounter = 0;
+
+                pageItems.forEach((mod, idx) => {
+                    // card
+                    const title = mod.title || 'بدون عنوان';
+                    const desc = mod.description || '';
+                    const img = mod.image || '';
+                    const id = mod.id;
+
+                    html += `
+                        <div class="post-card" data-id="${id}">
+                            <div class="card-image">
+                                <img src="${img}" alt="${title}" loading="lazy" onerror="this.style.background='#222';this.alt='صورة غير متوفرة'" />
+                            </div>
+                            <div class="card-body">
+                                <div class="card-title">${title}</div>
+                                <div class="card-desc">${desc}</div>
+                                <div class="card-actions">
+                                    <button class="btn-detail" data-id="${id}">عرض التفاصيل</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    // 320x50 ad after each post (except maybe last if we want)
+                    // user said "بعد كل منشور يظهر في feed"
+                    // but also "قبل المنشور الاول" — we handle that separately
+                    // we'll insert an ad after every post
+                    adCounter++;
+                    html += `
+                        <div class="ad-feed-item" data-ad="${adCounter}">
+                            <iframe src="/320-50.js?t=${Date.now()}" width="320" height="50" scrolling="no" frameborder="0"></iframe>
+                        </div>
+                    `;
+                });
+
+                // Insert before first post: 320x50 ad at the very top of the feed
+                // But only on first page
+                if (currentPage === 0 && filteredMods.length > 0) {
+                    const topAd = `
+                        <div class="ad-feed-item" data-ad="top">
+                            <iframe src="/320-50.js?t=${Date.now()}" width="320" height="50" scrolling="no" frameborder="0"></iframe>
+                        </div>
+                    `;
+                    // prepend to grid
+                    grid.insertAdjacentHTML('afterbegin', topAd);
+                }
+
+                // Append cards
+                if (currentPage === 0) {
+                    // we already set grid.innerHTML = '' above, so we can just append
+                    // but we need to handle the top ad separately
+                    // Let's reconstruct: we'll set grid.innerHTML to topAd + cards
+                    // But we already inserted topAd via insertAdjacentHTML after clearing
+                    // Actually we cleared grid.innerHTML = '' at the beginning of this function for page 0
+                    // So let's rebuild properly
+                    // I'll re-do this more cleanly
+                }
+
+                // Better approach: rebuild entire grid
+                // Let's redo the render logic
+                rebuildGrid();
+            }
+
+            function rebuildGrid() {
+                const start = currentPage * PER_PAGE;
+                const end = start + PER_PAGE;
+                const pageItems = filteredMods.slice(start, end);
+
+                if (filteredMods.length === 0) {
+                    grid.innerHTML = '';
+                    emptyState.classList.remove('hidden');
+                    showMoreBtn.disabled = true;
+                    showMoreBtn.textContent = 'لا توجد منشورات';
+                    return;
+                }
+                emptyState.classList.add('hidden');
+
+                let html = '';
+
+                // Top ad (only on first page)
+                if (currentPage === 0) {
+                    html += `
+                        <div class="ad-feed-item" data-ad="top">
+                            <iframe src="/320-50.js?t=${Date.now()}" width="320" height="50" scrolling="no" frameborder="0"></iframe>
+                        </div>
+                    `;
+                }
+
+                pageItems.forEach((mod) => {
+                    const title = mod.title || 'بدون عنوان';
+                    const desc = mod.description || '';
+                    const img = mod.image || '';
+                    const id = mod.id;
+
+                    html += `
+                        <div class="post-card" data-id="${id}">
+                            <div class="card-image">
+                                <img src="${img}" alt="${title}" loading="lazy" onerror="this.style.background='#222';this.alt='صورة غير متوفرة'" />
+                            </div>
+                            <div class="card-body">
+                                <div class="card-title">${title}</div>
+                                <div class="card-desc">${desc}</div>
+                                <div class="card-actions">
+                                    <button class="btn-detail" data-id="${id}">عرض التفاصيل</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    // ad after each post
+                    html += `
+                        <div class="ad-feed-item" data-ad="after-${id}">
+                            <iframe src="/320-50.js?t=${Date.now()}" width="320" height="50" scrolling="no" frameborder="0"></iframe>
+                        </div>
+                    `;
+                });
+
+                grid.innerHTML = html;
+
+                // Update show more button
+                const totalVisible = (currentPage + 1) * PER_PAGE;
+                if (totalVisible >= filteredMods.length) {
+                    showMoreBtn.disabled = true;
+                    showMoreBtn.textContent = 'تم عرض الكل';
+                } else {
+                    showMoreBtn.disabled = false;
+                    showMoreBtn.textContent = 'اظهار المزيد';
+                }
+
+                // Attach event listeners to detail buttons
+                document.querySelectorAll('.btn-detail').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const id = this.getAttribute('data-id');
+                        if (id) {
+                            window.location.href = '/tomod.html?id=' + id;
+                        }
+                    });
+                });
+            }
+
+            // ---------- sorting & filtering ----------
+            function applyFiltersAndSort() {
+                let result = [...allMods];
+
+                // search
+                if (searchQuery.trim() !== '') {
+                    const q = searchQuery.trim().toLowerCase();
+                    result = result.filter(mod =>
+                        (mod.title || '').toLowerCase().includes(q) ||
+                        (mod.description || '').toLowerCase().includes(q)
+                    );
+                }
+
+                // sort
+                if (currentSort === 'newest') {
+                    result.sort((a, b) => b.id - a.id);
+                } else {
+                    result.sort((a, b) => a.id - b.id);
+                }
+
+                filteredMods = result;
+                currentPage = 0;
+                rebuildGrid();
+            }
+
+            // ---------- load data ----------
+            function loadData() {
+                fetch('/mods.json')
+                    .then(res => {
+                        if (!res.ok) throw new Error('HTTP ' + res.status);
+                        return res.json();
+                    })
+                    .then(data => {
+                        if (!Array.isArray(data)) throw new Error('Invalid JSON');
+                        allMods = data.map(mod => ({
+                            ...mod,
+                            // decode link if present (base64)
+                            link: mod.link ? decodeBase64(mod.link) : ''
+                        }));
+                        applyFiltersAndSort();
+                    })
+                    .catch(err => {
+                        console.error('فشل تحميل البيانات:', err);
+                        grid.innerHTML = `
+                            <div class="empty-state" style="display:block;">
+                                ⚠️ تعذر تحميل المكتبة. تأكد من وجود <span>mods.json</span>
+                            </div>
+                        `;
+                        showMoreBtn.disabled = true;
+                        showMoreBtn.textContent = 'خطأ';
+                    });
+            }
+
+            // ---------- event binding ----------
+            function init() {
+                // sort buttons
+                sortNewest.addEventListener('click', function() {
+                    sortNewest.classList.add('active');
+                    sortOldest.classList.remove('active');
+                    currentSort = 'newest';
+                    applyFiltersAndSort();
+                });
+                sortOldest.addEventListener('click', function() {
+                    sortOldest.classList.add('active');
+                    sortNewest.classList.remove('active');
+                    currentSort = 'oldest';
+                    applyFiltersAndSort();
+                });
+
+                // search
+                function doSearch() {
+                    searchQuery = searchInput.value;
+                    applyFiltersAndSort();
+                }
+                searchBtn.addEventListener('click', doSearch);
+                searchInput.addEventListener('keyup', function(e) {
+                    if (e.key === 'Enter') doSearch();
+                });
+
+                // show more
+                showMoreBtn.addEventListener('click', function() {
+                    if (this.disabled) return;
+                    currentPage++;
+                    rebuildGrid();
+                    // scroll a bit to show new content
+                    window.scrollBy({ top: 120, behavior: 'smooth' });
+                });
+
+                // load
+                loadData();
+            }
+
+            // run
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+
+            // expose for debugging
+            window.__INDEX_STATE = {
+                allMods,
+                filteredMods,
+                currentPage,
+                PER_PAGE,
+                currentSort,
+                searchQuery,
+                rebuildGrid,
+                applyFiltersAndSort,
+                loadData
+            };
+
+        })();
+    </script>
+
 </body>
 </html>

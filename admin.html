@@ -49,7 +49,6 @@
     resize: vertical;
   }
   .field input:focus, .field textarea:focus { outline: none; border-color: var(--accent); }
-  .field input[readonly] { color: var(--text-muted); background: #0f0f0f; }
   .field-hint { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
   .form-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 6px; }
   .dash-toolbar {
@@ -101,22 +100,33 @@
   }
   .modal-box__title { font-family: var(--font-display); font-size: 18px; color: var(--accent); margin: 0 0 18px; }
   .empty-hint { color: var(--text-muted); font-size: 14px; text-align: center; padding: 20px; }
+  .upload-preview { margin-top: 8px; max-width: 120px; display: none; border-radius: 4px; border: 1px solid var(--border); }
 </style>
 </head>
 <body>
-
 <div id="header-mount"></div>
-
 <main class="container" style="padding-bottom: 60px;">
 
-  <!-- بوابة إدخال Token -->
+  <!-- بوابة إدخال الـ Tokens -->
   <div id="token-gate" class="gate-wrap" style="display:none;">
-    <h1 class="page-hero__title" style="border:none; padding:0; margin-bottom:14px;">الدخول إلى لوحة التحكم</h1>
-    <p>أدخل GitHub API Token للوصول إلى إدارة المستودع. سيتم حفظه في متصفحك فقط ولن يُطلب منك مرة أخرى.</p>
+    <h1 class="page-hero__title" style="border:none; padding:0; margin-bottom:14px;">إعدادات لوحة التحكم</h1>
+    <p>أدخل بيانات الاعتماد الخاصة بـ GitHub و Cloudinary للبدء. سيتم حفظها في متصفحك محلياً.</p>
+    
     <div class="field" style="text-align:right;">
       <label for="token-input">GitHub API Token</label>
       <input type="password" id="token-input" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off">
     </div>
+    
+    <div class="field" style="text-align:right;">
+      <label for="cloud-name-input">Cloudinary Cloud Name</label>
+      <input type="text" id="cloud-name-input" placeholder="اسم الحساب الخاص بك" autocomplete="off">
+    </div>
+
+    <div class="field" style="text-align:right;">
+      <label for="upload-preset-input">Cloudinary Upload Preset</label>
+      <input type="text" id="upload-preset-input" placeholder="اسم الـ Preset المخصص للرفع" autocomplete="off">
+    </div>
+
     <div class="form-actions" style="justify-content:center;">
       <button type="button" class="btn" id="token-save-btn">حفظ والدخول</button>
     </div>
@@ -124,10 +134,9 @@
 
   <!-- التطبيق الرئيسي -->
   <div id="dashboard-app" style="display:none;">
-
     <div class="dash-toolbar">
       <h1 class="dash-toolbar__title">لوحة التحكم <span class="badge">attackndestroy/modslib</span></h1>
-      <button type="button" class="btn btn--outline btn--sm" id="clear-token-btn">مسح Token</button>
+      <button type="button" class="btn btn--outline btn--sm" id="clear-token-btn">إعادة تعيين البيانات</button>
     </div>
 
     <div id="global-status" class="state-message" style="display:none;"></div>
@@ -138,8 +147,8 @@
       <form id="publish-form">
         <div class="field">
           <label>ID</label>
-          <input type="text" id="new-id" readonly>
-          <p class="field-hint">يُحسب تلقائياً بحسب أعلى ID موجود.</p>
+          <input type="number" id="new-id" required>
+          <p class="field-hint">يُحسب تلقائياً ويمكنك تعديله يدوياً.</p>
         </div>
         <div class="field">
           <label for="new-title">العنوان</label>
@@ -150,7 +159,12 @@
           <textarea id="new-desc" rows="3" required></textarea>
         </div>
         <div class="field">
-          <label for="new-image">رابط الصورة</label>
+          <label for="file-picker">رفع الصورة من جهازك (Media Picker)</label>
+          <input type="file" id="file-picker" accept="image/*">
+          <img id="upload-preview" class="upload-preview" alt="معاينة الصورة">
+        </div>
+        <div class="field">
+          <label for="new-image">رابط الصورة (يتم تعبئته تلقائياً بعد الرفع أو أدخله يدوياً)</label>
           <input type="url" id="new-image" placeholder="https://..." required>
         </div>
         <div class="field">
@@ -169,6 +183,19 @@
       </form>
     </section>
 
+    <!-- عرض JSON (تم نقله ليصبح قبل اللفتات والخيارات حسب الطلب) -->
+    <section class="dash-section">
+      <h2 class="dash-section__title">محتوى mods.json</h2>
+      <div id="json-view" class="json-output"></div>
+      <div class="json-tabs" style="margin-top: 14px;">
+        <button type="button" class="chip is-active" id="tab-unencrypted">غير مشفر</button>
+        <button type="button" class="chip" id="tab-encrypted">مشفر (كما هو مخزن)</button>
+      </div>
+      <div class="form-actions" style="margin-top:14px;">
+        <button type="button" class="btn btn--outline btn--sm" id="copy-json-btn">نسخ JSON</button>
+      </div>
+    </section>
+
     <!-- قائمة المودات -->
     <section class="dash-section">
       <h2 class="dash-section__title">إدارة المودات</h2>
@@ -185,23 +212,8 @@
       <div id="admin-empty" class="empty-hint" style="display:none;">لا توجد مودات مطابقة.</div>
     </section>
 
-    <!-- عرض JSON -->
-    <section class="dash-section">
-      <h2 class="dash-section__title">محتوى mods.json</h2>
-      <div class="json-tabs">
-        <button type="button" class="chip is-active" id="tab-unencrypted">غير مشفر</button>
-        <button type="button" class="chip" id="tab-encrypted">مشفر (كما هو مخزن)</button>
-      </div>
-      <div id="json-view" class="json-output"></div>
-      <div class="form-actions" style="margin-top:14px;">
-        <button type="button" class="btn btn--outline btn--sm" id="copy-json-btn">نسخ JSON</button>
-      </div>
-    </section>
-
   </div>
-
 </main>
-
 <div id="footer-mount"></div>
 
 <!-- نافذة التعديل -->
@@ -209,7 +221,11 @@
   <div class="modal-box">
     <h3 class="modal-box__title">تعديل المود</h3>
     <form id="edit-form">
-      <input type="hidden" id="edit-id">
+      <input type="hidden" id="edit-original-id">
+      <div class="field">
+        <label for="edit-id">ID</label>
+        <input type="number" id="edit-id" required>
+      </div>
       <div class="field">
         <label for="edit-title">العنوان</label>
         <input type="text" id="edit-title" required>
@@ -217,6 +233,10 @@
       <div class="field">
         <label for="edit-desc">الوصف</label>
         <textarea id="edit-desc" rows="3" required></textarea>
+      </div>
+      <div class="field">
+        <label for="edit-file-picker">تحديث الصورة (اختياري)</label>
+        <input type="file" id="edit-file-picker" accept="image/*">
       </div>
       <div class="field">
         <label for="edit-image">رابط الصورة</label>
@@ -234,42 +254,41 @@
   </div>
 </div>
 
-<script src="/stats.js"></script>
 <script src="/common.js"></script>
-
 <script>
-/* =========================================================
-   ModsLib — dashboard.js (مدمج)
-   إدارة لوحة التحكم: Token / CRUD عبر GitHub Contents API
-   ========================================================= */
-
 (function () {
-
   const OWNER = 'attackndestroy';
   const REPO = 'modslib';
   const FILE_PATH = 'mods.json';
+  
   const TOKEN_KEY = 'modslib_gh_token';
+  const CLOUD_NAME_KEY = 'modslib_cloud_name';
+  const UPLOAD_PRESET_KEY = 'modslib_upload_preset';
+  
   const API_BASE = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`;
 
-  /* ---------------- Token storage ---------------- */
-
-  function getToken() {
-    try { return localStorage.getItem(TOKEN_KEY); } catch (e) { return null; }
+  function getToken() { try { return localStorage.getItem(TOKEN_KEY); } catch (e) { return null; } }
+  function getCloudName() { try { return localStorage.getItem(CLOUD_NAME_KEY); } catch (e) { return null; } }
+  function getUploadPreset() { try { return localStorage.getItem(UPLOAD_PRESET_KEY); } catch (e) { return null; } }
+  
+  function saveCredentials(token, cloudName, preset) {
+    try {
+      localStorage.setItem(TOKEN_KEY, token);
+      localStorage.setItem(CLOUD_NAME_KEY, cloudName);
+      localStorage.setItem(UPLOAD_PRESET_KEY, preset);
+    } catch (e) {}
   }
-  function setToken(t) {
-    try { localStorage.setItem(TOKEN_KEY, t); } catch (e) { /* ignore */ }
+  
+  function clearCredentials() {
+    try {
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(CLOUD_NAME_KEY);
+      localStorage.removeItem(UPLOAD_PRESET_KEY);
+    } catch (e) {}
   }
-  function clearToken() {
-    try { localStorage.removeItem(TOKEN_KEY); } catch (e) { /* ignore */ }
-  }
-
-  /* ---------------- GitHub API layer ---------------- */
 
   class GitHubApiError extends Error {
-    constructor(code, message) {
-      super(message);
-      this.code = code;
-    }
+    constructor(code, message) { super(message); this.code = code; }
   }
 
   async function githubFetch(method, body) {
@@ -293,40 +312,21 @@
   }
 
   function mapStatusToError(status, res) {
-    if (status === 401) return new GitHubApiError('UNAUTHORIZED', 'GitHub Token غير صحيح أو منتهي الصلاحية.');
-    if (status === 403) {
-      const remaining = res && res.headers ? res.headers.get('X-RateLimit-Remaining') : null;
-      if (remaining === '0') return new GitHubApiError('RATE_LIMIT', 'تم تجاوز الحد المسموح من طلبات GitHub API. حاول لاحقاً.');
-      return new GitHubApiError('FORBIDDEN', 'ليس لدى هذا الـ Token صلاحية كافية للوصول إلى المستودع.');
-    }
-    if (status === 404) return new GitHubApiError('NOT_FOUND', 'لم يتم العثور على الملف أو المستودع (تحقق من الاسم أو الصلاحيات).');
-    if (status === 409) return new GitHubApiError('CONFLICT', 'تعارض في تحديث الملف (SHA غير مطابق). تتم إعادة المحاولة تلقائياً.');
-    return new GitHubApiError('UNKNOWN', 'حدث خطأ غير متوقع من GitHub API (كود ' + status + ').');
+    if (status === 401) return new GitHubApiError('UNAUTHORIZED', 'GitHub Token غير صحيح.');
+    if (status === 403) return new GitHubApiError('FORBIDDEN', 'صلاحيات غير كافية أو تجاوز للحد المسموح.');
+    if (status === 404) return new GitHubApiError('NOT_FOUND', 'لم يتم العثور على الملف.');
+    if (status === 409) return new GitHubApiError('CONFLICT', 'تعارض في التحديث، تتم إعادة المحاولة.');
+    return new GitHubApiError('UNKNOWN', 'حدث خطأ من GitHub API (' + status + ').');
   }
 
   async function fetchRemoteMods() {
     const res = await githubFetch('GET');
     if (!res.ok) throw mapStatusToError(res.status, res);
-    let data;
-    try {
-      data = await res.json();
-    } catch (e) {
-      throw new GitHubApiError('CORRUPT', 'استجابة GitHub غير صالحة.');
-    }
-    let jsonStr;
-    try {
-      const cleanB64 = String(data.content || '').replace(/\n/g, '');
-      jsonStr = decodeURIComponent(escape(atob(cleanB64)));
-    } catch (e) {
-      throw new GitHubApiError('CORRUPT', 'تعذر فك محتوى mods.json من GitHub.');
-    }
-    let parsed;
-    try {
-      parsed = JSON.parse(jsonStr);
-    } catch (e) {
-      throw new GitHubApiError('CORRUPT', 'ملف mods.json على GitHub تالف (JSON غير صالح).');
-    }
-    if (!Array.isArray(parsed)) throw new GitHubApiError('CORRUPT', 'تنسيق mods.json غير صحيح.');
+    const data = await res.json();
+    const cleanB64 = String(data.content || '').replace(/\n/g, '');
+    const jsonStr = decodeURIComponent(escape(atob(cleanB64)));
+    const parsed = JSON.parse(jsonStr);
+    if (!Array.isArray(parsed)) throw new GitHubApiError('CORRUPT', 'تنسيق الملف غير صحيح.');
     return { mods: parsed, sha: data.sha };
   }
 
@@ -338,10 +338,6 @@
     return await res.json();
   }
 
-  /**
-   * ينفّذ عملية كتابة مع إعادة محاولة واحدة تلقائياً عند تعارض SHA (409).
-   * mutateFn(currentMods) -> newMods
-   */
   async function writeWithRetry(mutateFn, message) {
     let attempt = 0;
     let lastErr = null;
@@ -361,11 +357,31 @@
     throw lastErr;
   }
 
-  /* ---------------- DOM refs ---------------- */
+  async function uploadToCloudinary(file) {
+    const cloudName = getCloudName();
+    const preset = getUploadPreset();
+    if (!cloudName || !preset) {
+      throw new Error('يرجى ضبط بيانات Cloudinary أولاً.');
+    }
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', preset);
+    
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+      method: 'POST',
+      body: formData
+    });
+    if (!res.ok) throw new Error('فشل رفع الصورة إلى Cloudinary.');
+    const data = await res.json();
+    return data.secure_url;
+  }
 
+  // عناصر DOM
   const tokenGate = document.getElementById('token-gate');
   const dashboardApp = document.getElementById('dashboard-app');
   const tokenInput = document.getElementById('token-input');
+  const cloudNameInput = document.getElementById('cloud-name-input');
+  const uploadPresetInput = document.getElementById('upload-preset-input');
   const tokenSaveBtn = document.getElementById('token-save-btn');
   const clearTokenBtn = document.getElementById('clear-token-btn');
   const globalStatus = document.getElementById('global-status');
@@ -380,6 +396,8 @@
   const publishResult = document.getElementById('publish-result');
   const publishLinkLabel = document.getElementById('publish-link-label');
   const copyNewLinkBtn = document.getElementById('copy-new-link-btn');
+  const filePicker = document.getElementById('file-picker');
+  const uploadPreview = document.getElementById('upload-preview');
 
   const adminList = document.getElementById('admin-list');
   const adminEmpty = document.getElementById('admin-empty');
@@ -394,24 +412,16 @@
 
   const editModal = document.getElementById('edit-modal');
   const editForm = document.getElementById('edit-form');
+  const editOriginalId = document.getElementById('edit-original-id');
   const editId = document.getElementById('edit-id');
   const editTitle = document.getElementById('edit-title');
   const editDesc = document.getElementById('edit-desc');
   const editImage = document.getElementById('edit-image');
   const editDownload = document.getElementById('edit-download');
+  const editFilePicker = document.getElementById('edit-file-picker');
   const editCancelBtn = document.getElementById('edit-cancel-btn');
 
-  /* ---------------- State ---------------- */
-
-  const state = {
-    mods: [],
-    adminSort: 'desc',
-    adminQuery: '',
-    jsonTab: 'unencrypted',
-    lastNewLink: ''
-  };
-
-  /* ---------------- Helpers ---------------- */
+  const state = { mods: [], adminSort: 'desc', adminQuery: '', jsonTab: 'unencrypted', lastNewLink: '' };
 
   function setBusy(el, busy, busyLabel, idleLabel) {
     el.disabled = busy;
@@ -423,37 +433,19 @@
     globalStatus.textContent = msg;
     globalStatus.style.color = isError ? 'var(--danger)' : 'var(--text-secondary)';
   }
-  function hideGlobalStatus() {
-    globalStatus.style.display = 'none';
-  }
-
-  function computeNewId(mods) {
-    return ModsLib.highestId(mods) + 1;
-  }
-
-  function isValidUrlInput(str) {
-    return ModsLib.isLikelyValidUrl(str);
-  }
-
-  /* ---------------- Rendering ---------------- */
+  function hideGlobalStatus() { globalStatus.style.display = 'none'; }
 
   function renderAll() {
-    newIdInput.value = computeNewId(state.mods);
+    newIdInput.value = ModsLib.highestId(state.mods) + 1;
     renderAdminList();
     renderJsonView();
   }
 
   function getFilteredAdminList() {
-    let list = state.adminSort === 'desc'
-      ? ModsLib.sortByIdDesc(state.mods)
-      : ModsLib.sortByIdAsc(state.mods);
+    let list = state.adminSort === 'desc' ? ModsLib.sortByIdDesc(state.mods) : ModsLib.sortByIdAsc(state.mods);
     const q = state.adminQuery.trim().toLowerCase();
     if (q) {
-      list = list.filter(m =>
-        String(m.id).includes(q) ||
-        String(m.title || '').toLowerCase().includes(q) ||
-        String(m.description || '').toLowerCase().includes(q)
-      );
+      list = list.filter(m => String(m.id).includes(q) || String(m.title || '').toLowerCase().includes(q) || String(m.description || '').toLowerCase().includes(q));
     }
     return list;
   }
@@ -466,12 +458,10 @@
     list.forEach(mod => {
       const row = document.createElement('div');
       row.className = 'admin-row';
-      const img = ModsLib.escapeHtml(mod.image || '');
-      const title = ModsLib.escapeHtml(mod.title || 'بدون عنوان');
       row.innerHTML = `
-        <img class="admin-row__thumb" src="${img}" alt="" onerror="this.style.opacity=0.15">
+        <img class="admin-row__thumb" src="${ModsLib.escapeHtml(mod.image || '')}" alt="" onerror="this.style.opacity=0.15">
         <span class="admin-row__id">#${ModsLib.escapeHtml(mod.id)}</span>
-        <span class="admin-row__title">${title}</span>
+        <span class="admin-row__title">${ModsLib.escapeHtml(mod.title || 'بدون عنوان')}</span>
         <div class="admin-row__actions">
           <button type="button" class="btn btn--sm btn--outline" data-action="edit" data-id="${mod.id}">تعديل</button>
           <button type="button" class="btn btn--sm btn--danger" data-action="delete" data-id="${mod.id}">حذف</button>
@@ -483,73 +473,83 @@
   }
 
   function renderJsonView() {
-    let displayMods;
-    if (state.jsonTab === 'unencrypted') {
-      displayMods = state.mods.map(m => ({
-        ...m,
-        download: ModsLib.resolveDownloadUrl(m) || m.download
-      }));
-    } else {
-      displayMods = state.mods;
-    }
+    let displayMods = state.jsonTab === 'unencrypted' ? state.mods.map(m => ({ ...m, download: ModsLib.resolveDownloadUrl(m) || m.download })) : state.mods;
     jsonView.textContent = JSON.stringify(displayMods, null, 2);
   }
 
-  /* ---------------- Data loading ---------------- */
-
   async function loadFromGitHub() {
     hideGlobalStatus();
-    showGlobalStatus('جاري تحميل البيانات من GitHub...', false);
+    showGlobalStatus('جاري التحميل...', false);
     try {
       const { mods } = await fetchRemoteMods();
       state.mods = mods;
       hideGlobalStatus();
       renderAll();
     } catch (err) {
-      showGlobalStatus(err.message || 'حدث خطأ غير متوقع.', true);
+      showGlobalStatus(err.message, true);
     }
   }
 
-  /* ---------------- Publish ---------------- */
+  filePicker.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      ModsLib.showToast('جاري رفع الصورة...', 'success');
+      const url = await uploadToCloudinary(file);
+      newImageInput.value = url;
+      uploadPreview.src = url;
+      uploadPreview.style.display = 'block';
+      ModsLib.showToast('تم الرفع بنجاح!', 'success');
+    } catch (err) {
+      ModsLib.showToast(err.message, 'error');
+    }
+  });
+
+  editFilePicker.addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      ModsLib.showToast('جاري تحديث الصورة...', 'success');
+      const url = await uploadToCloudinary(file);
+      editImage.value = url;
+      ModsLib.showToast('تم الرفع بنجاح!', 'success');
+    } catch (err) {
+      ModsLib.showToast(err.message, 'error');
+    }
+  });
 
   publishForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const id = Number(newIdInput.value);
     const title = newTitleInput.value.trim();
     const desc = newDescInput.value.trim();
     const image = newImageInput.value.trim();
     const download = newDownloadInput.value.trim();
 
-    if (!title || !desc || !image || !download) {
-      ModsLib.showToast('يرجى تعبئة جميع الحقول.', 'error');
-      return;
-    }
-    if (!isValidUrlInput(image) || !isValidUrlInput(download)) {
-      ModsLib.showToast('رابط الصورة أو رابط التحميل غير صالح.', 'error');
+    if (state.mods.some(m => Number(m.id) === id)) {
+      ModsLib.showToast('هذا الـ ID مستخدم مسبقاً، يجدر تغييره.', 'error');
       return;
     }
 
     setBusy(publishBtn, true, 'جاري النشر...', 'نشر');
     try {
-      let createdId = null;
       const newMods = await writeWithRetry((currentMods) => {
-        const id = computeNewId(currentMods);
-        createdId = id;
         const encodedDownload = ModsLib.b64Encode(download);
         return [...currentMods, { id, title, description: desc, image, download: encodedDownload }];
-      }, `Add mod #${Date.now()}`);
+      }, `Add mod #${id}`);
 
       state.mods = newMods;
       renderAll();
 
-      const link = ModsLib.fullModUrl(createdId);
+      const link = ModsLib.fullModUrl(id);
       state.lastNewLink = link;
       publishLinkLabel.textContent = 'تم النشر بنجاح — الرابط: ' + link;
       publishResult.style.display = 'block';
-
       publishForm.reset();
-      ModsLib.showToast('تم نشر المود بنجاح.', 'success');
+      uploadPreview.style.display = 'none';
+      ModsLib.showToast('تم النشر بنجاح.', 'success');
     } catch (err) {
-      ModsLib.showToast(err.message || 'فشل نشر المود.', 'error');
+      ModsLib.showToast(err.message || 'فشل النشر.', 'error');
     } finally {
       setBusy(publishBtn, false, 'جاري النشر...', 'نشر');
     }
@@ -558,10 +558,8 @@
   copyNewLinkBtn.addEventListener('click', async () => {
     if (!state.lastNewLink) return;
     const ok = await ModsLib.copyToClipboard(state.lastNewLink);
-    ModsLib.showToast(ok ? 'تم نسخ الرابط.' : 'تعذر نسخ الرابط.', ok ? 'success' : 'error');
+    ModsLib.showToast(ok ? 'تم النسخ.' : 'تعذر النسخ.', ok ? 'success' : 'error');
   });
-
-  /* ---------------- Admin list actions (delegated) ---------------- */
 
   adminList.addEventListener('click', async (e) => {
     const btn = e.target.closest('button[data-action]');
@@ -572,187 +570,101 @@
     if (!mod) return;
 
     if (action === 'edit') {
-      openEditModal(mod);
+      editOriginalId.value = mod.id;
+      editId.value = mod.id;
+      editTitle.value = mod.title || '';
+      editDesc.value = mod.description || '';
+      editImage.value = mod.image || '';
+      editDownload.value = ModsLib.resolveDownloadUrl(mod) || '';
+      editModal.classList.add('is-open');
     } else if (action === 'delete') {
-      handleDelete(id, btn);
+      if (!window.confirm('هل أنت متأكد من الحذف؟')) return;
+      try {
+        const newMods = await writeWithRetry(curr => curr.filter(m => Number(m.id) !== id), `Delete mod #${id}`);
+        state.mods = newMods;
+        renderAll();
+        ModsLib.showToast('تم الحذف.', 'success');
+      } catch (err) {
+        ModsLib.showToast(err.message, 'error');
+      }
     } else if (action === 'copy') {
-      const link = ModsLib.fullModUrl(id);
-      const ok = await ModsLib.copyToClipboard(link);
-      ModsLib.showToast(ok ? 'تم نسخ الرابط.' : 'تعذر نسخ الرابط.', ok ? 'success' : 'error');
+      await ModsLib.copyToClipboard(ModsLib.fullModUrl(id));
+      ModsLib.showToast('تم نسخ الرابط.', 'success');
     }
   });
 
-  async function handleDelete(id, btn) {
-    const confirmed = window.confirm('هل أنت متأكد من حذف هذا المود؟ لا يمكن التراجع عن هذا الإجراء.');
-    if (!confirmed) return;
-
-    setBusy(btn, true, 'جاري الحذف...', 'حذف');
-    try {
-      const newMods = await writeWithRetry((currentMods) => {
-        return currentMods.filter(m => Number(m.id) !== id);
-      }, `Delete mod #${id}`);
-      state.mods = newMods;
-      renderAll();
-      ModsLib.showToast('تم حذف المود.', 'success');
-    } catch (err) {
-      ModsLib.showToast(err.message || 'فشل حذف المود.', 'error');
-    } finally {
-      setBusy(btn, false, 'جاري الحذف...', 'حذف');
-    }
-  }
-
-  /* ---------------- Edit modal ---------------- */
-
-  function openEditModal(mod) {
-    editId.value = mod.id;
-    editTitle.value = mod.title || '';
-    editDesc.value = mod.description || '';
-    editImage.value = mod.image || '';
-    editDownload.value = ModsLib.resolveDownloadUrl(mod) || '';
-    editModal.classList.add('is-open');
-  }
-
-  function closeEditModal() {
-    editModal.classList.remove('is-open');
-    editForm.reset();
-  }
-
-  editCancelBtn.addEventListener('click', closeEditModal);
-  editModal.addEventListener('click', (e) => {
-    if (e.target === editModal) closeEditModal();
-  });
+  editCancelBtn.addEventListener('click', () => editModal.classList.remove('is-open'));
 
   editForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const id = Number(editId.value);
+    const originalId = Number(editOriginalId.value);
+    const newIdVal = Number(editId.value);
     const title = editTitle.value.trim();
     const desc = editDesc.value.trim();
     const image = editImage.value.trim();
     const download = editDownload.value.trim();
-
-    if (!title || !desc || !image || !download) {
-      ModsLib.showToast('يرجى تعبئة جميع الحقول.', 'error');
-      return;
-    }
-    if (!isValidUrlInput(image) || !isValidUrlInput(download)) {
-      ModsLib.showToast('رابط الصورة أو رابط التحميل غير صالح.', 'error');
-      return;
-    }
 
     const submitBtn = editForm.querySelector('button[type="submit"]');
     setBusy(submitBtn, true, 'جاري الحفظ...', 'حفظ التعديل');
     try {
       const newMods = await writeWithRetry((currentMods) => {
         return currentMods.map(m => {
-          if (Number(m.id) !== id) return m;
-          return {
-            ...m,
-            title,
-            description: desc,
-            image,
-            download: ModsLib.b64Encode(download)
-          };
+          if (Number(m.id) !== originalId) return m;
+          return { ...m, id: newIdVal, title, description: desc, image, download: ModsLib.b64Encode(download) };
         });
-      }, `Edit mod #${id}`);
+      }, `Edit mod #${originalId}`);
       state.mods = newMods;
       renderAll();
-      closeEditModal();
-      ModsLib.showToast('تم حفظ التعديل.', 'success');
+      editModal.classList.remove('is-open');
+      ModsLib.showToast('تم التعديل بنجاح.', 'success');
     } catch (err) {
-      ModsLib.showToast(err.message || 'فشل حفظ التعديل.', 'error');
+      ModsLib.showToast(err.message, 'error');
     } finally {
       setBusy(submitBtn, false, 'جاري الحفظ...', 'حفظ التعديل');
     }
   });
 
-  /* ---------------- Admin list controls ---------------- */
+  adminSortNewest.addEventListener('click', () => { state.adminSort = 'desc'; adminSortNewest.classList.add('is-active'); adminSortOldest.classList.remove('is-active'); renderAdminList(); });
+  adminSortOldest.addEventListener('click', () => { state.adminSort = 'asc'; adminSortOldest.classList.add('is-active'); adminSortNewest.classList.remove('is-active'); renderAdminList(); });
+  adminSearch.addEventListener('input', (e) => { state.adminQuery = e.target.value; renderAdminList(); });
 
-  adminSortNewest.addEventListener('click', () => {
-    if (state.adminSort === 'desc') return;
-    state.adminSort = 'desc';
-    adminSortNewest.classList.add('is-active');
-    adminSortOldest.classList.remove('is-active');
-    renderAdminList();
-  });
-  adminSortOldest.addEventListener('click', () => {
-    if (state.adminSort === 'asc') return;
-    state.adminSort = 'asc';
-    adminSortOldest.classList.add('is-active');
-    adminSortNewest.classList.remove('is-active');
-    renderAdminList();
-  });
-  adminSearch.addEventListener('input', (e) => {
-    state.adminQuery = e.target.value;
-    renderAdminList();
-  });
-
-  /* ---------------- JSON view tabs ---------------- */
-
-  tabUnencrypted.addEventListener('click', () => {
-    state.jsonTab = 'unencrypted';
-    tabUnencrypted.classList.add('is-active');
-    tabEncrypted.classList.remove('is-active');
-    renderJsonView();
-  });
-  tabEncrypted.addEventListener('click', () => {
-    state.jsonTab = 'encrypted';
-    tabEncrypted.classList.add('is-active');
-    tabUnencrypted.classList.remove('is-active');
-    renderJsonView();
-  });
-  copyJsonBtn.addEventListener('click', async () => {
-    const ok = await ModsLib.copyToClipboard(jsonView.textContent);
-    ModsLib.showToast(ok ? 'تم نسخ JSON.' : 'تعذر النسخ.', ok ? 'success' : 'error');
-  });
-
-  /* ---------------- Token gate ---------------- */
-
-  function showApp() {
-    tokenGate.style.display = 'none';
-    dashboardApp.style.display = 'block';
-    loadFromGitHub();
-  }
-
-  function showGate() {
-    dashboardApp.style.display = 'none';
-    tokenGate.style.display = 'block';
-  }
+  tabUnencrypted.addEventListener('click', () => { state.jsonTab = 'unencrypted'; tabUnencrypted.classList.add('is-active'); tabEncrypted.classList.remove('is-active'); renderJsonView(); });
+  tabEncrypted.addEventListener('click', () => { state.jsonTab = 'encrypted'; tabEncrypted.classList.add('is-active'); tabUnencrypted.classList.remove('is-active'); renderJsonView(); });
+  copyJsonBtn.addEventListener('click', async () => { await ModsLib.copyToClipboard(jsonView.textContent); ModsLib.showToast('تم النسخ.', 'success'); });
 
   tokenSaveBtn.addEventListener('click', () => {
-    const val = tokenInput.value.trim();
-    if (!val) {
-      ModsLib.showToast('يرجى إدخال Token صالح.', 'error');
+    const t = tokenInput.value.trim();
+    const cn = cloudNameInput.value.trim();
+    const up = uploadPresetInput.value.trim();
+    if (!t || !cn || !up) {
+      ModsLib.showToast('يرجى تعبئة كافة الحقول المطلوبة.', 'error');
       return;
     }
-    setToken(val);
-    tokenInput.value = '';
+    saveCredentials(t, cn, up);
     showApp();
   });
 
-  tokenInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      tokenSaveBtn.click();
-    }
-  });
-
   clearTokenBtn.addEventListener('click', () => {
-    const confirmed = window.confirm('هل تريد مسح GitHub Token المحفوظ من هذا المتصفح؟');
-    if (!confirmed) return;
-    clearToken();
-    ModsLib.showToast('تم مسح Token.', 'success');
+    if (!window.confirm('هل تريد مسح بيانات الاعتماد المحفوظة؟')) return;
+    clearCredentials();
     showGate();
   });
 
-  /* ---------------- Init ---------------- */
+  function showApp() { tokenGate.style.display = 'none'; dashboardApp.style.display = 'block'; loadFromGitHub(); }
+  function showGate() { 
+    dashboardApp.style.display = 'none'; 
+    tokenGate.style.display = 'block'; 
+    tokenInput.value = getToken() || '';
+    cloudNameInput.value = getCloudName() || '';
+    uploadPresetInput.value = getUploadPreset() || '';
+  }
 
   function init() {
     ModsLib.renderHeader('#header-mount');
     ModsLib.renderFooter('#footer-mount');
     ModsLib.ensureFavicon();
-    ModsLib.injectGlobalAdScripts();
 
-    if (getToken()) {
+    if (getToken() && getCloudName() && getUploadPreset()) {
       showApp();
     } else {
       showGate();
@@ -762,6 +674,5 @@
   init();
 })();
 </script>
-
 </body>
 </html>

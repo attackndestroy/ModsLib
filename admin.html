@@ -302,7 +302,11 @@
       localStorage.removeItem(CLOUD_KEY_KEY);
       localStorage.removeItem(CLOUD_SECRET_KEY);
       localStorage.removeItem(UPLOAD_PRESET_KEY);
+      // مسح كامل للذاكرة المؤقتة الخاصة بالتطبيق لضمان عدم بقاء أي بيانات قديمة
+      localStorage.clear();
     } catch (e) {}
+    // إعادة تحميل الصفحة لتفريغ الذاكرة بالكامل
+    window.location.reload();
   }
 
   class GitHubApiError extends Error {
@@ -673,7 +677,6 @@
   clearTokenBtn.addEventListener('click', () => {
     if (!window.confirm('هل تريد مسح بيانات الاعتماد المحفوظة؟')) return;
     clearCredentials();
-    showGate();
   });
 
   function showApp() { tokenGate.style.display = 'none'; dashboardApp.style.display = 'block'; loadFromGitHub(); }

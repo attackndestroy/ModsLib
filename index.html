@@ -1,496 +1,436 @@
 <!DOCTYPE html>
-<html lang="ar" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>ModsLib - Main Menu</title>
-    
-    <link rel="icon" type="image/x-icon" href="https://attdes.online/fav.ico" />
-    <link rel="shortcut icon" type="image/x-icon" href="https://attdes.online/fav.ico" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attack N' Destroy – مودات ماينكرافت</title>
+    <!-- الخطوط -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
     <style>
-        :root {
-            --metal-yellow: #ffde00;
-            --metal-yellow-glow: rgba(255, 222, 0, 0.4);
-            --metal-dark: #0a0a0a;
-            --metal-card: #141414;
-            --metal-border: #282828;
-            --metal-gray: #888888;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { overflow-x: hidden; font-size: 16px; scroll-behavior: smooth; }
-        
+        /* ===== الأساسيات ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: var(--metal-dark);
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(255, 222, 0, 0.05) 0%, transparent 60%),
-                repeating-linear-gradient(45deg, rgba(0,0,0,0.2) 0, rgba(0,0,0,0.2) 2px, transparent 0, transparent 4px);
-            color: #f0f0f0;
-            font-family: 'Cairo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            line-height: 1.6; 
-            overflow-x: hidden; 
+            background: #0a0a0a;
+            color: #eee;
+            font-family: 'Cairo', sans-serif;
             min-height: 100vh;
-            display: flex; flex-direction: column;
-        }
-
-        a { color: var(--metal-yellow); text-decoration: none; transition: 0.2s; pointer-events: auto; }
-        a:hover { text-shadow: 0 0 10px var(--metal-yellow-glow); }
-        :focus-visible { outline: 2px solid var(--metal-yellow); outline-offset: 2px; }
-
-        .site-header {
-            background: #000000;
-            padding: 1.2rem 1rem;
-            text-align: center;
-            border-bottom: 3px solid var(--metal-yellow);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
-            position: relative;
-        }
-        .site-header::after {
-            content: '';
-            position: absolute;
-            bottom: -6px; left: 0; right: 0;
-            height: 3px;
-            background: repeating-linear-gradient(90deg, var(--metal-yellow) 0, var(--metal-yellow) 10px, transparent 10px, transparent 20px);
-        }
-        .header-logo { 
-            max-width: 100%; height: auto; max-height: 90px; width: auto; 
-            display: inline-block;
-            filter: drop-shadow(0 2px 8px rgba(255, 222, 0, 0.2));
-            transition: transform 0.3s ease;
-        }
-        .header-logo:hover { transform: scale(1.03); }
-
-        .container { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; width: 100%; flex: 1; }
-
-        .native-banner-wrapper, .social-bar-wrapper { text-align: center; margin: 1rem 0; overflow: hidden; }
-        .native-banner-wrapper iframe, .social-bar-wrapper iframe { max-width: 100%; }
-
-        .banner-between {
-            margin: 1.5rem 0;
-            text-align: center;
-            background: transparent;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            overflow: hidden;
+            flex-direction: column;
         }
-        .banner-between iframe {
-            width: 320px;
-            height: 50px;
-            max-width: 100%;
-            border: none;
-            overflow: hidden;
-            display: block;
+        a { text-decoration: none; color: inherit; }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex: 1;
         }
 
-        .feed-controls {
-            display: flex; gap: 0.8rem; margin-bottom: 2rem;
-            flex-wrap: wrap; justify-content: center;
-        }
-        .btn-sort {
-            background: #1a1a1a; 
-            color: var(--metal-gray); 
-            border: 2px solid #333;
-            padding: 0.6rem 1.5rem; 
-            border-radius: 0px;
-            font-family: 'Oswald', 'Cairo', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 1.1rem;
-            cursor: pointer; 
-            transition: all 0.2s ease;
-            font-weight: 700; 
-            min-height: 48px; min-width: 100px;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-            pointer-events: auto;
-        }
-        .btn-sort:hover { 
-            background: #252525; 
-            color: #fff; 
-            border-color: #555;
-        }
-        .btn-sort.active {
-            background: var(--metal-yellow); 
-            color: #000; 
-            border-color: var(--metal-yellow);
-            box-shadow: 0 0 15px var(--metal-yellow-glow);
-            text-shadow: none;
-        }
-
-        .feed { display: flex; flex-direction: column; gap: 2rem; }
-        
-        .mod-card {
-            background: var(--metal-card); 
-            border: 1px solid var(--metal-border);
-            border-radius: 4px; 
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.7);
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-            display: flex; flex-direction: column;
-            position: relative;
-        }
-        .mod-card::before {
+        /* ===== الخلفية المميزة ===== */
+        body::before {
             content: '';
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
-            background: var(--metal-border);
-            transition: background 0.3s ease;
-        }
-        .mod-card:hover { 
-            transform: translateY(-5px); 
-            border-color: var(--metal-yellow);
-            box-shadow: 0 12px 35px rgba(255, 222, 0, 0.15);
-        }
-        .mod-card:hover::before {
-            background: var(--metal-yellow);
-            box-shadow: 0 0 10px var(--metal-yellow);
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,222,0,0.02) 20px, rgba(255,222,0,0.02) 21px),
+                radial-gradient(circle at 30% 40%, #1a1a1a, #0a0a0a 80%);
+            pointer-events: none;
+            z-index: -1;
         }
 
-        .mod-card-image {
-            width: 100%; background: #000; display: flex; align-items: center; justify-content: center;
-            min-height: 180px; overflow: hidden; position: relative;
+        /* ===== الهيدر ===== */
+        .header-img {
+            width: 100%;
+            max-height: 600px;
+            object-fit: cover;
+            display: block;
+            background: #141414;
+            border-bottom: 2px solid #ffde00;
         }
-        .mod-card-image img {
-            width: 100%; height: auto; max-height: 320px; object-fit: cover; display: block;
-            filter: contrast(1.1) saturate(0.9);
-            transition: filter 0.3s ease, transform 0.5s ease;
+
+        /* ===== الإعلان تحت الهيدر ===== */
+        .ad-under-header {
+            text-align: center;
+            padding: 10px 0;
+            background: #141414;
+            border-bottom: 1px solid #333;
         }
-        .mod-card:hover .mod-card-image img {
-            filter: contrast(1.2) saturate(1.1);
-            transform: scale(1.03);
+
+        /* ===== أدوات التحكم (ترتيب - بحث) ===== */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 0 15px;
+            border-bottom: 1px solid #333;
         }
-        .mod-card-image-placeholder {
-            width: 100%; padding: 2rem 1rem; text-align: center; color: var(--metal-gray); font-size: 1.2rem;
-            background: #0d0d0d;
+        .controls .sort-btns {
+            display: flex;
+            gap: 10px;
+        }
+        .controls .sort-btns button {
+            background: transparent;
+            border: 1px solid #555;
+            color: #ccc;
+            padding: 6px 18px;
             font-family: 'Oswald', sans-serif;
-            letter-spacing: 1px;
-        }
-        
-        .mod-card-title {
-            font-size: 1.35rem; 
-            font-weight: 900; 
-            color: #fff;
-            padding: 1.2rem 1.2rem 0.4rem; 
-            margin: 0; 
-            line-height: 1.3;
-            font-family: 'Oswald', 'Cairo', sans-serif;
-            letter-spacing: 0.5px;
-        }
-        
-        .mod-card-btn {
-            display: inline-block; 
-            background: var(--metal-yellow); 
-            color: #000;
-            font-weight: 900; 
-            padding: 0.7rem 1.8rem; 
-            border-radius: 0px;
-            text-align: center; 
-            transition: all 0.2s ease;
-            border: none; 
-            cursor: pointer; 
-            font-size: 1rem; 
-            min-height: 44px; min-width: 130px;
-            align-self: flex-start; 
-            margin: 0.8rem 1.2rem 1.2rem; 
-            text-decoration: none; 
-            line-height: 1.4;
-            font-family: 'Oswald', 'Cairo', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
-            pointer-events: auto;
-            position: relative;
-            z-index: 2;
-        }
-        .mod-card-btn:hover { 
-            background: #fff; 
-            color: #000;
-            box-shadow: 0 0 20px var(--metal-yellow-glow);
-            transform: translateY(-2px); 
-        }
-        .mod-card-btn:active { transform: scale(0.96); }
-
-        .load-more-wrap { text-align: center; margin: 3rem 0 1.5rem; }
-        .btn-load-more {
-            background: transparent; 
-            color: var(--metal-yellow); 
-            border: 2px solid var(--metal-yellow);
-            padding: 0.8rem 2.5rem; 
-            border-radius: 0px; 
-            font-size: 1.1rem;
-            font-family: 'Oswald', 'Cairo', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            cursor: pointer; 
-            transition: all 0.3s ease;
-            min-height: 50px; min-width: 180px;
             font-weight: 700;
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
-            pointer-events: auto;
+            font-size: 1rem;
+            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+            cursor: pointer;
+            transition: 0.3s;
         }
-        .btn-load-more:hover { 
-            background: var(--metal-yellow); 
-            color: #000; 
-            box-shadow: 0 0 25px var(--metal-yellow-glow);
+        .controls .sort-btns button:hover,
+        .controls .sort-btns button.active {
+            background: #ffde00;
+            color: #0a0a0a;
+            border-color: #ffde00;
+            box-shadow: 0 0 15px rgba(255,222,0,0.3);
+        }
+        .search-box input {
+            background: #141414;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 0;
+            font-family: 'Cairo', sans-serif;
+            clip-path: polygon(8% 0%, 100% 0%, 92% 100%, 0% 100%);
+            width: 220px;
+            transition: 0.3s;
+        }
+        .search-box input:focus {
+            border-color: #ffde00;
+            outline: none;
+            box-shadow: 0 0 10px rgba(255,222,0,0.2);
         }
 
-        .feed-status { text-align: center; padding: 2rem; color: var(--metal-gray); font-size: 1.1rem; font-family: 'Oswald', sans-serif; letter-spacing: 1px; }
+        /* ===== شبكة البطاقات ===== */
+        .feed {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 30px 0;
+        }
+        .card {
+            background: #141414;
+            border: 1px solid #333;
+            clip-path: polygon(0% 0%, 98% 0%, 100% 5%, 100% 100%, 2% 100%, 0% 95%);
+            transition: 0.3s;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: #ffde00;
+            box-shadow: 0 8px 25px rgba(255,222,0,0.15);
+        }
+        .card img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+            border-bottom: 2px solid #ffde00;
+        }
+        .card .content {
+            padding: 18px 16px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card .content h3 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+        .card .content .btn-detail {
+            margin-top: auto;
+            background: transparent;
+            border: 1px solid #ffde00;
+            color: #ffde00;
+            padding: 8px 0;
+            text-align: center;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            background: rgba(255,222,0,0.05);
+        }
+        .card .content .btn-detail:hover {
+            background: #ffde00;
+            color: #0a0a0a;
+            box-shadow: 0 0 20px rgba(255,222,0,0.4);
+        }
 
-        @media (max-width: 360px) {
-            .container { padding: 0.6rem; }
-            .mod-card-title { font-size: 1.15rem; padding: 0.8rem 1rem 0.2rem; }
-            .mod-card-btn { font-size: 0.9rem; padding: 0.5rem 1.2rem; min-width: 110px; }
-            .btn-sort { font-size: 0.95rem; padding: 0.4rem 1rem; min-width: 80px; }
+        /* ===== زر إظهار المزيد ===== */
+        .load-more {
+            text-align: center;
+            padding: 20px 0 40px;
         }
-        @media (min-width: 600px) {
-            .feed { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-            .banner-between { grid-column: 1 / -1; }
+        .load-more button {
+            background: transparent;
+            border: 2px solid #ffde00;
+            color: #ffde00;
+            padding: 12px 40px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+            cursor: pointer;
+            transition: 0.3s;
         }
-        @media (min-width: 900px) {
-            .feed { grid-template-columns: repeat(3, 1fr); }
-            .container { padding: 2rem 2.5rem; }
-            .header-logo { max-height: 110px; }
+        .load-more button:hover {
+            background: #ffde00;
+            color: #0a0a0a;
+            box-shadow: 0 0 30px rgba(255,222,0,0.3);
         }
-        @media (min-width: 1400px) {
-            .container { max-width: 1300px; }
-            .feed { grid-template-columns: repeat(4, 1fr); }
+
+        /* ===== إعلانات 320×50 المضمنة ===== */
+        .ad-infeed {
+            text-align: center;
+            padding: 15px 0;
+            background: #0f0f0f;
+            border-top: 1px solid #2a2a2a;
+            border-bottom: 1px solid #2a2a2a;
+            margin: 10px 0;
         }
-        img, iframe, video { max-width: 100%; height: auto; }
-        * { max-width: 100%; }
+        .ad-infeed iframe {
+            border: none;
+            max-width: 100%;
+        }
+
+        /* ===== الفوتر ===== */
+        footer {
+            background: #0a0a0a;
+            border-top: 2px solid #ffde00;
+            padding: 25px 20px;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            color: #aaa;
+            margin-top: 30px;
+        }
+        footer .highlight {
+            color: #ffde00;
+            font-weight: 700;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        /* استجابة */
+        @media (max-width: 600px) {
+            .controls { flex-direction: column; align-items: stretch; }
+            .search-box input { width: 100%; }
+            .feed { grid-template-columns: 1fr; }
+        }
     </style>
-    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
-    <script src="https://modslib.attdes.online/analytics.js"></script>
 </head>
 <body>
 
-    <header class="site-header">
-        <a href="index.html"><img src="https://attdes.online/header.png" alt="ATT/DES Logo" class="header-logo" /></a>
+    <!-- ===== الهيدر ===== -->
+    <header>
+        <img src="/header.png" alt="Attack N' Destroy" class="header-img" />
     </header>
 
-    <div class="native-banner-wrapper">
+    <!-- ===== إعلان تحت الهيدر ===== -->
+    <div class="ad-under-header">
         <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js"></script>
         <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
     </div>
 
-    <div class="social-bar-wrapper">
-        <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
-    </div>
-
+    <!-- ===== المحتوى الرئيسي ===== -->
     <main class="container">
-        <div class="feed-controls">
-            <button class="btn-sort active" data-sort="newest">أحدث (NEW)</button>
-            <button class="btn-sort" data-sort="oldest">أقدم (OLD)</button>
+
+        <!-- أدوات التحكم -->
+        <div class="controls">
+            <div class="sort-btns">
+                <button id="sortNewest" class="active">أحدث</button>
+                <button id="sortOldest">أقدم</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="ابحث عن مود..." />
+            </div>
         </div>
-        <div id="feed" class="feed"></div>
-        <div id="load-more-wrap" class="load-more-wrap">
-            <button id="btn-load-more" class="btn-load-more">إظهار المزيد</button>
+
+        <!-- شبكة البطاقات + الإعلانات المضمنة -->
+        <div id="feedContainer">
+            <!-- يتم إنشاء البطاقات بواسطة JavaScript -->
         </div>
-        <div id="feed-status" class="feed-status"></div>
+
+        <!-- زر إظهار المزيد -->
+        <div class="load-more">
+            <button id="loadMoreBtn">إظهار المزيد</button>
+        </div>
+
+        <!-- إعلانات عامة (موجودة في جميع الصفحات) -->
+        <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
+        <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
     </main>
 
+    <!-- ===== الفوتر ===== -->
+    <footer>
+        <div>Copyright: <span class="highlight">ATTACK N' DESTROY</span></div>
+        <div>Powered By: <span class="highlight">ATTACK N' DESTROY</span></div>
+    </footer>
+
+    <!-- ===== إحصائيات ===== -->
+    <script src="/stats.js"></script>
+
+    <!-- ===== كود index الخاص ===== -->
     <script>
         (function() {
-            'use strict';
+            // الحالة
+            let allPosts = [];
+            let displayedCount = 10;    // عدد المعروض حالياً
+            let currentSort = 'newest'; // 'newest' أو 'oldest'
+            let searchTerm = '';
 
-            const feedEl = document.getElementById('feed');
-            const statusEl = document.getElementById('feed-status');
-            const loadMoreBtn = document.getElementById('btn-load-more');
-            const sortBtns = document.querySelectorAll('.btn-sort');
+            // عناصر DOM
+            const feedContainer = document.getElementById('feedContainer');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            const sortNewest = document.getElementById('sortNewest');
+            const sortOldest = document.getElementById('sortOldest');
+            const searchInput = document.getElementById('searchInput');
 
-            let allItems = [];
-            let currentSort = 'newest';
-            let visibleCount = 6;
-            const PAGE_SIZE = 6;
-
-            function isNumericId(id) {
-                if (typeof id === 'number') return true;
-                if (typeof id === 'string') return /^[0-9]+$/.test(id);
-                return false;
-            }
-
-            function getNumericValue(id) {
-                if (typeof id === 'number') return id;
-                if (typeof id === 'string' && /^[0-9]+$/.test(id)) return parseInt(id, 10);
-                return null;
-            }
-
-            function sortItems(items, sortOrder) {
-                const numeric = items.filter(item => isNumericId(item.id));
-                const text = items.filter(item => !isNumericId(item.id));
-
-                if (sortOrder === 'newest') {
-                    numeric.sort((a, b) => getNumericValue(b.id) - getNumericValue(a.id));
-                } else {
-                    numeric.sort((a, b) => getNumericValue(a.id) - getNumericValue(b.id));
+            // دالة لجلب البيانات
+            async function fetchPosts() {
+                try {
+                    const res = await fetch('/mods.json');
+                    if (!res.ok) throw new Error('فشل تحميل البيانات');
+                    const data = await res.json();
+                    // نتأكد أنها مصفوفة
+                    allPosts = Array.isArray(data) ? data : [];
+                    // ترتيب مبدئي حسب id تنازلي (أحدث)
+                    allPosts.sort((a, b) => b.id - a.id);
+                    render();
+                } catch (err) {
+                    feedContainer.innerHTML = `<p style="color:#ff4444; padding:30px;">⚠️ حدث خطأ في تحميل المودات: ${err.message}</p>`;
                 }
-                return numeric.concat(text);
             }
 
-            function createBanner() {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'banner-between';
+            // دالة الحصول على البيانات بعد تطبيق الترتيب والبحث
+            function getFilteredAndSorted() {
+                let result = [...allPosts];
 
-                const iframe = document.createElement('iframe');
-                iframe.width = '320';
-                iframe.height = '50';
-                iframe.style.border = 'none';
-                iframe.style.overflow = 'hidden';
-                iframe.style.maxWidth = '100%';
-                iframe.scrolling = 'no';
-                iframe.srcdoc = `
-                    <html>
-                    <head>
-                        <style>
-                            body { margin: 0; padding: 0; background: transparent; overflow: hidden; display: flex; justify-content: center; align-items: center; }
-                            * { box-sizing: border-box; }
-                        </style>
-                    </head>
-                    <body>
-                        <script>
-                            window.atOptions = {
-                                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
-                                'format' : 'iframe',
-                                'height' : 50,
-                                'width' : 320,
-                                'params' : {}
-                            };
-                        <\/script>
-                        <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"><\/script>
-                    </body>
-                    </html>
+                // بحث
+                if (searchTerm.trim() !== '') {
+                    const term = searchTerm.trim().toLowerCase();
+                    result = result.filter(p => p.title.toLowerCase().includes(term));
+                }
+
+                // ترتيب
+                if (currentSort === 'newest') {
+                    result.sort((a, b) => b.id - a.id);
+                } else {
+                    result.sort((a, b) => a.id - b.id);
+                }
+
+                return result;
+            }
+
+            // دالة عرض البطاقات مع الإعلانات المضمنة
+            function render() {
+                const filtered = getFilteredAndSorted();
+                const total = filtered.length;
+                const toShow = Math.min(displayedCount, total);
+                const shownPosts = filtered.slice(0, toShow);
+
+                let html = '';
+
+                // الإعلان الأول (قبل أول منشور) – باستخدام iframe ديناميكي
+                html += `
+                    <div class="ad-infeed">
+                        <iframe src="/320-50.js" style="width:100%; max-width:320px; height:50px; display:inline-block;"></iframe>
+                    </div>
                 `;
 
-                wrapper.appendChild(iframe);
-                return wrapper;
-            }
+                // عرض البطاقات مع إعلان بعد كل منشور
+                shownPosts.forEach((post, index) => {
+                    html += `
+                        <div class="card" data-id="${post.id}">
+                            <img src="${post.image}" alt="${post.title}" loading="lazy" />
+                            <div class="content">
+                                <h3>${post.title}</h3>
+                                <a href="/tomod.html?id=${post.id}" class="btn-detail">عرض التفاصيل</a>
+                            </div>
+                        </div>
+                    `;
 
-            function renderFeed(items) {
-                const total = items.length;
-                if (total === 0) {
-                    feedEl.innerHTML = '';
-                    statusEl.textContent = 'لا توجد منشورات.';
-                    loadMoreBtn.style.display = 'none';
-                    return;
-                }
-
-                const visible = items.slice(0, visibleCount);
-                feedEl.innerHTML = '';
-
-                visible.forEach(function(item, index) {
-                    const card = document.createElement('div');
-                    card.className = 'mod-card';
-
-                    const imgDiv = document.createElement('div');
-                    imgDiv.className = 'mod-card-image';
-                    if (item.image) {
-                        const img = document.createElement('img');
-                        img.src = item.image;
-                        img.alt = item.title;
-                        img.loading = 'lazy';
-                        imgDiv.appendChild(img);
-                    } else {
-                        const placeholder = document.createElement('div');
-                        placeholder.className = 'mod-card-image-placeholder';
-                        placeholder.textContent = item.title || 'بدون عنوان';
-                        imgDiv.appendChild(placeholder);
-                    }
-                    card.appendChild(imgDiv);
-
-                    const title = document.createElement('h3');
-                    title.className = 'mod-card-title';
-                    title.textContent = item.title || 'بدون عنوان';
-                    card.appendChild(title);
-
-                    const btn = document.createElement('a');
-                    btn.className = 'mod-card-btn';
-                    btn.href = 'tomod.html?id=' + encodeURIComponent(item.id);
-                    btn.textContent = 'عرض التفاصيل';
-                    card.appendChild(btn);
-
-                    feedEl.appendChild(card);
-
-                    if (index < visible.length - 1) {
-                        feedEl.appendChild(createBanner());
-                    }
+                    // إعلان 320×50 بعد كل منشور (باستثناء آخر واحد؟ حسب الطلب "بعد كل منشور")
+                    // نضعه بعد كل منشور بما في ذلك الأخير
+                    html += `
+                        <div class="ad-infeed">
+                            <iframe src="/320-50.js" style="width:100%; max-width:320px; height:50px; display:inline-block;"></iframe>
+                        </div>
+                    `;
                 });
 
-                statusEl.textContent = '';
-                if (visibleCount < total) {
-                    loadMoreBtn.style.display = 'inline-block';
-                    loadMoreBtn.textContent = 'إظهار المزيد (' + (total - visibleCount) + ' متبقي)';
+                // إذا لم توجد نتائج
+                if (shownPosts.length === 0) {
+                    html = `<p style="padding:40px; text-align:center; color:#aaa;">لا توجد مودات مطابقة للبحث.</p>`;
+                }
+
+                feedContainer.innerHTML = html;
+
+                // إظهار أو إخفاء زر "إظهار المزيد"
+                if (toShow >= total) {
+                    loadMoreBtn.style.display = 'none';
                 } else {
-                    loadMoreBtn.style.display = 'none';
+                    loadMoreBtn.style.display = 'block';
                 }
             }
 
-            function applySortAndRender() {
-                const sorted = sortItems(allItems, currentSort);
-                renderFeed(sorted);
-            }
-
-            function loadData() {
-                statusEl.textContent = 'جاري التحميل…';
-                fetch('/mods.json')
-                    .then(res => {
-                        if (!res.ok) throw new Error('HTTP ' + res.status);
-                        return res.json();
-                    })
-                    .then(data => {
-                        if (typeof data !== 'object' || data === null) {
-                            throw new Error('JSON غير صالح');
-                        }
-                        const keys = Object.keys(data);
-                        if (keys.length === 0) {
-                            statusEl.textContent = 'لا توجد بيانات.';
-                            return;
-                        }
-                        allItems = keys.map(key => {
-                            const item = data[key];
-                            return {
-                                id: key,
-                                title: item.title || '',
-                                image: item.image || ''
-                            };
-                        });
-                        allItems = allItems.filter(item => item.title);
-                        visibleCount = PAGE_SIZE;
-                        applySortAndRender();
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        statusEl.textContent = '⚠️ تعذر تحميل البيانات. تأكد من وجود /mods.json.';
-                        feedEl.innerHTML = '';
-                        loadMoreBtn.style.display = 'none';
-                    });
-            }
-
-            sortBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const sort = this.dataset.sort;
-                    if (sort === currentSort) return;
-                    sortBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentSort = sort;
-                    visibleCount = PAGE_SIZE;
-                    applySortAndRender();
-                });
-            });
-
-            loadMoreBtn.addEventListener('click', function() {
-                const total = allItems.length;
-                if (visibleCount < total) {
-                    visibleCount = Math.min(visibleCount + PAGE_SIZE, total);
-                    applySortAndRender();
+            // تحديث الـ displayedCount وإعادة العرض
+            function loadMore() {
+                const filtered = getFilteredAndSorted();
+                if (displayedCount < filtered.length) {
+                    displayedCount += 10;
+                    render();
                 }
+            }
+
+            // تغيير الترتيب
+            function setSort(sortType) {
+                currentSort = sortType;
+                // تحديث شكل الأزرار
+                sortNewest.classList.toggle('active', sortType === 'newest');
+                sortOldest.classList.toggle('active', sortType === 'oldest');
+                // إعادة تعيين العدد المعروض إلى 10 (لأن الترتيب تغير)
+                displayedCount = 10;
+                render();
+            }
+
+            // ربط الأحداث
+            loadMoreBtn.addEventListener('click', loadMore);
+
+            sortNewest.addEventListener('click', function() {
+                if (currentSort !== 'newest') setSort('newest');
+            });
+            sortOldest.addEventListener('click', function() {
+                if (currentSort !== 'oldest') setSort('oldest');
             });
 
-            loadData();
+            // البحث – مع تأخير بسيط
+            let searchTimeout;
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    searchTerm = this.value;
+                    displayedCount = 10; // إعادة ضبط العدد
+                    render();
+                }, 300);
+            });
+
+            // بدء التطبيق
+            fetchPosts();
+
+            // إعادة تعيين displayedCount بعد أي تغيير في البحث أو الترتيب (تم تضمينه)
         })();
     </script>
 

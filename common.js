@@ -1,12 +1,6 @@
 /* =========================================================
    ModsLib — common.js
-   وظائف مشتركة بين جميع صفحات الموقع:
-   - Base64 (UTF-8 آمن)
-   - جلب mods.json
-   - Header / Footer
-   - حقن الإعلانات (تحت الهيدر + 320x50 الديناميكية)
-   - Toast / رسائل النظام
-   - أدوات URL / الحماية بالجلسة
+   الوظائف المشتركة بين جميع صفحات الموقع
    ========================================================= */
 
 const ModsLib = (() => {
@@ -15,11 +9,13 @@ const ModsLib = (() => {
   const HEADER_IMG = '/header.png';
   const FAVICON = '/fav.ico';
 
-  /* ---------------- Base64 (يدعم النصوص العربية) ---------------- */
+  /* =========================================================
+     Base64 — UTF-8 آمن
+     ========================================================= */
 
   function b64Encode(str) {
     try {
-      return btoa(unescape(encodeURIComponent(str)));
+      return btoa(unescape(encodeURIComponent(String(str))));
     } catch (e) {
       console.error('B64 encode failed', e);
       return '';
@@ -28,18 +24,27 @@ const ModsLib = (() => {
 
   function b64Decode(str) {
     try {
-      return decodeURIComponent(escape(atob(str)));
+      return decodeURIComponent(escape(atob(String(str))));
     } catch (e) {
       console.error('B64 decode failed', e);
       return '';
     }
   }
 
+  /* =========================================================
+     URL Validation
+     ========================================================= */
+
   function isLikelyValidUrl(str) {
     if (!str || typeof str !== 'string') return false;
+
     try {
       const u = new URL(str);
-      return u.protocol === 'http:' || u.protocol === 'https:';
+
+      return (
+        u.protocol === 'http:' ||
+        u.protocol === 'https:'
+      );
     } catch (e) {
       return false;
     }
@@ -47,275 +52,718 @@ const ModsLib = (() => {
 
   function resolveDownloadUrl(mod) {
     if (!mod || !mod.download) return null;
+
     const decoded = b64Decode(mod.download);
-    if (!isLikelyValidUrl(decoded)) return null;
+
+    if (!isLikelyValidUrl(decoded)) {
+      return null;
+    }
+
     return decoded;
   }
 
-  /* ---------------- جلب البيانات ---------------- */
+  /* =========================================================
+     جلب mods.json
+     ========================================================= */
 
   async function fetchMods() {
+
     let res;
+
     try {
-      res = await fetch(DATA_URL, { cache: 'no-store' });
+      res = await fetch(DATA_URL, {
+        cache: 'no-store'
+      });
     } catch (e) {
-      throw new Error('تعذر الاتصال بالخادم لتحميل قائمة المودات. تحقق من اتصالك بالإنترنت.');
+      throw new Error(
+        'تعذر الاتصال بالخادم لتحميل قائمة المودات. تحقق من اتصالك بالإنترنت.'
+      );
     }
+
     if (!res.ok) {
-      throw new Error('ملف mods.json غير موجود أو تعذر الوصول إليه (' + res.status + ').');
+      throw new Error(
+        'ملف mods.json غير موجود أو تعذر الوصول إليه (' +
+        res.status +
+        ').'
+      );
     }
+
     let data;
+
     try {
       data = await res.json();
     } catch (e) {
-      throw new Error('ملف mods.json تالف أو بصيغة غير صالحة.');
+      throw new Error(
+        'ملف mods.json تالف أو بصيغة غير صالحة.'
+      );
     }
+
     if (!Array.isArray(data)) {
-      throw new Error('تنسيق mods.json غير صحيح.');
+      throw new Error(
+        'تنسيق mods.json غير صحيح.'
+      );
     }
-    return data.filter(m => m && typeof m.id !== 'undefined');
+
+    return data.filter(
+      m => m && typeof m.id !== 'undefined'
+    );
   }
 
+  /* =========================================================
+     ترتيب المودات
+     ========================================================= */
+
   function sortByIdDesc(list) {
-    return [...list].sort((a, b) => Number(b.id) - Number(a.id));
+    return [...list].sort(
+      (a, b) => Number(b.id) - Number(a.id)
+    );
   }
 
   function sortByIdAsc(list) {
-    return [...list].sort((a, b) => Number(a.id) - Number(b.id));
+    return [...list].sort(
+      (a, b) => Number(a.id) - Number(b.id)
+    );
   }
 
   function highestId(list) {
-    if (!list.length) return 0;
-    return Math.max(...list.map(m => Number(m.id) || 0));
+    if (!Array.isArray(list) || !list.length) {
+      return 0;
+    }
+
+    return Math.max(
+      ...list.map(m => Number(m.id) || 0)
+    );
   }
 
-  /* ---------------- URL / Query ---------------- */
+  /* =========================================================
+     قراءة ID من الرابط
+     ========================================================= */
 
   function getValidId() {
-    const params = new URLSearchParams(window.location.search);
+
+    const params = new URLSearchParams(
+      window.location.search
+    );
+
     const raw = params.get('id');
-    if (raw === null) return null;
-    if (!/^\d+$/.test(raw.trim())) return null;
-    const n = parseInt(raw, 10);
-    if (!Number.isFinite(n) || n <= 0) return null;
-    return n;
+
+    if (raw === null) {
+      return null;
+    }
+
+    const clean = raw.trim();
+
+    if (!/^\d+$/.test(clean)) {
+      return null;
+    }
+
+    const id = parseInt(clean, 10);
+
+    if (!Number.isFinite(id) || id <= 0) {
+      return null;
+    }
+
+    return id;
   }
 
-  function modUrl(id) {
-    return '/mod.html?id=' + encodeURIComponent(id);
+  /* =========================================================
+     روابط الموقع
+     
+     مهم:
+     toTomodUrl() = صفحة التفاصيل
+     toModUrl()   = صفحة التحميل
+     ========================================================= */
+
+  function toTomodUrl(id) {
+    return '/tomod.html?id=' +
+      encodeURIComponent(id);
+  }
+
+  function toModUrl(id) {
+    return '/mod.html?id=' +
+      encodeURIComponent(id);
+  }
+
+  function fullTomodUrl(id) {
+    try {
+      return window.location.origin +
+        toTomodUrl(id);
+    } catch (e) {
+      return toTomodUrl(id);
+    }
   }
 
   function fullModUrl(id) {
     try {
-      return window.location.origin + modUrl(id);
+      return window.location.origin +
+        toModUrl(id);
     } catch (e) {
-      return modUrl(id);
+      return toModUrl(id);
     }
   }
 
-  /* ---------------- الحماية بالجلسة ---------------- */
+  /* =========================================================
+     حماية صفحة mod.html
+     ========================================================= */
 
   function markAllowed(id) {
     try {
-      sessionStorage.setItem('allowed_mod_' + id, 'true');
-    } catch (e) { /* ignore */ }
+      sessionStorage.setItem(
+        'allowed_mod_' + id,
+        'true'
+      );
+    } catch (e) {
+      /* local/session storage غير متاح */
+    }
   }
 
   function isAllowed(id) {
     try {
-      return sessionStorage.getItem('allowed_mod_' + id) === 'true';
+      return sessionStorage.getItem(
+        'allowed_mod_' + id
+      ) === 'true';
     } catch (e) {
       return false;
     }
   }
 
-  /* ---------------- Header ---------------- */
+  /*
+     هذه الدالة تستخدمها mod.html.
 
-  function renderHeader(targetSelector) {
-    const target = document.querySelector(targetSelector);
-    if (!target) return;
-    target.innerHTML = `
-      <header class="site-header">
-        <div class="site-header__inner">
-          <a href="/index.html" class="site-header__link" aria-label="ModsLib">
-            <img src="${HEADER_IMG}" alt="ModsLib" class="site-header__img"
-                 onerror="this.style.display='none'">
-          </a>
-        </div>
-      </header>
-      <div class="ad-slot ad-slot--under-header" id="header-ad-slot"></div>
-    `;
-    injectHeaderAd(document.getElementById('header-ad-slot'));
+     إذا لم يمر الزائر من tomod.html
+     يتم إرساله مباشرة إلى tomod.html بنفس ID.
+  */
+
+  function protectDownloadPage(id) {
+
+    if (!id) {
+      window.location.replace('/index.html');
+      return false;
+    }
+
+    if (!isAllowed(id)) {
+      window.location.replace(
+        toTomodUrl(id)
+      );
+
+      return false;
+    }
+
+    return true;
   }
 
+  /* =========================================================
+     Header
+     ========================================================= */
+
+  function renderHeader(targetSelector) {
+
+    const target =
+      document.querySelector(targetSelector);
+
+    if (!target) return;
+
+    target.innerHTML = `
+      <header class="site-header">
+
+        <div class="site-header__inner">
+
+          <a
+            href="/index.html"
+            class="site-header__link"
+            aria-label="ModsLib"
+          >
+
+            <img
+              src="${HEADER_IMG}"
+              alt="ModsLib"
+              class="site-header__img"
+              onerror="this.style.display='none'"
+            >
+
+          </a>
+
+        </div>
+
+      </header>
+
+      <div
+        class="ad-slot ad-slot--under-header"
+        id="header-ad-slot"
+      ></div>
+    `;
+
+    injectHeaderAd(
+      document.getElementById(
+        'header-ad-slot'
+      )
+    );
+  }
+
+  /* =========================================================
+     إعلان تحت الهيدر
+     ========================================================= */
+
   function injectHeaderAd(container) {
-    if (!container || container.dataset.injected === 'true') return;
+
+    if (!container) return;
+
+    if (
+      container.dataset.injected === 'true'
+    ) {
+      return;
+    }
+
     container.dataset.injected = 'true';
-    const script = document.createElement('script');
+
+    const script =
+      document.createElement('script');
+
     script.async = true;
-    script.setAttribute('data-cfasync', 'false');
-    script.src = 'https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js';
-    const div = document.createElement('div');
-    div.id = 'container-2d6b46676c10234a8731ba94f0111059';
+
+    script.setAttribute(
+      'data-cfasync',
+      'false'
+    );
+
+    script.src =
+      'https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js';
+
+    const div =
+      document.createElement('div');
+
+    div.id =
+      'container-2d6b46676c10234a8731ba94f0111059';
+
     container.appendChild(script);
     container.appendChild(div);
   }
 
-  /* ---------------- الإعلانات العامة (JS #1 و #2) ---------------- */
+  /* =========================================================
+     الإعلانات العامة
+     ========================================================= */
 
   function injectGlobalAdScripts() {
-    if (document.body.dataset.globalAdsInjected === 'true') return;
-    document.body.dataset.globalAdsInjected = 'true';
+
+    if (!document.body) return;
+
+    if (
+      document.body.dataset.globalAdsInjected === 'true'
+    ) {
+      return;
+    }
+
+    document.body.dataset.globalAdsInjected =
+      'true';
+
     const srcs = [
+
       'https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js',
+
       'https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js'
+
     ];
+
     srcs.forEach(src => {
-      const s = document.createElement('script');
-      s.src = src;
-      document.body.appendChild(s);
+
+      const script =
+        document.createElement('script');
+
+      script.src = src;
+
+      document.body.appendChild(script);
+
     });
   }
 
-  /* ---------------- إعلان 320x50 الديناميكي (iframe) ----------------
-     يُبنى كـ iframe مرن غير مقيّد بأبعاد ثابتة، ويحمّل /320-50.js
-     داخل مستند منفصل حتى لا يتعارض مع باقي سكربتات الصفحة.
-     ملاحظة: هذا الغلاف عام ومتوافق مع أي كود يوضع داخل 320-50.js،
-     لكن Claude لا يملك محتوى سكربت الشبكة الإعلانية الفعلي، لذا تم
-     إنشاء 320-50.js كملف عنصر نائب (placeholder) وضّح ذلك بوضوح
-     ليستبدله صاحب الموقع بالكود الحقيقي من لوحة الشبكة الإعلانية. */
+  /* =========================================================
+     إعلان 320×50
+     
+     يتم تحميل /320-50.js داخل iframe
+     والـ iframe قابل لتغيير الارتفاع حسب المحتوى.
+     ========================================================= */
 
   function createDynamicAd320() {
-    const iframe = document.createElement('iframe');
-    iframe.setAttribute('scrolling', 'no');
-    iframe.setAttribute('loading', 'lazy');
-    iframe.setAttribute('title', 'إعلان');
-    iframe.style.width = '100%';
-    iframe.style.maxWidth = '336px';
-    iframe.style.minHeight = '50px';
-    iframe.style.height = '50px';
-    iframe.style.border = '0';
-    iframe.style.display = 'block';
-    iframe.style.margin = '0 auto';
-    iframe.srcdoc =
-      '<!DOCTYPE html><html><head><style>' +
-      'html,body{margin:0;padding:0;background:transparent;overflow:hidden;}' +
-      '</style></head><body><script src="/320-50.js"><\/script></body></html>';
 
-    iframe.addEventListener('load', () => {
-      try {
-        const doc = iframe.contentDocument;
-        if (doc && doc.body) {
+    const iframe =
+      document.createElement('iframe');
+
+    iframe.setAttribute(
+      'scrolling',
+      'no'
+    );
+
+    iframe.setAttribute(
+      'loading',
+      'lazy'
+    );
+
+    iframe.setAttribute(
+      'title',
+      'إعلان'
+    );
+
+    iframe.style.width = '100%';
+
+    iframe.style.maxWidth = '336px';
+
+    iframe.style.minHeight = '50px';
+
+    iframe.style.height = '50px';
+
+    iframe.style.border = '0';
+
+    iframe.style.display = 'block';
+
+    iframe.style.margin = '0 auto';
+
+    iframe.srcdoc =
+      '<!DOCTYPE html>' +
+      '<html>' +
+      '<head>' +
+      '<style>' +
+      'html,body{' +
+      'margin:0;' +
+      'padding:0;' +
+      'background:transparent;' +
+      'overflow:hidden;' +
+      '}' +
+      '</style>' +
+      '</head>' +
+      '<body>' +
+      '<script src="/320-50.js"><\\/script>' +
+      '</body>' +
+      '</html>';
+
+    iframe.addEventListener(
+      'load',
+      () => {
+
+        try {
+
+          const doc =
+            iframe.contentDocument;
+
+          if (!doc || !doc.body) {
+            return;
+          }
+
           const resize = () => {
-            const h = doc.body.scrollHeight;
-            if (h && h > 10) iframe.style.height = h + 'px';
+
+            const height =
+              Math.max(
+                doc.body.scrollHeight,
+                doc.documentElement
+                  ? doc.documentElement.scrollHeight
+                  : 0
+              );
+
+            if (height > 10) {
+              iframe.style.height =
+                height + 'px';
+            }
           };
+
           resize();
+
           setTimeout(resize, 400);
           setTimeout(resize, 1200);
+          setTimeout(resize, 2500);
+
+        } catch (e) {
+
+          /*
+             في حال تعذر الوصول لمحتوى iframe
+             يبقى الارتفاع الافتراضي 50px.
+          */
+
         }
-      } catch (e) {
-        /* محتوى عابر للأصول (cross-origin) — يبقى الارتفاع الافتراضي */
+
       }
-    });
+    );
 
     return iframe;
   }
 
   function makeAdSlotWrap() {
-    const wrap = document.createElement('div');
-    wrap.className = 'ad-slot ad-slot--inline320';
-    const inner = document.createElement('div');
-    inner.className = 'ad-slot__frame-wrap';
-    inner.appendChild(createDynamicAd320());
+
+    const wrap =
+      document.createElement('div');
+
+    wrap.className =
+      'ad-slot ad-slot--inline320';
+
+    const inner =
+      document.createElement('div');
+
+    inner.className =
+      'ad-slot__frame-wrap';
+
+    inner.appendChild(
+      createDynamicAd320()
+    );
+
     wrap.appendChild(inner);
+
     return wrap;
   }
 
-  /* ---------------- Footer ---------------- */
+  /* =========================================================
+     Footer
+     ========================================================= */
 
   function renderFooter(targetSelector) {
-    const target = document.querySelector(targetSelector);
+
+    const target =
+      document.querySelector(targetSelector);
+
     if (!target) return;
+
     target.innerHTML = `
+
       <footer class="site-footer">
-        <p class="site-footer__line">Copyright: <span class="site-footer__brand">ATTACK N' DESROY</span></p>
-        <p class="site-footer__line">Powered By: <span class="site-footer__brand">ATTACK N' DESTROY</span></p>
+
+        <p class="site-footer__line">
+          Copyright:
+          <span class="site-footer__brand">
+            ATTACK N' DESROY
+          </span>
+        </p>
+
+        <p class="site-footer__line">
+          Powered By:
+          <span class="site-footer__brand">
+            ATTACK N' DESTROY
+          </span>
+        </p>
+
       </footer>
+
     `;
   }
 
-  /* ---------------- Favicon ---------------- */
+  /* =========================================================
+     Favicon
+     ========================================================= */
 
   function ensureFavicon() {
-    if (document.querySelector('link[rel="icon"]')) return;
-    const link = document.createElement('link');
+
+    if (
+      document.querySelector(
+        'link[rel="icon"]'
+      )
+    ) {
+      return;
+    }
+
+    const link =
+      document.createElement('link');
+
     link.rel = 'icon';
+
     link.href = FAVICON;
+
     document.head.appendChild(link);
   }
 
-  /* ---------------- Toast ---------------- */
+  /* =========================================================
+     Toast
+     ========================================================= */
 
   let toastTimer = null;
+
   function showToast(message, type) {
-    let el = document.getElementById('mlib-toast');
+
+    let el =
+      document.getElementById(
+        'mlib-toast'
+      );
+
     if (!el) {
-      el = document.createElement('div');
-      el.id = 'mlib-toast';
-      el.className = 'toast';
+
+      el =
+        document.createElement('div');
+
+      el.id =
+        'mlib-toast';
+
+      el.className =
+        'toast';
+
       document.body.appendChild(el);
     }
+
     el.textContent = message;
-    el.className = 'toast is-visible' + (type === 'error' ? ' is-error' : type === 'success' ? ' is-success' : '');
+
+    let className =
+      'toast is-visible';
+
+    if (type === 'error') {
+      className += ' is-error';
+    }
+
+    if (type === 'success') {
+      className += ' is-success';
+    }
+
+    el.className = className;
+
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => {
-      el.classList.remove('is-visible');
-    }, 3200);
+
+    toastTimer =
+      setTimeout(() => {
+
+        el.classList.remove(
+          'is-visible'
+        );
+
+      }, 3200);
   }
 
-  /* ---------------- نسخ إلى الحافظة ---------------- */
+  /* =========================================================
+     Clipboard
+     ========================================================= */
 
   async function copyToClipboard(text) {
+
     try {
-      await navigator.clipboard.writeText(text);
+
+      await navigator.clipboard.writeText(
+        text
+      );
+
       return true;
+
     } catch (e) {
+
       try {
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
+
+        const textarea =
+          document.createElement(
+            'textarea'
+          );
+
+        textarea.value = text;
+
+        textarea.style.position =
+          'fixed';
+
+        textarea.style.opacity =
+          '0';
+
+        document.body.appendChild(
+          textarea
+        );
+
+        textarea.select();
+
+        document.execCommand(
+          'copy'
+        );
+
+        document.body.removeChild(
+          textarea
+        );
+
         return true;
+
       } catch (e2) {
+
         return false;
       }
     }
   }
 
-  /* ---------------- HTML escaping ---------------- */
+  /* =========================================================
+     HTML Escape
+     ========================================================= */
 
   function escapeHtml(str) {
-    if (str === null || typeof str === 'undefined') return '';
+
+    if (
+      str === null ||
+      typeof str === 'undefined'
+    ) {
+      return '';
+    }
+
     return String(str)
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;')
-      .replaceAll('"', '&quot;')
-      .replaceAll("'", '&#039;');
+      .replaceAll(
+        '&',
+        '&amp;'
+      )
+      .replaceAll(
+        '<',
+        '&lt;'
+      )
+      .replaceAll(
+        '>',
+        '&gt;'
+      )
+      .replaceAll(
+        '"',
+        '&quot;'
+      )
+      .replaceAll(
+        "'",
+        '&#039;'
+      );
   }
 
+  /* =========================================================
+     Public API
+     ========================================================= */
+
   return {
-    b64Encode, b64Decode, isLikelyValidUrl, resolveDownloadUrl,
-    fetchMods, sortByIdDesc, sortByIdAsc, highestId,
-    getValidId, modUrl, fullModUrl,
-    markAllowed, isAllowed,
-    renderHeader, injectHeaderAd, injectGlobalAdScripts,
-    createDynamicAd320, makeAdSlotWrap,
-    renderFooter, ensureFavicon, showToast, copyToClipboard, escapeHtml
+
+    /* Base64 */
+    b64Encode,
+    b64Decode,
+
+    /* URL */
+    isLikelyValidUrl,
+    resolveDownloadUrl,
+
+    /* Data */
+    fetchMods,
+    sortByIdDesc,
+    sortByIdAsc,
+    highestId,
+
+    /* ID */
+    getValidId,
+
+    /* Page URLs */
+    toTomodUrl,
+    toModUrl,
+    fullTomodUrl,
+    fullModUrl,
+
+    /* Download protection */
+    markAllowed,
+    isAllowed,
+    protectDownloadPage,
+
+    /* Header */
+    renderHeader,
+    injectHeaderAd,
+
+    /* Ads */
+    injectGlobalAdScripts,
+    createDynamicAd320,
+    makeAdSlotWrap,
+
+    /* Footer */
+    renderFooter,
+
+    /* Favicon */
+    ensureFavicon,
+
+    /* UI */
+    showToast,
+    copyToClipboard,
+    escapeHtml
+
   };
+
 })();

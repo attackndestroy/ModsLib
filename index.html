@@ -1,174 +1,331 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>ModsLib — مكتبة المودات</title>
-<meta name="description" content="ModsLib — منصة عرض وتحميل المودات">
-<link rel="icon" href="/fav.ico">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATTACK N' DESTROY - الرهيبة للمودات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --card-dark: #141414;
+            --accent-yellow: #ffde00;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --border-color: #262626;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Cairo', sans-serif;
+            overflow-x: hidden;
+            background-image: repeating-linear-gradient(45deg, rgba(255, 222, 0, 0.01) 0, rgba(255, 222, 0, 0.01) 1px, transparent 0, transparent 50px);
+        }
+        h1, h2, h3, .oswald-font {
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 1px;
+        }
+        /* Header */
+        .main-header {
+            width: 100%;
+            max-height: 400px;
+            overflow: hidden;
+            border-bottom: 3px solid var(--accent-yellow);
+        }
+        .main-header img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+        /* Ads Area */
+        .ad-container {
+            width: 100%;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background: var(--card-dark);
+            border: 1px dashed var(--border-color);
+        }
+        /* Controls & Search */
+        .controls-section {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .search-box input {
+            background: var(--card-dark);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px 20px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            width: 300px;
+            outline: none;
+            transition: 0.3s;
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+        }
+        .search-box input:focus {
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 10px rgba(255, 222, 0, 0.2);
+        }
+        .sort-btns button {
+            background: var(--card-dark);
+            border: 1px solid var(--accent-yellow);
+            color: var(--accent-yellow);
+            padding: 10px 20px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 10px;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            transition: 0.3s;
+        }
+        .sort-btns button.active, .sort-btns button:hover {
+            background: var(--accent-yellow);
+            color: var(--bg-dark);
+        }
+        /* Feed Grid */
+        .feed-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .mod-card {
+            background: var(--card-dark);
+            border: 1px solid var(--border-color);
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: 0.3s;
+            clip-path: polygon(0 0, 100% 0, 100% 95%, 98% 100%, 0 100%);
+        }
+        .mod-card:hover {
+            border-color: var(--accent-yellow);
+            box-shadow: 0 5px 20px rgba(255, 222, 0, 0.1);
+            transform: translateY(-3px);
+        }
+        .mod-img-wrapper {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #000;
+        }
+        .mod-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+        .mod-card:hover .mod-img-wrapper img {
+            transform: scale(1.03);
+        }
+        .mod-content {
+            padding: 20px;
+            text-align: center;
+        }
+        .mod-title {
+            font-size: 24px;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+        .details-btn {
+            background: transparent;
+            border: 2px solid var(--accent-yellow);
+            color: var(--accent-yellow);
+            padding: 10px 30px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 18px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            transition: 0.3s;
+        }
+        .details-btn:hover {
+            background: var(--accent-yellow);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px rgba(255, 222, 0, 0.4);
+        }
+        /* Load More Button */
+        .load-more-wrapper {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .load-more-btn {
+            background: var(--accent-yellow);
+            color: var(--bg-dark);
+            border: none;
+            padding: 15px 40px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+            transition: 0.3s;
+        }
+        .load-more-btn:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 20px rgba(255, 222, 0, 0.6);
+        }
+        /* Footer */
+        footer {
+            background: #050505;
+            border-top: 2px solid var(--border-color);
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+        footer p {
+            color: var(--text-muted);
+            margin: 5px 0;
+            font-size: 15px;
+        }
+        .highlight-brand {
+            color: var(--accent-yellow);
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
-<div id="header-mount"></div>
+    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
+    <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
 
-<main class="container">
+    <header class="main-header">
+        <img src="header.png" alt="ATTACK N' DESTROY Header" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1600&q=80'">
+    </header>
 
-  <section class="page-hero">
-    <h1 class="page-hero__title">أحدث المودات</h1>
-  </section>
-
-  <div class="feed-toolbar">
-    <div class="feed-toolbar__sort">
-      <button type="button" class="chip is-active" id="sort-newest">أحدث</button>
-      <button type="button" class="chip" id="sort-oldest">أقدم</button>
-    </div>
-    <div class="search-box">
-      <input type="text" id="search-input" placeholder="ابحث عن مود بالاسم أو الوصف...">
-    </div>
-  </div>
-
-  <div id="pre-feed-ad"></div>
-
-  <div id="feed-status" class="state-message" style="display:none;"></div>
-
-  <div id="feed-grid" class="mod-grid"></div>
-
-  <div id="feed-empty" class="feed-empty" style="display:none;">لا توجد نتائج مطابقة لبحثك.</div>
-
-  <div class="load-more-wrap">
-    <button type="button" class="btn btn--outline" id="load-more-btn" style="display:none;">إظهار المزيد</button>
-  </div>
-
-</main>
-
-<div id="footer-mount"></div>
-
-<script src="/stats.js"></script>
-<script src="/common.js"></script>
-<script>
-(function () {
-  const feedGrid = document.getElementById('feed-grid');
-  const feedEmpty = document.getElementById('feed-empty');
-  const feedStatus = document.getElementById('feed-status');
-  const preFeedAd = document.getElementById('pre-feed-ad');
-  const loadMoreBtn = document.getElementById('load-more-btn');
-  const searchInput = document.getElementById('search-input');
-  const sortNewestBtn = document.getElementById('sort-newest');
-  const sortOldestBtn = document.getElementById('sort-oldest');
-
-  const PAGE_SIZE = 10;
-
-  let allMods = [];
-  let currentList = [];
-  let visibleCount = 0;
-  let sortMode = 'desc'; // 'desc' = أحدث, 'asc' = أقدم
-  let searchQuery = '';
-
-  ModsLib.renderHeader('#header-mount');
-  ModsLib.renderFooter('#footer-mount');
-  ModsLib.ensureFavicon();
-  ModsLib.injectGlobalAdScripts();
-
-  function buildCard(mod) {
-    const card = document.createElement('article');
-    card.className = 'mod-card';
-    const img = ModsLib.escapeHtml(mod.image || '');
-    const title = ModsLib.escapeHtml(mod.title || 'بدون عنوان');
-    card.innerHTML = `
-      <div class="mod-card__media">
-        <img src="${img}" alt="${title}" loading="lazy"
-             onerror="this.style.opacity=0.15">
-      </div>
-      <div class="mod-card__body">
-        <h2 class="mod-card__title">${title}</h2>
-        <div class="mod-card__actions">
-          <a class="btn btn--sm" href="${ModsLib.modUrl(mod.id)}">عرض التفاصيل</a>
+    <div class="controls-section">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="ابحث عن مود...">
         </div>
-      </div>
-    `;
-    return card;
-  }
+        <div class="sort-btns">
+            <button id="btnNewest" class="active" onclick="setSortOrder('newest')">الأحدث</button>
+            <button id="btnOldest" onclick="setSortOrder('oldest')">الأقدم</button>
+        </div>
+    </div>
 
-  function computeCurrentList() {
-    let list = sortMode === 'desc' ? ModsLib.sortByIdDesc(allMods) : ModsLib.sortByIdAsc(allMods);
-    const q = searchQuery.trim().toLowerCase();
-    if (q) {
-      list = list.filter(m =>
-        String(m.title || '').toLowerCase().includes(q) ||
-        String(m.description || '').toLowerCase().includes(q)
-      );
-    }
-    return list;
-  }
+    <div class="ad-container">
+        <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js"></script>
+        <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
+    </div>
 
-  function updateLoadMoreVisibility() {
-    loadMoreBtn.style.display = (visibleCount < currentList.length) ? 'inline-flex' : 'none';
-  }
+    <main class="feed-container" id="feedContainer">
+        </main>
 
-  function appendMore() {
-    const next = currentList.slice(visibleCount, visibleCount + PAGE_SIZE);
-    next.forEach(mod => {
-      feedGrid.appendChild(buildCard(mod));
-      feedGrid.appendChild(ModsLib.makeAdSlotWrap());
-    });
-    visibleCount += next.length;
-    updateLoadMoreVisibility();
-  }
+    <div class="load-more-wrapper" id="loadMoreWrapper" style="display: none;">
+        <button class="load-more-btn" onclick="loadMorePosts()">إظهار المزيد</button>
+    </div>
 
-  function resetFeed() {
-    currentList = computeCurrentList();
-    visibleCount = 0;
-    feedGrid.innerHTML = '';
-    preFeedAd.innerHTML = '';
-    feedEmpty.style.display = currentList.length ? 'none' : 'block';
-    if (currentList.length) {
-      preFeedAd.appendChild(ModsLib.makeAdSlotWrap());
-    }
-    appendMore();
-  }
+    <footer>
+        <p>Copyright: <span class="highlight-brand">ATTACK N' DESTROY</span></p>
+        <p>Powered By: <span class="highlight-brand">ATTACK N' DESTROY</span></p>
+    </footer>
 
-  loadMoreBtn.addEventListener('click', () => appendMore());
+    <script src="stats.js"></script>
 
-  sortNewestBtn.addEventListener('click', () => {
-    if (sortMode === 'desc') return;
-    sortMode = 'desc';
-    sortNewestBtn.classList.add('is-active');
-    sortOldestBtn.classList.remove('is-active');
-    resetFeed();
-  });
+    <script>
+        let allMods = [];
+        let displayedCount = 10;
+        let currentSort = 'newest';
+        let searchQuery = '';
 
-  sortOldestBtn.addEventListener('click', () => {
-    if (sortMode === 'asc') return;
-    sortMode = 'asc';
-    sortOldestBtn.classList.add('is-active');
-    sortNewestBtn.classList.remove('is-active');
-    resetFeed();
-  });
+        async function fetchMods() {
+            try {
+                const response = await fetch('mods.json');
+                const data = await response.json();
+                // ترتيب مبدئي حسب أكبر ID (الأحدث)
+                allMods = data.sort((a, b) => b.id - a.id);
+                renderFeed();
+            } catch (error) {
+                console.error("Error loading mods.json:", error);
+            }
+        }
 
-  searchInput.addEventListener('input', (e) => {
-    searchQuery = e.target.value;
-    resetFeed();
-  });
+        function setSortOrder(order) {
+            currentSort = order;
+            document.getElementById('btnNewest').classList.toggle('active', order === 'newest');
+            document.getElementById('btnOldest').classList.toggle('active', order === 'oldest');
+            
+            if (order === 'newest') {
+                allMods.sort((a, b) => b.id - a.id);
+            } else {
+                allMods.sort((a, b) => a.id - b.id);
+            }
+            displayedCount = 10;
+            renderFeed();
+        }
 
-  async function init() {
-    feedStatus.style.display = 'block';
-    feedStatus.innerHTML = '<div class="spinner"></div>';
-    try {
-      allMods = await ModsLib.fetchMods();
-      feedStatus.style.display = 'none';
-      resetFeed();
-    } catch (err) {
-      feedStatus.textContent = err.message || 'حدث خطأ غير متوقع أثناء تحميل المودات.';
-    }
-  }
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchQuery = e.target.value.toLowerCase();
+            displayedCount = 10;
+            renderFeed();
+        });
 
-  init();
-})();
-</script>
+        function renderFeed() {
+            const container = document.getElementById('feedContainer');
+            container.innerHTML = '';
 
+            let filtered = allMods.filter(mod => mod.title.toLowerCase().includes(searchQuery));
+            let itemsToDisplay = filtered.slice(0, displayedCount);
+
+            if (itemsToDisplay.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#aaa; padding:40px;">لا توجد نتائج مطابقة لبحثك.</p>';
+                document.getElementById('loadMoreWrapper').style.display = 'none';
+                return;
+            }
+
+            itemsToDisplay.forEach((mod, index) => {
+                // إنشاء بطاقة المنشور
+                const card = document.createElement('div');
+                card.className = 'mod-card';
+                card.innerHTML = `
+                    <div class="mod-img-wrapper">
+                        <img src="${mod.image}" alt="${mod.title}" loading="lazy">
+                    </div>
+                    <div class="mod-content">
+                        <h2 class="mod-title">${mod.title}</h2>
+                        <a href="tomod.html?id=${mod.id}" class="details-btn">عرض التفاصيل</a>
+                    </div>
+                `;
+                container.appendChild(card);
+
+                // إدراج إعلان بانر متكرر (iframe ديناميكي قابل للتمدد) بعد كل منشور في الـ feed
+                const dynamicAd = document.createElement('div');
+                dynamicAd.className = 'ad-container';
+                dynamicAd.innerHTML = `
+                    <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js"><\/script>
+                    <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
+                `;
+                container.appendChild(dynamicAd);
+            });
+
+            // إظهار أو إخفاء زر "إظهار المزيد"
+            if (displayedCount < filtered.length) {
+                document.getElementById('loadMoreWrapper').style.display = 'block';
+            } else {
+                document.getElementById('loadMoreWrapper').style.display = 'none';
+            }
+        }
+
+        function loadMorePosts() {
+            displayedCount += 10;
+            renderFeed();
+        }
+
+        window.addEventListener('DOMContentLoaded', fetchMods);
+    </script>
 </body>
 </html>

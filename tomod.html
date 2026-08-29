@@ -1,437 +1,218 @@
 <!DOCTYPE html>
-<html lang="ar" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>ModsLib - Mod Details</title>
-    
-    <link rel="icon" type="image/x-icon" href="https://attdes.online/fav.ico" />
-    <link rel="shortcut icon" type="image/x-icon" href="https://attdes.online/fav.ico" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تفاصيل المود – Attack N' Destroy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
     <style>
-        :root {
-            --metal-yellow: #ffde00;
-            --metal-yellow-glow: rgba(255, 222, 0, 0.4);
-            --metal-dark: #0a0a0a;
-            --metal-card: #141414;
-            --metal-border: #282828;
-            --metal-gray: #888888;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { overflow-x: hidden; font-size: 16px; scroll-behavior: smooth; }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: var(--metal-dark);
-            background-image: 
-                radial-gradient(circle at 50% 0%, rgba(255, 222, 0, 0.05) 0%, transparent 60%),
-                repeating-linear-gradient(45deg, rgba(0,0,0,0.2) 0, rgba(0,0,0,0.2) 2px, transparent 0, transparent 4px);
-            color: #f0f0f0;
-            font-family: 'Cairo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            line-height: 1.6; overflow-x: hidden; min-height: 100vh;
-            display: flex; flex-direction: column;
-        }
-
-        a { color: var(--metal-yellow); text-decoration: none; transition: 0.2s; pointer-events: auto; }
-        a:hover { text-shadow: 0 0 10px var(--metal-yellow-glow); }
-        :focus-visible { outline: 2px solid var(--metal-yellow); outline-offset: 2px; }
-
-        .site-header {
-            background: #000000;
-            padding: 1.2rem 1rem;
-            text-align: center;
-            border-bottom: 3px solid var(--metal-yellow);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
-            position: relative;
-        }
-        .site-header::after {
-            content: '';
-            position: absolute;
-            bottom: -6px; left: 0; right: 0;
-            height: 3px;
-            background: repeating-linear-gradient(90deg, var(--metal-yellow) 0, var(--metal-yellow) 10px, transparent 10px, transparent 20px);
-        }
-        .header-logo { 
-            max-width: 100%; height: auto; max-height: 90px; width: auto; 
-            display: inline-block;
-            filter: drop-shadow(0 2px 8px rgba(255, 222, 0, 0.2));
-            transition: transform 0.3s ease;
-        }
-        .header-logo:hover { transform: scale(1.03); }
-
-        .container { max-width: 800px; margin: 0 auto; padding: 2rem 1rem; width: 100%; flex: 1; }
-
-        .native-banner-wrapper, .social-bar-wrapper { text-align: center; margin: 1rem 0; overflow: hidden; }
-        .native-banner-wrapper iframe, .social-bar-wrapper iframe { max-width: 100%; }
-
-        .tomod-banner {
-            margin: 1.2rem 0;
-            text-align: center;
+            background: #0a0a0a;
+            color: #eee;
+            font-family: 'Cairo', sans-serif;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
+        }
+        a { text-decoration: none; color: inherit; }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex: 1;
             width: 100%;
-            overflow: hidden;
         }
-        .tomod-banner iframe {
-            width: 320px;
-            height: 50px;
-            max-width: 100%;
-            border: none;
-            overflow: hidden;
-            display: block;
-        }
-
-        .mod-detail {
-            background: var(--metal-card); 
-            border: 1px solid var(--metal-border);
-            border-radius: 4px; 
-            padding: 2rem;
-            margin-bottom: 2rem; 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.7);
-            position: relative;
-        }
-        .mod-detail::before {
+        body::before {
             content: '';
-            position: absolute;
-            top: 0; left: 0; width: 4px; height: 100%;
-            background: var(--metal-yellow);
-            box-shadow: 0 0 10px var(--metal-yellow);
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,222,0,0.02) 20px, rgba(255,222,0,0.02) 21px),
+                radial-gradient(circle at 30% 40%, #1a1a1a, #0a0a0a 80%);
+            pointer-events: none;
+            z-index: -1;
         }
-
-        .mod-detail-image { text-align: center; margin-bottom: 1.5rem; }
-        .mod-detail-image img {
-            max-width: 100%; height: auto; max-height: 400px; object-fit: contain;
-            border-radius: 2px; background: #000;
-            filter: contrast(1.1) saturate(0.9);
-            border: 1px solid #333;
-        }
-        .mod-detail-image-placeholder {
-            background: #0d0d0d; color: var(--metal-gray); padding: 3rem 1rem;
-            border-radius: 2px; font-size: 1.2rem;
-            font-family: 'Oswald', sans-serif;
-            letter-spacing: 1px;
-        }
-        
-        .mod-detail-title {
-            font-size: 2.2rem; 
-            font-weight: 900; 
-            color: #fff;
-            margin: 0.5rem 0 0.8rem; 
-            text-align: center; 
-            line-height: 1.3;
-            font-family: 'Oswald', 'Cairo', sans-serif;
-            letter-spacing: 0.5px;
-        }
-        
-        .mod-detail-description {
-            font-size: 1.1rem; line-height: 1.8; color: #ddd;
-            background: #0d0d0d; padding: 1.5rem; border-radius: 2px;
-            border: 1px solid #222;
-            margin-bottom: 2rem; white-space: pre-wrap; word-break: break-word;
-        }
-        
-        .download-btn {
-            display: inline-block; 
-            background: var(--metal-yellow); 
-            color: #000;
-            font-weight: 900; 
-            padding: 0.9rem 2.8rem; 
-            border-radius: 0px;
-            text-decoration: none; 
-            font-size: 1.2rem; 
-            transition: all 0.2s ease;
-            border: none; 
-            cursor: pointer; 
-            min-height: 50px; min-width: 180px;
-            text-align: center; 
-            line-height: 1.4; 
-            margin: 0.5rem auto;
+        .header-img {
+            width: 100%;
+            max-height: 600px;
+            object-fit: cover;
             display: block;
-            font-family: 'Oswald', 'Cairo', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
-            pointer-events: auto;
-            position: relative;
-            z-index: 10;
+            border-bottom: 2px solid #ffde00;
         }
-        .download-btn:hover { 
-            background: #fff; 
-            color: #000;
-            box-shadow: 0 0 25px var(--metal-yellow-glow);
-            transform: translateY(-2px); 
-        }
-        .download-btn:active { transform: scale(0.96); }
-
-        .error-box {
-            background: var(--metal-card); 
-            border: 1px solid var(--metal-yellow); 
-            border-radius: 4px;
-            padding: 2.5rem 1.5rem; 
-            text-align: center; 
-            max-width: 600px; 
-            margin: 2rem auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-        }
-        .error-box h2 { color: var(--metal-yellow); font-size: 1.8rem; margin-bottom: 0.5rem; font-family: 'Oswald', sans-serif; }
-        .error-box p { color: #ccc; margin-bottom: 1.5rem; font-size: 1.1rem; }
-        .error-box .mod-card-btn {
-            display: inline-block; background: var(--metal-yellow); color: #000;
-            font-weight: 900; padding: 0.7rem 2rem; border-radius: 0px;
-            text-decoration: none; transition: all 0.2s;
-            min-height: 44px; min-width: 140px; text-align: center; line-height: 1.4;
-            margin: 0.5rem auto;
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
-            pointer-events: auto;
-            position: relative;
-            z-index: 10;
-        }
-        .error-box .mod-card-btn:hover { background: #fff; box-shadow: 0 0 15px var(--metal-yellow-glow); }
-
-        .detail-status { text-align: center; padding: 2rem; color: var(--metal-gray); font-size: 1.1rem; font-family: 'Oswald', sans-serif; letter-spacing: 1px; }
-
-        /* تنسيق حقوق النشر في الأسفل */
-        .site-footer {
-            background: #000000;
-            border-top: 1px solid var(--metal-border);
-            padding: 1.5rem 1rem;
+        .ad-under-header {
             text-align: center;
-            margin-top: auto;
+            padding: 10px 0;
+            background: #141414;
+            border-bottom: 1px solid #333;
         }
-        .site-footer p {
-            color: var(--metal-gray);
-            font-size: 0.95rem;
-            font-family: 'Oswald', 'Cairo', sans-serif;
-            letter-spacing: 1px;
-            line-height: 1.6;
+        .detail-card {
+            background: #141414;
+            border: 1px solid #333;
+            padding: 30px;
+            margin: 30px 0;
+            clip-path: polygon(0% 0%, 98% 0%, 100% 5%, 100% 100%, 2% 100%, 0% 95%);
         }
-        .site-footer span {
-            color: var(--metal-yellow);
+        .detail-card img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            border-bottom: 3px solid #ffde00;
+            margin-bottom: 20px;
+        }
+        .detail-card h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.2rem;
+            color: #ffde00;
+            margin-bottom: 15px;
+        }
+        .detail-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ccc;
+            margin-bottom: 25px;
+        }
+        .btn-download-link {
+            display: inline-block;
+            background: transparent;
+            border: 2px solid #ffde00;
+            color: #ffde00;
+            padding: 12px 35px;
+            font-family: 'Oswald', sans-serif;
             font-weight: 700;
+            font-size: 1.3rem;
+            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .btn-download-link:hover {
+            background: #ffde00;
+            color: #0a0a0a;
+            box-shadow: 0 0 30px rgba(255,222,0,0.3);
         }
 
-        @media (max-width: 360px) {
-            .container { padding: 0.6rem; }
-            .mod-detail-title { font-size: 1.6rem; }
-            .mod-detail-description { font-size: 1rem; padding: 1rem; }
-            .download-btn { font-size: 1.1rem; padding: 0.7rem 2rem; min-width: 150px; }
+        /* إعلانات 320×50 داخل المحتوى */
+        .ad-incontent {
+            text-align: center;
+            padding: 15px 0;
+            margin: 20px 0;
+            background: #0f0f0f;
+            border: 1px solid #2a2a2a;
         }
-        @media (min-width: 900px) {
-            .mod-detail { padding: 2.5rem; }
-            .mod-detail-title { font-size: 2.5rem; }
-            .header-logo { max-height: 110px; }
+        .ad-incontent iframe {
+            border: none;
+            max-width: 320px;
+            width: 100%;
+            height: 50px;
+            display: inline-block;
         }
-        img, iframe, video { max-width: 100%; height: auto; }
-        * { max-width: 100%; }
+
+        footer {
+            background: #0a0a0a;
+            border-top: 2px solid #ffde00;
+            padding: 25px 20px;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            color: #aaa;
+            margin-top: 30px;
+        }
+        footer .highlight {
+            color: #ffde00;
+            font-weight: 700;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        @media (max-width: 600px) {
+            .detail-card { padding: 15px; }
+            .detail-card h1 { font-size: 1.6rem; }
+        }
     </style>
-    <!-- سكربت الإعلانات الرئيسي -->
-    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
-    <script src="https://modslib.attdes.online/analytics.js"></script>
 </head>
 <body>
 
-    <header class="site-header">
-        <a href="index.html"><img src="https://attdes.online/header.png" alt="ATT/DES Logo" class="header-logo" /></a>
+    <!-- ===== الهيدر ===== -->
+    <header>
+        <img src="/header.png" alt="Attack N' Destroy" class="header-img" />
     </header>
 
-    <div class="native-banner-wrapper">
+    <!-- ===== إعلان تحت الهيدر ===== -->
+    <div class="ad-under-header">
         <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js"></script>
         <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
     </div>
 
-    <div class="social-bar-wrapper">
-        <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
-    </div>
+    <!-- ===== المحتوى ===== -->
+    <main class="container">
+        <div id="detailContainer">
+            <!-- سيتم تعبئته بواسطة JS -->
+        </div>
 
-    <main class="container tomod-container">
-        <div id="mod-detail" class="mod-detail"></div>
-        <div id="detail-status" class="detail-status"></div>
+        <!-- إعلانات عامة -->
+        <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
+        <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
     </main>
 
-    <!-- الفوتر مع حقوق النشر المطلوبة -->
-    <footer class="site-footer">
-        <p>©2026 Attack N' Destroy<br>Powered by <span>Attack N' Destroy</span></p>
+    <!-- ===== الفوتر ===== -->
+    <footer>
+        <div>Copyright: <span class="highlight">ATTACK N' DESTROY</span></div>
+        <div>Powered By: <span class="highlight">ATTACK N' DESTROY</span></div>
     </footer>
+
+    <script src="/stats.js"></script>
 
     <script>
         (function() {
-            'use strict';
+            const container = document.getElementById('detailContainer');
 
-            function getUrlParam(param) {
-                const urlParams = new URLSearchParams(window.location.search);
-                return urlParams.get(param);
-            }
-
-            function escapeHtml(str) {
-                if (!str) return '';
-                return String(str).replace(/[&<>"]/g, function(m) {
-                    if (m === '&') return '&amp;';
-                    if (m === '<') return '&lt;';
-                    if (m === '>') return '&gt;';
-                    if (m === '"') return '&quot;';
-                    return m;
-                });
-            }
-
-            function createBanner320x50() {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'tomod-banner';
-
-                const iframe = document.createElement('iframe');
-                iframe.width = '320';
-                iframe.height = '50';
-                iframe.style.border = 'none';
-                iframe.style.overflow = 'hidden';
-                iframe.style.maxWidth = '100%';
-                iframe.scrolling = 'no';
-                iframe.srcdoc = `
-                    <html>
-                    <head>
-                        <style>
-                            body { margin: 0; padding: 0; background: transparent; overflow: hidden; display: flex; justify-content: center; align-items: center; }
-                            * { box-sizing: border-box; }
-                        </style>
-                    </head>
-                    <body>
-                        <script>
-                            window.atOptions = {
-                                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
-                                'format' : 'iframe',
-                                'height' : 50,
-                                'width' : 320,
-                                'params' : {}
-                            };
-                        <\/script>
-                        <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"><\/script>
-                    </body>
-                    </html>
-                `;
-
-                wrapper.appendChild(iframe);
-                return wrapper;
-            }
-
-            const id = getUrlParam('id');
-            const detailEl = document.getElementById('mod-detail');
-            const statusEl = document.getElementById('detail-status');
+            // جلب id من الرابط
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
 
             if (!id) {
-                detailEl.innerHTML = '';
-                statusEl.innerHTML = `
-                    <div class="error-box">
-                        <h2>لم يتم تحديد المود</h2>
-                        <p>الرجاء استخدام رابط صحيح.</p>
-                        <a href="index.html" class="mod-card-btn">العودة للرئيسية</a>
-                    </div>
-                `;
+                container.innerHTML = `<p style="color:#ff4444; padding:30px;">⚠️ لم يتم تحديد معرف المود.</p>`;
                 return;
             }
 
-            function showError(title, msg) {
-                detailEl.innerHTML = '';
-                statusEl.innerHTML = `
-                    <div class="error-box">
-                        <h2>${escapeHtml(title)}</h2>
-                        <p>${escapeHtml(msg)}</p>
-                        <a href="index.html" class="mod-card-btn">العودة للرئيسية</a>
-                    </div>
-                `;
-            }
-
-            function renderDetail(item) {
-                const img = item.image || '';
-                const title = item.title || 'بدون عنوان';
-                const desc = item.description || 'لا يوجد وصف.';
-
-                const container = document.createElement('div');
-
-                // 1. الإعلان الأول فوق الصورة
-                container.appendChild(createBanner320x50());
-
-                const imgDiv = document.createElement('div');
-                imgDiv.className = 'mod-detail-image';
-                if (img) {
-                    const imgEl = document.createElement('img');
-                    imgEl.src = img;
-                    imgEl.alt = title;
-                    imgDiv.appendChild(imgEl);
-                } else {
-                    const placeholder = document.createElement('div');
-                    placeholder.className = 'mod-detail-image-placeholder';
-                    placeholder.textContent = 'لا توجد صورة';
-                    imgDiv.appendChild(placeholder);
-                }
-                container.appendChild(imgDiv);
-
-                const titleEl = document.createElement('h1');
-                titleEl.className = 'mod-detail-title';
-                titleEl.textContent = title;
-                container.appendChild(titleEl);
-
-                // 2. الإعلان بين العنوان وصندوق الوصف
-                container.appendChild(createBanner320x50());
-
-                const descEl = document.createElement('div');
-                descEl.className = 'mod-detail-description';
-                descEl.innerHTML = escapeHtml(desc).replace(/\n/g, '<br>');
-                container.appendChild(descEl);
-
-                // 3. الإعلان الثالث بين الوصف وزر التحميل
-                container.appendChild(createBanner320x50());
-
-                const btn = document.createElement('a');
-                btn.className = 'download-btn';
-                btn.href = 'mod.html?id=' + encodeURIComponent(id);
-                btn.textContent = 'تحميل المود';
-                
-                // ضمان تفعيل الضغط المباشر بلمسة واحدة ومنع أي تداخل
-                btn.addEventListener('click', function(e) {
-                    // الانتقال السريع والفوري بضغطة واحدة
-                }, { passive: true });
-
-                container.appendChild(btn);
-
-                detailEl.innerHTML = '';
-                detailEl.appendChild(container);
-
+            async function loadDetail() {
                 try {
-                    sessionStorage.setItem('download_access_' + id, 'true');
-                } catch(e) {}
+                    const res = await fetch('/mods.json');
+                    if (!res.ok) throw new Error('فشل تحميل البيانات');
+                    const data = await res.json();
+                    const post = data.find(p => p.id == id);  // مقارنة غير صارمة
 
-                statusEl.innerHTML = '';
+                    if (!post) {
+                        container.innerHTML = `<p style="color:#ffaa00; padding:30px;">❌ لم نجد موداً بهذا الرقم.</p>`;
+                        return;
+                    }
+
+                    // بناء المحتوى
+                    let html = `
+                        <div class="detail-card">
+                            <img src="${post.image}" alt="${post.title}" />
+                            <h1>${post.title}</h1>
+                            <p>${post.description || 'لا يوجد وصف تفصيلي لهذا المود.'}</p>
+                            <a href="/mod.html?id=${post.id}" class="btn-download-link">انتقال لصفحة التحميل</a>
+                        </div>
+                    `;
+
+                    // إضافة 3 إعلانات 320×50 في المحتوى (ليست في الفوتر)
+                    for (let i = 0; i < 3; i++) {
+                        html += `
+                            <div class="ad-incontent">
+                                <iframe src="/320-50.js" style="width:100%; max-width:320px; height:50px; display:inline-block;"></iframe>
+                            </div>
+                        `;
+                    }
+
+                    container.innerHTML = html;
+
+                } catch (err) {
+                    container.innerHTML = `<p style="color:#ff4444; padding:30px;">⚠️ خطأ في التحميل: ${err.message}</p>`;
+                }
             }
 
-            function fetchData() {
-                statusEl.textContent = 'جاري التحميل…';
-                fetch('/mods.json')
-                    .then(res => {
-                        if (!res.ok) throw new Error('HTTP ' + res.status);
-                        return res.json();
-                    })
-                    .then(data => {
-                        if (typeof data !== 'object' || data === null) throw new Error('JSON غير صالح');
-                        const item = data[id];
-                        if (!item) {
-                            showError('المود غير موجود', 'لم نعثر على مود بهذا المعرف.');
-                            return;
-                        }
-                        renderDetail(item);
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        showError('خطأ في التحميل', 'تعذر تحميل البيانات. تأكد من وجود /mods.json.');
-                    });
-            }
-
-            fetchData();
+            loadDetail();
         })();
     </script>
 

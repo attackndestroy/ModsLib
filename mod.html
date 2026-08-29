@@ -1,337 +1,178 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
-<title>تحميل المود — ModsLib</title>
-
-<link rel="icon" href="/fav.ico">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحة التحميل - ATTACK N' DESTROY</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --card-dark: #141414;
+            --accent-yellow: #ffde00;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --border-color: #262626;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Cairo', sans-serif;
+            overflow-x: hidden;
+            background-image: repeating-linear-gradient(45deg, rgba(255, 222, 0, 0.01) 0, rgba(255, 222, 0, 0.01) 1px, transparent 0, transparent 50px);
+        }
+        h1, h2, h3, .oswald-font {
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 1px;
+        }
+        .main-header {
+            width: 100%;
+            max-height: 400px;
+            overflow: hidden;
+            border-bottom: 3px solid var(--accent-yellow);
+        }
+        .main-header img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+        .ad-container {
+            width: 100%;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            background: var(--card-dark);
+            border: 1px dashed var(--border-color);
+        }
+        .download-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .download-card {
+            background: var(--card-dark);
+            border: 1px solid var(--border-color);
+            padding: 40px 30px;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 98%, 98% 100%, 0 100%);
+        }
+        .mod-title {
+            font-size: 36px;
+            color: var(--accent-yellow);
+            margin-bottom: 20px;
+        }
+        .mod-desc {
+            font-size: 18px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+        .download-btn {
+            background: var(--accent-yellow);
+            color: var(--bg-dark);
+            border: none;
+            padding: 18px 50px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+            transition: 0.3s;
+        }
+        .download-btn:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 25px rgba(255, 222, 0, 0.6);
+            transform: translateY(-2px);
+        }
+        footer {
+            background: #050505;
+            border-top: 2px solid var(--border-color);
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+        footer p {
+            color: var(--text-muted);
+            margin: 5px 0;
+            font-size: 15px;
+        }
+        .highlight-brand {
+            color: var(--accent-yellow);
+            font-weight: bold;
+        }
+    </style>
 </head>
-
 <body>
 
-<div id="header-mount"></div>
+    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
+    <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
 
-<main class="container">
+    <header class="main-header">
+        <img src="header.png" alt="ATTACK N' DESTROY Header" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1600&q=80'">
+    </header>
 
-  <div id="page-body">
-    <div class="state-message">
-      <div class="spinner"></div>
-    </div>
-  </div>
-
-</main>
-
-<div id="footer-mount"></div>
-
-<script src="/stats.js"></script>
-<script src="/common.js"></script>
-
-<script>
-(function () {
-
-  const pageBody =
-    document.getElementById('page-body');
-
-  /*
-   * نجهز الواجهة فقط بعد تحميل common.js
-   */
-  ModsLib.renderHeader('#header-mount');
-  ModsLib.renderFooter('#footer-mount');
-  ModsLib.ensureFavicon();
-  ModsLib.injectGlobalAdScripts();
-
-
-  /* =========================
-     404
-     ========================= */
-
-  function renderNotFound() {
-
-    pageBody.innerHTML = `
-      <div class="error-page">
-
-        <p class="error-page__code">
-          404
-        </p>
-
-        <p class="error-page__msg">
-          المود غير موجود
-        </p>
-
-        <a
-          class="btn"
-          href="/index.html"
-        >
-          العودة إلى الصفحة الرئيسية
-        </a>
-
-      </div>
-    `;
-  }
-
-
-  /* =========================
-     Download page
-     ========================= */
-
-  function renderDownload(mod) {
-
-    const title =
-      ModsLib.escapeHtml(
-        mod.title || 'بدون عنوان'
-      );
-
-    const desc =
-      ModsLib.escapeHtml(
-        mod.description || ''
-      );
-
-    pageBody.innerHTML = `
-
-      <div id="ad-slot-1"></div>
-
-      <section class="download-panel">
-
-        <p class="detail-card__eyebrow">
-          صفحة التحميل
-        </p>
-
-        <h1 class="download-panel__title">
-          ${title}
-        </h1>
-
-        <p class="download-panel__desc">
-          ${desc}
-        </p>
-
-        <div id="ad-slot-2"></div>
-
-        <button
-          type="button"
-          class="btn"
-          id="download-btn"
-        >
-          تحميل الملف
-        </button>
-
-        <p
-          id="download-error"
-          class="error-page__msg"
-          style="
-            display:none;
-            margin-top:18px;
-            font-size:14px;
-          "
-        ></p>
-
-      </section>
-
-      <div id="ad-slot-3"></div>
-    `;
-
-
-    /*
-     * الإعلانات
-     */
-
-    document
-      .getElementById('ad-slot-1')
-      .appendChild(
-        ModsLib.makeAdSlotWrap()
-      );
-
-    document
-      .getElementById('ad-slot-2')
-      .appendChild(
-        ModsLib.makeAdSlotWrap()
-      );
-
-    document
-      .getElementById('ad-slot-3')
-      .appendChild(
-        ModsLib.makeAdSlotWrap()
-      );
-
-
-    /* =========================
-       Download button
-       ========================= */
-
-    const btn =
-      document.getElementById(
-        'download-btn'
-      );
-
-    const errEl =
-      document.getElementById(
-        'download-error'
-      );
-
-
-    btn.addEventListener(
-      'click',
-      function (event) {
-
-        event.preventDefault();
-        event.stopPropagation();
-
-        const url =
-          ModsLib.resolveDownloadUrl(
-            mod
-          );
-
-        if (!url) {
-
-          errEl.textContent =
-            'تعذر فك رابط التحميل أو أنه غير صالح.';
-
-          errEl.style.display =
-            'block';
-
-          return;
-        }
-
-        errEl.style.display =
-          'none';
-
-
-        /*
-         * استخدام location.href
-         * بدل window.open يمنع مشكلة
-         * الضغط مرتين في المتصفحات التي
-         * تمنع النوافذ الجديدة.
-         */
-        window.location.href = url;
-
-      },
-      false
-    );
-  }
-
-
-  /* =========================
-     Init
-     ========================= */
-
-  async function init() {
-
-    const id =
-      ModsLib.getValidId();
-
-
-    /* ID غير صالح */
-
-    if (id === null) {
-
-      renderNotFound();
-
-      return;
-    }
-
-
-    /*
-     * الحماية:
-     *
-     * إذا دخل الزائر مباشرة إلى:
-     *
-     * /mod.html?id=123
-     *
-     * ولم يمر بـ tomod.html
-     *
-     * نرسله إلى:
-     *
-     * /tomod.html?id=123
-     */
-
-    if (!ModsLib.isAllowed(id)) {
-
-      const target =
-        '/tomod.html?id=' +
-        encodeURIComponent(id);
-
-      /*
-       * حماية إضافية من أي حلقة تحويل
-       */
-      if (
-        window.location.pathname !==
-        '/tomod.html'
-      ) {
-
-        window.location.replace(
-          target
-        );
-      }
-
-      return;
-    }
-
-
-    /* =========================
-       Load mod
-       ========================= */
-
-    try {
-
-      const mods =
-        await ModsLib.fetchMods();
-
-      const mod =
-        mods.find(
-          m => Number(m.id) === id
-        );
-
-
-      if (!mod) {
-
-        renderNotFound();
-
-        return;
-      }
-
-
-      renderDownload(mod);
-
-    } catch (err) {
-
-      pageBody.innerHTML = `
-
-        <div class="error-page">
-
-          <p class="error-page__msg">
-            ${ModsLib.escapeHtml(
-              err.message ||
-              'حدث خطأ غير متوقع.'
-            )}
-          </p>
-
-          <a
-            class="btn"
-            href="/index.html"
-          >
-            العودة إلى الصفحة الرئيسية
-          </a>
-
+    <div class="download-container" id="downloadWrapper">
         </div>
 
-      `;
-    }
-  }
+    <footer>
+        <p>Copyright: <span class="highlight-brand">ATTACK N' DESTROY</span></p>
+        <p>Powered By: <span class="highlight-brand">ATTACK N' DESTROY</span></p>
+    </footer>
 
+    <script src="stats.js"></script>
 
-  init();
+    <script>
+        async function loadDownloadPage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const modId = parseInt(urlParams.get('id'));
+            const container = document.getElementById('downloadWrapper');
 
-})();
-</script>
+            if (!modId) {
+                container.innerHTML = '<p style="text-align:center; color:#ffde00; font-size:20px;">معرّف المود غير موجود!</p>';
+                return;
+            }
 
+            try {
+                const response = await fetch('mods.json');
+                const data = await response.json();
+                const mod = data.find(m => m.id === modId);
+
+                if (!mod) {
+                    container.innerHTML = '<p style="text-align:center; color:#ffde00; font-size:20px;">عذراً، الملف المطلوب غير متوفر.</p>';
+                    return;
+                }
+
+                container.innerHTML = `
+                    <div class="download-card">
+                        <h1 class="mod-title">${mod.title}</h1>
+                        <p class="mod-desc">${mod.description}</p>
+                        
+                        <div class="ad-container"><script src="/320-50.js"><\/script></div>
+
+                        <div style="margin: 35px 0;">
+                            <a href="${mod.downloadLink}" class="download-btn" target="_blank">تحميل الملف الآن</a>
+                        </div>
+
+                        <div class="ad-container"><script src="/320-50.js"><\/script></div>
+
+                        <div class="ad-container"><script src="/320-50.js"><\/script></div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error("Error loading download link:", error);
+                container.innerHTML = '<p style="text-align:center; color:#ffde00;">حدث خطأ أثناء تحميل بيانات الملف.</p>';
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', loadDownloadPage);
+    </script>
 </body>
 </html>

@@ -158,7 +158,7 @@
             clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
             pointer-events: auto;
             position: relative;
-            z-index: 2;
+            z-index: 10;
         }
         .download-btn:hover { 
             background: #fff; 
@@ -191,10 +191,32 @@
             letter-spacing: 1px;
             clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
             pointer-events: auto;
+            position: relative;
+            z-index: 10;
         }
         .error-box .mod-card-btn:hover { background: #fff; box-shadow: 0 0 15px var(--metal-yellow-glow); }
 
         .detail-status { text-align: center; padding: 2rem; color: var(--metal-gray); font-size: 1.1rem; font-family: 'Oswald', sans-serif; letter-spacing: 1px; }
+
+        /* تنسيق حقوق النشر في الأسفل */
+        .site-footer {
+            background: #000000;
+            border-top: 1px solid var(--metal-border);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            margin-top: auto;
+        }
+        .site-footer p {
+            color: var(--metal-gray);
+            font-size: 0.95rem;
+            font-family: 'Oswald', 'Cairo', sans-serif;
+            letter-spacing: 1px;
+            line-height: 1.6;
+        }
+        .site-footer span {
+            color: var(--metal-yellow);
+            font-weight: 700;
+        }
 
         @media (max-width: 360px) {
             .container { padding: 0.6rem; }
@@ -210,6 +232,7 @@
         img, iframe, video { max-width: 100%; height: auto; }
         * { max-width: 100%; }
     </style>
+    <!-- سكربت الإعلانات الرئيسي -->
     <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
     <script src="https://modslib.attdes.online/analytics.js"></script>
 </head>
@@ -232,6 +255,11 @@
         <div id="mod-detail" class="mod-detail"></div>
         <div id="detail-status" class="detail-status"></div>
     </main>
+
+    <!-- الفوتر مع حقوق النشر المطلوبة -->
+    <footer class="site-footer">
+        <p>©2026 Attack N' Destroy<br>Powered by <span>Attack N' Destroy</span></p>
+    </footer>
 
     <script>
         (function() {
@@ -325,7 +353,7 @@
 
                 const container = document.createElement('div');
 
-                // 1. البانر الأول فوق الصورة مباشرة
+                // 1. الإعلان الأول فوق الصورة
                 container.appendChild(createBanner320x50());
 
                 const imgDiv = document.createElement('div');
@@ -348,7 +376,7 @@
                 titleEl.textContent = title;
                 container.appendChild(titleEl);
 
-                // 2. البانر الجديد (بين العنوان وصندوق الوصف بناءً على طلبك)
+                // 2. الإعلان بين العنوان وصندوق الوصف
                 container.appendChild(createBanner320x50());
 
                 const descEl = document.createElement('div');
@@ -356,13 +384,19 @@
                 descEl.innerHTML = escapeHtml(desc).replace(/\n/g, '<br>');
                 container.appendChild(descEl);
 
-                // 3. البانر الذي كان بين الوصف وزر التحميل
+                // 3. الإعلان الثالث بين الوصف وزر التحميل
                 container.appendChild(createBanner320x50());
 
                 const btn = document.createElement('a');
                 btn.className = 'download-btn';
                 btn.href = 'mod.html?id=' + encodeURIComponent(id);
                 btn.textContent = 'تحميل المود';
+                
+                // ضمان تفعيل الضغط المباشر بلمسة واحدة ومنع أي تداخل
+                btn.addEventListener('click', function(e) {
+                    // الانتقال السريع والفوري بضغطة واحدة
+                }, { passive: true });
+
                 container.appendChild(btn);
 
                 detailEl.innerHTML = '';

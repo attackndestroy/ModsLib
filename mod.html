@@ -1,212 +1,118 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>تحميل المود – Attack N' Destroy</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: #0a0a0a;
-            color: #eee;
-            font-family: 'Cairo', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        a { text-decoration: none; color: inherit; }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px;
-            flex: 1;
-            width: 100%;
-        }
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: 
-                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,222,0,0.02) 20px, rgba(255,222,0,0.02) 21px),
-                radial-gradient(circle at 30% 40%, #1a1a1a, #0a0a0a 80%);
-            pointer-events: none;
-            z-index: -1;
-        }
-        .header-img {
-            width: 100%;
-            max-height: 600px;
-            object-fit: cover;
-            display: block;
-            border-bottom: 2px solid #ffde00;
-        }
-        .ad-under-header {
-            text-align: center;
-            padding: 10px 0;
-            background: #141414;
-            border-bottom: 1px solid #333;
-        }
-        .download-card {
-            background: #141414;
-            border: 1px solid #333;
-            padding: 30px;
-            margin: 30px 0;
-            clip-path: polygon(0% 0%, 98% 0%, 100% 5%, 100% 100%, 2% 100%, 0% 95%);
-        }
-        .download-card h1 {
-            font-family: 'Oswald', sans-serif;
-            font-size: 2rem;
-            color: #ffde00;
-            margin-bottom: 15px;
-        }
-        .download-card p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #ccc;
-            margin-bottom: 30px;
-        }
-        .btn-download-final {
-            display: inline-block;
-            background: #ffde00;
-            color: #0a0a0a;
-            padding: 14px 40px;
-            font-family: 'Oswald', sans-serif;
-            font-weight: 700;
-            font-size: 1.5rem;
-            clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
-            transition: 0.3s;
-            border: none;
-            cursor: pointer;
-            text-align: center;
-        }
-        .btn-download-final:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 40px rgba(255,222,0,0.5);
-        }
-
-        .ad-incontent {
-            text-align: center;
-            padding: 15px 0;
-            margin: 20px 0;
-            background: #0f0f0f;
-            border: 1px solid #2a2a2a;
-        }
-        .ad-incontent iframe {
-            border: none;
-            max-width: 320px;
-            width: 100%;
-            height: 50px;
-            display: inline-block;
-        }
-
-        footer {
-            background: #0a0a0a;
-            border-top: 2px solid #ffde00;
-            padding: 25px 20px;
-            text-align: center;
-            font-family: 'Cairo', sans-serif;
-            font-size: 1rem;
-            color: #aaa;
-            margin-top: 30px;
-        }
-        footer .highlight {
-            color: #ffde00;
-            font-weight: 700;
-            font-family: 'Oswald', sans-serif;
-        }
-
-        @media (max-width: 600px) {
-            .download-card { padding: 15px; }
-            .download-card h1 { font-size: 1.5rem; }
-            .btn-download-final { font-size: 1.2rem; padding: 12px 25px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>تحميل المود — ModsLib</title>
+<link rel="icon" href="/fav.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-    <!-- ===== الهيدر ===== -->
-    <header>
-        <img src="/header.png" alt="Attack N' Destroy" class="header-img" />
-    </header>
+<div id="header-mount"></div>
 
-    <!-- ===== إعلان تحت الهيدر ===== -->
-    <div class="ad-under-header">
-        <script async="async" data-cfasync="false" src="https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js"></script>
-        <div id="container-2d6b46676c10234a8731ba94f0111059"></div>
-    </div>
+<main class="container">
+  <div id="page-body">
+    <div class="state-message"><div class="spinner"></div></div>
+  </div>
+</main>
 
-    <!-- ===== المحتوى ===== -->
-    <main class="container">
-        <div id="downloadContainer">
-            <!-- سيتم تعبئته بواسطة JS -->
+<div id="footer-mount"></div>
+
+<script src="/stats.js"></script>
+<script src="/common.js"></script>
+<script>
+(function () {
+  const pageBody = document.getElementById('page-body');
+
+  ModsLib.renderHeader('#header-mount');
+  ModsLib.renderFooter('#footer-mount');
+  ModsLib.ensureFavicon();
+  ModsLib.injectGlobalAdScripts();
+
+  function renderNotFound() {
+    pageBody.innerHTML = `
+      <div class="error-page">
+        <p class="error-page__code">404</p>
+        <p class="error-page__msg">المود غير موجود</p>
+        <a class="btn" href="/index.html">العودة إلى الصفحة الرئيسية</a>
+      </div>
+    `;
+  }
+
+  function renderDownload(mod) {
+    const title = ModsLib.escapeHtml(mod.title || 'بدون عنوان');
+    const desc = ModsLib.escapeHtml(mod.description || '');
+
+    pageBody.innerHTML = `
+      <div id="ad-slot-1"></div>
+      <section class="download-panel">
+        <p class="detail-card__eyebrow">صفحة التحميل</p>
+        <h1 class="download-panel__title">${title}</h1>
+        <p class="download-panel__desc">${desc}</p>
+        <div id="ad-slot-2"></div>
+        <button type="button" class="btn" id="download-btn">تحميل الملف</button>
+        <p id="download-error" class="error-page__msg" style="display:none; margin-top:18px; font-size:14px;"></p>
+      </section>
+      <div id="ad-slot-3"></div>
+    `;
+
+    document.getElementById('ad-slot-1').appendChild(ModsLib.makeAdSlotWrap());
+    document.getElementById('ad-slot-2').appendChild(ModsLib.makeAdSlotWrap());
+    document.getElementById('ad-slot-3').appendChild(ModsLib.makeAdSlotWrap());
+
+    const btn = document.getElementById('download-btn');
+    const errEl = document.getElementById('download-error');
+
+    btn.addEventListener('click', () => {
+      const url = ModsLib.resolveDownloadUrl(mod);
+      if (!url) {
+        errEl.textContent = 'تعذر فك رابط التحميل أو أنه غير صالح.';
+        errEl.style.display = 'block';
+        return;
+      }
+      errEl.style.display = 'none';
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }, { once: false });
+  }
+
+  async function init() {
+    const id = ModsLib.getValidId();
+    if (id === null) {
+      renderNotFound();
+      return;
+    }
+
+    // الحماية: يجب المرور بصفحة tomod.html لنفس الـ ID أولاً
+    if (!ModsLib.isAllowed(id)) {
+      window.location.replace(ModsLib.modUrl(id));
+      return;
+    }
+
+    try {
+      const mods = await ModsLib.fetchMods();
+      const mod = mods.find(m => Number(m.id) === id);
+      if (!mod) {
+        renderNotFound();
+        return;
+      }
+      renderDownload(mod);
+    } catch (err) {
+      pageBody.innerHTML = `
+        <div class="error-page">
+          <p class="error-page__msg">${ModsLib.escapeHtml(err.message || 'حدث خطأ غير متوقع.')}</p>
+          <a class="btn" href="/index.html">العودة إلى الصفحة الرئيسية</a>
         </div>
+      `;
+    }
+  }
 
-        <!-- إعلانات عامة -->
-        <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
-        <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
-    </main>
-
-    <!-- ===== الفوتر ===== -->
-    <footer>
-        <div>Copyright: <span class="highlight">ATTACK N' DESTROY</span></div>
-        <div>Powered By: <span class="highlight">ATTACK N' DESTROY</span></div>
-    </footer>
-
-    <script src="/stats.js"></script>
-
-    <script>
-        (function() {
-            const container = document.getElementById('downloadContainer');
-            const params = new URLSearchParams(window.location.search);
-            const id = params.get('id');
-
-            if (!id) {
-                container.innerHTML = `<p style="color:#ff4444; padding:30px;">⚠️ لم يتم تحديد المود.</p>`;
-                return;
-            }
-
-            async function loadDownload() {
-                try {
-                    const res = await fetch('/mods.json');
-                    if (!res.ok) throw new Error('فشل التحميل');
-                    const data = await res.json();
-                    const post = data.find(p => p.id == id);
-
-                    if (!post) {
-                        container.innerHTML = `<p style="color:#ffaa00; padding:30px;">❌ المود غير موجود.</p>`;
-                        return;
-                    }
-
-                    // رابط التحميل النهائي – نفترض أن الحقل اسمه "download" أو "downloadUrl"
-                    const downloadLink = post.download || post.downloadUrl || '#';
-
-                    let html = `
-                        <div class="download-card">
-                            <h1>${post.title}</h1>
-                            <p>${post.description || 'لا يوجد وصف.'}</p>
-                            <a href="${downloadLink}" class="btn-download-final" target="_blank">تحميل المود</a>
-                        </div>
-                    `;
-
-                    // 3 إعلانات 320×50 داخل المحتوى (وليس في الفوتر)
-                    for (let i = 0; i < 3; i++) {
-                        html += `
-                            <div class="ad-incontent">
-                                <iframe src="/320-50.js" style="width:100%; max-width:320px; height:50px; display:inline-block;"></iframe>
-                            </div>
-                        `;
-                    }
-
-                    container.innerHTML = html;
-
-                } catch (err) {
-                    container.innerHTML = `<p style="color:#ff4444; padding:30px;">⚠️ خطأ: ${err.message}</p>`;
-                }
-            }
-
-            loadDownload();
-        })();
-    </script>
+  init();
+})();
+</script>
 
 </body>
 </html>

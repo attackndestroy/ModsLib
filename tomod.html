@@ -35,7 +35,7 @@
             display: flex; flex-direction: column;
         }
 
-        a { color: var(--metal-yellow); text-decoration: none; transition: 0.2s; }
+        a { color: var(--metal-yellow); text-decoration: none; transition: 0.2s; pointer-events: auto; }
         a:hover { text-shadow: 0 0 10px var(--metal-yellow-glow); }
         :focus-visible { outline: 2px solid var(--metal-yellow); outline-offset: 2px; }
 
@@ -67,9 +67,8 @@
         .native-banner-wrapper, .social-bar-wrapper { text-align: center; margin: 1rem 0; overflow: hidden; }
         .native-banner-wrapper iframe, .social-bar-wrapper iframe { max-width: 100%; }
 
-        /* تنسيق حاوية البانر لضبط المقاس تلقائياً بدون فراغات */
         .tomod-banner {
-            margin: 1.5rem 0;
+            margin: 1.2rem 0;
             text-align: center;
             display: flex;
             justify-content: center;
@@ -121,7 +120,7 @@
             font-size: 2.2rem; 
             font-weight: 900; 
             color: #fff;
-            margin: 0.5rem 0 1.2rem; 
+            margin: 0.5rem 0 0.8rem; 
             text-align: center; 
             line-height: 1.3;
             font-family: 'Oswald', 'Cairo', sans-serif;
@@ -157,6 +156,9 @@
             letter-spacing: 1.5px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);
+            pointer-events: auto;
+            position: relative;
+            z-index: 2;
         }
         .download-btn:hover { 
             background: #fff; 
@@ -188,6 +190,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             clip-path: polygon(8% 0, 100% 0, 92% 100%, 0% 100%);
+            pointer-events: auto;
         }
         .error-box .mod-card-btn:hover { background: #fff; box-shadow: 0 0 15px var(--metal-yellow-glow); }
 
@@ -322,7 +325,7 @@
 
                 const container = document.createElement('div');
 
-                // إضافة البانر الأول فوق الصورة مباشرة
+                // 1. البانر الأول فوق الصورة مباشرة
                 container.appendChild(createBanner320x50());
 
                 const imgDiv = document.createElement('div');
@@ -345,12 +348,15 @@
                 titleEl.textContent = title;
                 container.appendChild(titleEl);
 
+                // 2. البانر الجديد (بين العنوان وصندوق الوصف بناءً على طلبك)
+                container.appendChild(createBanner320x50());
+
                 const descEl = document.createElement('div');
                 descEl.className = 'mod-detail-description';
                 descEl.innerHTML = escapeHtml(desc).replace(/\n/g, '<br>');
                 container.appendChild(descEl);
 
-                // إضافة البانر الثاني بين الوصف وزر التحميل
+                // 3. البانر الذي كان بين الوصف وزر التحميل
                 container.appendChild(createBanner320x50());
 
                 const btn = document.createElement('a');

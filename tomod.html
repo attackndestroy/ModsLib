@@ -1,225 +1,324 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تفاصيل المود - ATTACK N' DESTROY</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-dark: #0a0a0a;
-            --card-dark: #141414;
-            --accent-yellow: #ffde00;
-            --text-main: #ffffff;
-            --text-muted: #aaaaaa;
-            --border-color: #262626;
-        }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'Cairo', sans-serif;
-            overflow-x: hidden;
-            background-image: repeating-linear-gradient(45deg, rgba(255, 222, 0, 0.01) 0, rgba(255, 222, 0, 0.01) 1px, transparent 0, transparent 50px);
-        }
-        h1, h2, h3, .oswald-font {
-            font-family: 'Oswald', sans-serif;
-            letter-spacing: 1px;
-        }
-        .main-header {
-            width: 100%;
-            max-height: 400px;
-            overflow: hidden;
-            border-bottom: 3px solid var(--accent-yellow);
-        }
-        .main-header img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            display: block;
-        }
-        .ad-container {
-            width: 100%;
-            text-align: center;
-            margin: 20px 0;
-            padding: 10px;
-            background: var(--card-dark);
-            border: 1px dashed var(--border-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-        .details-container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        .mod-details-card {
-            background: var(--card-dark);
-            border: 1px solid var(--border-color);
-            padding: 30px;
-        }
-        .mod-img {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            object-fit: cover;
-            border: 1px solid var(--border-color);
-            margin-bottom: 25px;
-        }
-        .mod-title {
-            font-size: 32px;
-            color: var(--accent-yellow);
-            margin-bottom: 20px;
-        }
-        .mod-desc {
-            font-size: 18px;
-            color: var(--text-muted);
-            line-height: 1.8;
-            margin-bottom: 30px;
-        }
-        .action-btn {
-            background: var(--accent-yellow);
-            color: var(--bg-dark);
-            border: none;
-            padding: 15px 40px;
-            font-family: 'Oswald', sans-serif;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: 0.3s;
-            position: relative;
-            z-index: 10;
-        }
-        .action-btn:hover {
-            opacity: 0.9;
-            box-shadow: 0 0 20px rgba(255, 222, 0, 0.6);
-        }
-        footer {
-            background: #050505;
-            border-top: 2px solid var(--border-color);
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 50px;
-        }
-        footer p {
-            color: var(--text-muted);
-            margin: 5px 0;
-            font-size: 15px;
-        }
-        .highlight-brand {
-            color: var(--accent-yellow);
-            font-weight: bold;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>تفاصيل الـ Mod - ATTACK N' DESTROY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --card:#141414;
+    --yellow:#ffde00;
+    --text:#e9e9e9;
+    --muted:#9a9a9a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{overflow-x:hidden;max-width:100%;}
+  body{
+    background-color:var(--bg);
+    color:var(--text);
+    font-family:'Cairo', sans-serif;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(255,222,0,0.02) 0px, rgba(255,222,0,0.02) 2px, transparent 2px, transparent 40px),
+      radial-gradient(circle at 15% 10%, rgba(255,222,0,0.06), transparent 40%),
+      radial-gradient(circle at 85% 90%, rgba(255,222,0,0.05), transparent 45%);
+    min-height:100vh;
+  }
+  h1,h2,h3,button,.btn{font-family:'Oswald', sans-serif;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+
+  header.site-header{
+    width:100%;
+    background:#000;
+    border-bottom:2px solid var(--yellow);
+  }
+  header.site-header img{
+    width:100%;
+    height:auto;
+    aspect-ratio:1600/600;
+    object-fit:cover;
+    display:block;
+  }
+
+  .container{
+    width:100%;
+    max-width:800px;
+    margin:0 auto;
+    padding:16px;
+  }
+
+  .ad-320-wrap{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    margin:18px 0;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .ad-320-wrap iframe{
+    max-width:320px;
+    width:100%;
+    border:0;
+    display:block;
+    pointer-events: none !important;
+    touch-action: none;
+  }
+
+  .mod-card{
+    background:var(--card);
+    border:1px solid #232323;
+    overflow:hidden;
+    margin:18px 0;
+  }
+  .mod-card .img-wrap{
+    width:100%;
+    aspect-ratio:16/9;
+    background:#000;
+    overflow:hidden;
+  }
+  .mod-card .img-wrap img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .mod-card .mod-body{
+    padding:22px;
+    text-align:center;
+  }
+  .mod-card h1{
+    font-size:24px;
+    font-weight:700;
+    color:#fff;
+    margin-bottom:16px;
+    line-height:1.4;
+    word-break:break-word;
+  }
+  .mod-card .desc{
+    font-size:16px;
+    color:var(--text);
+    line-height:1.9;
+    margin-bottom:22px;
+    text-align:right;
+    white-space:pre-wrap;
+    word-break:break-word;
+  }
+  .mod-card .desc:empty{display:none;}
+
+  .btn{
+    display:inline-block;
+    background:var(--card);
+    color:var(--yellow);
+    border:1px solid var(--yellow);
+    padding:14px 26px;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:.5px;
+    cursor:pointer;
+    text-align:center;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    transition: background .2s ease, color .2s ease, box-shadow .2s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* === إصلاح مشكلة الضغطتين === */
+  @media (hover: hover) {
+    .btn:hover {
+      background:var(--yellow);
+      color:#0a0a0a;
+      box-shadow:0 0 16px rgba(255,222,0,0.55);
+      transform:translateY(-1px);
+    }
+  }
+  .btn:active {
+    background:var(--yellow);
+    color:#0a0a0a;
+    box-shadow:0 0 20px rgba(255,222,0,0.7);
+    transform: none !important;
+  }
+  /* =========================== */
+
+  #errorBox{
+    display:none;
+    text-align:center;
+    padding:40px 16px;
+    color:var(--muted);
+    font-size:16px;
+  }
+
+  footer{
+    text-align:center;
+    padding:26px 16px 34px;
+    color:var(--muted);
+    font-size:14px;
+    border-top:1px solid #1e1e1e;
+    margin-top:20px;
+  }
+  footer .accent{color:#ffde00;font-weight:700;}
+  footer p{margin:4px 0;}
+
+  @media (min-width:600px){
+    .mod-card h1{font-size:28px;}
+  }
+</style>
 </head>
 <body>
 
-    <!-- إعلانات تحت الهيدر مباشرة -->
-    <script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
-    <script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
+<header class="site-header">
+  <img src="/header.png" alt="ATTACK N' DESTROY">
+</header>
 
-    <header class="main-header">
-        <img src="header.png" alt="ATTACK N' DESTROY Header" onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1600&q=80'">
-    </header>
+<div class="container">
 
-    <div class="details-container" id="detailsWrapper"></div>
+  <div class="ad-320-wrap" id="ad1"></div>
 
-    <footer>
-        <p>Copyright: <span class="highlight-brand">ATTACK N' DESTROY</span></p>
-        <p>Powered By: <span class="highlight-brand">ATTACK N' DESTROY</span></p>
-    </footer>
+  <div id="modContent"></div>
 
-    <script src="stats.js"></script>
+  <div id="ad2mid" class="ad-320-wrap" style="display:none;"></div>
 
-    <script>
-        async function loadModDetails() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const modId = parseInt(urlParams.get('id'));
-            const container = document.getElementById('detailsWrapper');
+  <div id="errorBox">لم يتم العثور على المنشور المطلوب.</div>
 
-            if (!modId) {
-                container.innerHTML = '<p style="text-align:center; color:#ffde00; font-size:20px;">معرّف المود غير موجود!</p>';
-                return;
-            }
+  <div class="ad-320-wrap" id="ad3"></div>
 
-            try {
-                const response = await fetch('mods.json');
-                const data = await response.json();
-                const mod = data.find(m => m.id === modId);
+</div>
 
-                if (!mod) {
-                    container.innerHTML = '<p style="text-align:center; color:#ffde00; font-size:20px;">عذراً، هذا المود غير متوفر حالياً.</p>';
-                    return;
-                }
+<footer>
+  <p>Copyright: <span class="accent">ATTACK N' DESROY</span></p>
+  <p>Powered By: <span class="accent">ATTACK N' DESTROY</span></p>
+</footer>
 
-                container.innerHTML = `
-                    <div class="mod-details-card">
-                        <img src="${mod.image}" alt="${mod.title}" class="mod-img">
-                        <h1 class="mod-title">${mod.title}</h1>
-                        <p class="mod-desc">${mod.description}</p>
-                        
-                        <!-- إعلان محتوى 1 (320x50) -->
-                        <div class="ad-container">
-                            <script>
-                              atOptions = {
-                                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
-                                'format' : 'iframe',
-                                'height' : 50,
-                                'width' : 320,
-                                'params' : {}
-                              };
-                            <\/script>
-                            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"><\/script>
-                        </div>
+<script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
+<script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
+<script src="/stats.js"></script>
 
-                        <div style="margin: 30px 0; text-align: center;">
-                            <a href="mod.html?id=${mod.id}" class="action-btn">إنتقال لصفحة التحميل</a>
-                        </div>
+<script>
+(function(){
+  "use strict";
 
-                        <!-- إعلان محتوى 2 (320x50) -->
-                        <div class="ad-container">
-                            <script>
-                              atOptions = {
-                                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
-                                'format' : 'iframe',
-                                'height' : 50,
-                                'width' : 320,
-                                'params' : {}
-                              };
-                            <\/script>
-                            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"><\/script>
-                        </div>
+  function injectDynamicAd(container){
+    var iframe = document.createElement('iframe');
+    iframe.style.width = '100%';
+    iframe.style.maxWidth = '320px';
+    iframe.style.height = '50px';
+    iframe.style.border = '0';
+    iframe.style.overflow = 'hidden';
+    iframe.style.pointerEvents = 'none'; // منع التقاط النقر
+    iframe.setAttribute('scrolling', 'no');
+    container.appendChild(iframe);
+    try{
+      var doc = iframe.contentWindow.document;
+      doc.open();
+      doc.write('<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;background:transparent;overflow:hidden;}</style></head><body><script src="/320-50.js"><\/script></body></html>');
+      doc.close();
+      var resize = function(){
+        try{
+          var h = doc.body.scrollHeight;
+          if (h && h > 10){ iframe.style.height = h + 'px'; }
+        }catch(e){}
+      };
+      iframe.onload = resize;
+      setTimeout(resize, 700);
+      setTimeout(resize, 1600);
+      setTimeout(resize, 3000);
+    }catch(e){}
+  }
 
-                        <!-- إعلان محتوى 3 (320x50) -->
-                        <div class="ad-container">
-                            <script>
-                              atOptions = {
-                                'key' : '28d1f1f838ea883f1f7fc0d4733ebba6',
-                                'format' : 'iframe',
-                                'height' : 50,
-                                'width' : 320,
-                                'params' : {}
-                              };
-                            <\/script>
-                            <script src="https://www.highrevenueformat.com/28d1f1f838ea883f1f7fc0d4733ebba6/invoke.js"><\/script>
-                        </div>
-                    </div>
-                `;
-            } catch (error) {
-                console.error("Error loading mod details:", error);
-                container.innerHTML = '<p style="text-align:center; color:#ffde00;">حدث خطأ أثناء تحميل البيانات.</p>';
-            }
+  function getIdFromUrl(){
+    var params = new URLSearchParams(window.location.search);
+    var id = params.get('id');
+    if (id === null) return null;
+    var n = Number(id);
+    return isNaN(n) ? id : n;
+  }
+
+  function showError(){
+    document.getElementById('errorBox').style.display = 'block';
+    document.getElementById('modContent').style.display = 'none';
+    document.getElementById('ad2mid').style.display = 'none';
+  }
+
+  function render(post){
+    var wrap = document.getElementById('modContent');
+    var card = document.createElement('div');
+    card.className = 'mod-card';
+
+    var imgWrap = document.createElement('div');
+    imgWrap.className = 'img-wrap';
+    if (post.image){
+      var img = document.createElement('img');
+      img.src = post.image;
+      img.alt = post.title || '';
+      imgWrap.appendChild(img);
+    }
+    card.appendChild(imgWrap);
+
+    var body = document.createElement('div');
+    body.className = 'mod-body';
+
+    var h1 = document.createElement('h1');
+    h1.textContent = post.title || '';
+    body.appendChild(h1);
+
+    var desc = document.createElement('div');
+    desc.className = 'desc';
+    desc.textContent = post.description || '';
+    body.appendChild(desc);
+
+    var btn = document.createElement('a');
+    btn.className = 'btn';
+    btn.href = '/mod.html?id=' + encodeURIComponent(post.id);
+    btn.textContent = 'انتقال لصفحة التحميل';
+
+    // منع انتشار الأحداث (إجراء احتياطي)
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+    btn.addEventListener('touchstart', function(e) {
+      e.stopPropagation();
+    }, { passive: true });
+
+    body.appendChild(btn);
+    card.appendChild(body);
+    wrap.appendChild(card);
+
+    var ad2 = document.getElementById('ad2mid');
+    ad2.style.display = 'flex';
+    injectDynamicAd(ad2);
+  }
+
+  var id = getIdFromUrl();
+  if (id === null){
+    showError();
+  } else {
+    fetch('/mods.json')
+      .then(function(res){ return res.json(); })
+      .then(function(data){
+        var list = Array.isArray(data) ? data : [];
+        var post = list.find(function(p){ return String(p.id) === String(id); });
+        if (!post){
+          showError();
+        } else {
+          render(post);
         }
+      })
+      .catch(function(){
+        showError();
+      });
+  }
 
-        window.addEventListener('DOMContentLoaded', loadModDetails);
-    </script>
+  injectDynamicAd(document.getElementById('ad1'));
+  injectDynamicAd(document.getElementById('ad3'));
+
+})();
+</script>
+
 </body>
 </html>

@@ -14,6 +14,13 @@
     --yellow:#ffde00;
     --text:#e9e9e9;
     --muted:#9a9a9a;
+    --btn-bg: rgba(255,255,255,0.03);
+    --btn-border: #3a3a3a;
+    --btn-text: #ffde00;
+    --btn-active-bg: #ffde00;
+    --btn-active-border: #ffde00;
+    --btn-active-text: #0a0a0a;
+    --btn-radius: 8px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html,body{overflow-x:hidden;max-width:100%;}
@@ -55,7 +62,7 @@
     width:100%;
     display:flex;
     justify-content:center;
-    margin:18px 0;
+    margin:12px 0;
     pointer-events: none;
     user-select: none;
     -webkit-user-select: none;
@@ -110,41 +117,39 @@
   }
   .mod-card .desc:empty{display:none;}
 
+  /* ===== الأزرار بدون أي hover ===== */
   .btn{
     display:inline-block;
-    background:var(--card);
-    color:var(--yellow);
-    border:1px solid var(--yellow);
+    background:var(--btn-bg);
+    color:var(--btn-text);
+    border:1px solid var(--btn-border);
     padding:14px 26px;
     font-weight:600;
     font-size:15px;
     letter-spacing:.5px;
     cursor:pointer;
     text-align:center;
-    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-    transition: background .2s ease, color .2s ease, box-shadow .2s ease;
+    border-radius:var(--btn-radius);
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
-    position: relative;
-    z-index: 10;
+    position:relative;
+    z-index:10;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    min-width:200px;
   }
 
-  /* === إصلاح مشكلة الضغطتين === */
-  @media (hover: hover) {
-    .btn:hover {
-      background:var(--yellow);
-      color:#0a0a0a;
-      box-shadow:0 0 16px rgba(255,222,0,0.55);
-      transform:translateY(-1px);
-    }
-  }
+  /* تأثير الضغط فقط (للكل) */
   .btn:active {
-    background:var(--yellow);
-    color:#0a0a0a;
-    box-shadow:0 0 20px rgba(255,222,0,0.7);
-    transform: none !important;
+    background:var(--btn-active-bg);
+    border-color:var(--btn-active-border);
+    color:var(--btn-active-text);
+    box-shadow:0 2px 8px rgba(255,222,0,0.5);
+    transform:scale(0.96);
   }
-  /* =========================== */
+
+  /* ====================================================== */
 
   #errorBox{
     display:none;
@@ -168,6 +173,14 @@
   @media (min-width:600px){
     .mod-card h1{font-size:28px;}
   }
+
+  @media (max-width:480px){
+    .btn{
+      padding:12px 18px;
+      font-size:14px;
+      min-width:160px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -178,15 +191,18 @@
 
 <div class="container">
 
-  <div class="ad-320-wrap" id="ad1"></div>
+  <!-- إعلان علوي -->
+  <div class="ad-320-wrap" id="adTop"></div>
 
   <div id="modContent"></div>
 
-  <div id="ad2mid" class="ad-320-wrap" style="display:none;"></div>
+  <!-- الإعلان الأوسط (سيظهر داخل البطاقة بعد الصورة) -->
+  <div class="ad-320-wrap" id="adMid" style="display:none;"></div>
 
   <div id="errorBox">لم يتم العثور على المنشور المطلوب.</div>
 
-  <div class="ad-320-wrap" id="ad3"></div>
+  <!-- إعلان سفلي -->
+  <div class="ad-320-wrap" id="adBottom"></div>
 
 </div>
 
@@ -210,7 +226,7 @@
     iframe.style.height = '50px';
     iframe.style.border = '0';
     iframe.style.overflow = 'hidden';
-    iframe.style.pointerEvents = 'none'; // منع التقاط النقر
+    iframe.style.pointerEvents = 'none';
     iframe.setAttribute('scrolling', 'no');
     container.appendChild(iframe);
     try{
@@ -242,7 +258,7 @@
   function showError(){
     document.getElementById('errorBox').style.display = 'block';
     document.getElementById('modContent').style.display = 'none';
-    document.getElementById('ad2mid').style.display = 'none';
+    document.getElementById('adMid').style.display = 'none';
   }
 
   function render(post){
@@ -250,6 +266,7 @@
     var card = document.createElement('div');
     card.className = 'mod-card';
 
+    // 1. الصورة
     var imgWrap = document.createElement('div');
     imgWrap.className = 'img-wrap';
     if (post.image){
@@ -260,6 +277,14 @@
     }
     card.appendChild(imgWrap);
 
+    // 2. الإعلان تحت الصورة (يظهر هنا)
+    var adUnderImg = document.createElement('div');
+    adUnderImg.className = 'ad-320-wrap';
+    adUnderImg.id = 'adUnderImage';
+    card.appendChild(adUnderImg);
+    // سيتم حقن الإعلان فيه لاحقاً
+
+    // 3. باقي المحتوى
     var body = document.createElement('div');
     body.className = 'mod-body';
 
@@ -272,27 +297,44 @@
     desc.textContent = post.description || '';
     body.appendChild(desc);
 
+    // 4. الإعلان فوق الزر
+    var adAboveBtn = document.createElement('div');
+    adAboveBtn.className = 'ad-320-wrap';
+    adAboveBtn.id = 'adAboveButton';
+    body.appendChild(adAboveBtn);
+
+    // 5. الزر
     var btn = document.createElement('a');
     btn.className = 'btn';
     btn.href = '/mod.html?id=' + encodeURIComponent(post.id);
     btn.textContent = 'انتقال لصفحة التحميل';
-
-    // منع انتشار الأحداث (إجراء احتياطي)
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-    });
-    btn.addEventListener('touchstart', function(e) {
-      e.stopPropagation();
-    }, { passive: true });
-
+    btn.addEventListener('click', function(e) { e.stopPropagation(); });
+    btn.addEventListener('touchstart', function(e) { e.stopPropagation(); }, { passive: true });
     body.appendChild(btn);
+
+    // 6. الإعلان تحت الزر
+    var adBelowBtn = document.createElement('div');
+    adBelowBtn.className = 'ad-320-wrap';
+    adBelowBtn.id = 'adBelowButton';
+    body.appendChild(adBelowBtn);
+
     card.appendChild(body);
     wrap.appendChild(card);
 
-    var ad2 = document.getElementById('ad2mid');
-    ad2.style.display = 'flex';
-    injectDynamicAd(ad2);
+    // 7. حقن الإعلانات في الأماكن الثلاثة الجديدة
+    injectDynamicAd(document.getElementById('adUnderImage'));
+    injectDynamicAd(document.getElementById('adAboveButton'));
+    injectDynamicAd(document.getElementById('adBelowButton'));
+
+    // 8. إظهار الإعلان الأوسط (الذي كان مخفياً) – سنضعه كإعلان إضافي اختياري بين البطاقات
+    var adMid = document.getElementById('adMid');
+    adMid.style.display = 'flex';
+    injectDynamicAd(adMid);
   }
+
+  // === تشغيل الإعلانات العلوية والسفلية ===
+  injectDynamicAd(document.getElementById('adTop'));
+  injectDynamicAd(document.getElementById('adBottom'));
 
   var id = getIdFromUrl();
   if (id === null){
@@ -313,9 +355,6 @@
         showError();
       });
   }
-
-  injectDynamicAd(document.getElementById('ad1'));
-  injectDynamicAd(document.getElementById('ad3'));
 
 })();
 </script>

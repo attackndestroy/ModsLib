@@ -14,6 +14,17 @@
     --yellow:#ffde00;
     --text:#e9e9e9;
     --muted:#9a9a9a;
+    --btn-bg: transparent;
+    --btn-border: #3a3a3a;
+    --btn-text: #e9e9e9;
+    --btn-hover-bg: #ffde00;
+    --btn-hover-border: #ffde00;
+    --btn-hover-text: #0a0a0a;
+    --btn-active-bg: #e6c800;
+    --btn-active-border: #e6c800;
+    --btn-active-text: #0a0a0a;
+    --btn-radius: 8px;
+    --btn-transition: all 0.25s ease;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html,body{overflow-x:hidden;max-width:100%;}
@@ -69,7 +80,7 @@
   .controls-bar{
     display:flex;
     flex-wrap:wrap;
-    gap:10px;
+    gap:12px;
     align-items:center;
     margin-bottom:18px;
   }
@@ -82,61 +93,120 @@
     background:var(--card);
     border:1px solid #2a2a2a;
     color:var(--text);
-    padding:12px 14px;
+    padding:12px 16px;
     font-family:'Cairo', sans-serif;
     font-size:15px;
-    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    border-radius:var(--btn-radius);
     outline:none;
     transition:border-color .2s, box-shadow .2s;
   }
   .search-box input:focus{
     border-color:var(--yellow);
-    box-shadow:0 0 10px rgba(255,222,0,0.25);
+    box-shadow:0 0 10px rgba(255,222,0,0.15);
   }
 
+  /* ===== الأزرار الجديدة البسيطة والاحترافية ===== */
   .btn{
-    background:var(--card);
-    color:var(--yellow);
-    border:1px solid var(--yellow);
-    padding:12px 20px;
+    display:inline-block;
+    background:var(--btn-bg);
+    color:var(--btn-text);
+    border:1px solid var(--btn-border);
+    padding:10px 22px;
     font-weight:600;
     font-size:14px;
-    letter-spacing:.5px;
+    letter-spacing:.3px;
     cursor:pointer;
     text-align:center;
-    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
-    transition: background .2s ease, color .2s ease, box-shadow .2s ease; /* إزالة transform من الانتقال */
+    border-radius:var(--btn-radius);
+    transition:var(--btn-transition);
     -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation; /* تحسين اللمس */
-    position: relative;
-    z-index: 10;
+    touch-action: manipulation;
+    position:relative;
+    z-index:10;
+    background-color: rgba(255,255,255,0.03);
+    backdrop-filter: blur(2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    min-width:100px;
   }
 
-  /* ===== إصلاح مشكلة الضغطتين: فصل تأثير الماوس عن اللمس ===== */
-  /* 1. تأثيرات الـ Hover والـ Active للماوس فقط (أجهزة الكمبيوتر) */
+  /* تأثير hover (للماوس فقط) */
   @media (hover: hover) {
     .btn:hover {
-      background:var(--yellow);
-      color:#0a0a0a;
-      box-shadow:0 0 16px rgba(255,222,0,0.55);
-      transform:translateY(-1px); /* حركة أنيقة تظهر فقط عند التحويم بالماوس */
+      background:var(--btn-hover-bg);
+      border-color:var(--btn-hover-border);
+      color:var(--btn-hover-text);
+      box-shadow:0 4px 16px rgba(255,222,0,0.3);
+      transform:translateY(-2px);
     }
   }
 
-  /* 2. تأثير الـ Active (الضغط) يكون بسيطاً جداً ومباشراً للأجهزة اللمسية */
+  /* تأثير active (للضغط بالماوس أو اللمس) */
   .btn:active {
-    background:var(--yellow);
-    color:#0a0a0a;
-    box-shadow:0 0 20px rgba(255,222,0,0.7);
-    /* نزيل أي transform أو translateY نهائياً هنا حتى لا يسبب إعادة تخطيط */ 
-    transform: none !important; 
+    background:var(--btn-active-bg);
+    border-color:var(--btn-active-border);
+    color:var(--btn-active-text);
+    box-shadow:0 2px 8px rgba(255,222,0,0.5);
+    transform:scale(0.96);
   }
 
-  /* 3. ضمان أن الزر لا يتغير شكله أو حجمه أثناء النقر على الهاتف */
-  .btn.active{
+  /* حالة النشاط (للأزرار المحددة مثل "أحدث" و "أقدم") */
+  .btn.active {
     background:var(--yellow);
+    border-color:var(--yellow);
+    color:#0a0a0a;
+    box-shadow:0 0 20px rgba(255,222,0,0.25);
+    font-weight:700;
+  }
+  .btn.active:hover {
+    background:var(--btn-active-bg);
+    border-color:var(--btn-active-border);
+    box-shadow:0 4px 20px rgba(255,222,0,0.4);
+  }
+  .btn.active:active {
+    transform:scale(0.96);
+  }
+
+  /* تنسيق خاص لأزرار "عرض التفاصيل" داخل البطاقات */
+  .post-card .btn {
+    min-width:160px;
+    background:rgba(255,222,0,0.08);
+    border-color:rgba(255,222,0,0.25);
+    color:#ffde00;
+    font-weight:600;
+    letter-spacing:0.5px;
+    backdrop-filter:blur(4px);
+  }
+  .post-card .btn:hover {
+    background:var(--yellow);
+    border-color:var(--yellow);
+    color:#0a0a0a;
+    box-shadow:0 4px 20px rgba(255,222,0,0.35);
+  }
+  .post-card .btn:active {
+    background:var(--btn-active-bg);
+    border-color:var(--btn-active-border);
     color:#0a0a0a;
   }
+
+  /* تنسيق زر "إظهار المزيد" */
+  #loadMoreBtn {
+    background:rgba(255,255,255,0.05);
+    border-color:#3a3a3a;
+    color:#d0d0d0;
+    padding:12px 32px;
+    font-size:15px;
+    letter-spacing:1px;
+  }
+  #loadMoreBtn:hover {
+    background:rgba(255,222,0,0.15);
+    border-color:var(--yellow);
+    color:var(--yellow);
+    transform:translateY(-2px);
+  }
+  #loadMoreBtn:active {
+    transform:scale(0.96);
+  }
+
   /* ====================================================== */
 
   .order-btns{
@@ -152,7 +222,7 @@
   .post-card{
     background:var(--card);
     border:1px solid #232323;
-    border-radius:2px;
+    border-radius:4px;
     overflow:hidden;
     margin-bottom:18px;
   }
@@ -179,10 +249,6 @@
     margin-bottom:14px;
     line-height:1.4;
     word-break:break-word;
-  }
-  .post-card .btn{
-    display:inline-block;
-    min-width:160px;
   }
 
   #loadMoreWrap{
@@ -216,6 +282,27 @@
   }
   @media (min-width:900px){
     .container{padding:24px;}
+  }
+
+  /* تحسينات إضافية للتوافق مع اللمس */
+  @media (max-width:480px) {
+    .btn {
+      padding:10px 16px;
+      font-size:13px;
+      min-width:80px;
+    }
+    .post-card .btn {
+      min-width:140px;
+    }
+    .controls-bar {
+      gap:8px;
+    }
+    .order-btns {
+      flex:1 1 100%;
+    }
+    .order-btns .btn {
+      flex:1;
+    }
   }
 </style>
 </head>
@@ -359,7 +446,6 @@
     btn.href = '/tomod.html?id=' + encodeURIComponent(post.id);
     btn.textContent = 'عرض التفاصيل';
 
-    // منع انتشار الحدث كإجراء احتياطي (للإعلانات)
     btn.addEventListener('click', function(e) {
       e.stopPropagation();
     });

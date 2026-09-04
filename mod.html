@@ -1,357 +1,47 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>تحميل الـ Mod - ATTACK N' DESTROY</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#0a0a0a;
-    --card:#141414;
-    --yellow:#ffde00;
-    --text:#e9e9e9;
-    --muted:#9a9a9a;
-    --btn-bg: rgba(255,255,255,0.03);
-    --btn-border: #3a3a3a;
-    --btn-text: #ffde00;
-    --btn-active-bg: #ffde00;
-    --btn-active-border: #ffde00;
-    --btn-active-text: #0a0a0a;
-    --btn-radius: 8px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html,body{overflow-x:hidden;max-width:100%;}
-  body{
-    background-color:var(--bg);
-    color:var(--text);
-    font-family:'Cairo', sans-serif;
-    background-image:
-      repeating-linear-gradient(45deg, rgba(255,222,0,0.02) 0px, rgba(255,222,0,0.02) 2px, transparent 2px, transparent 40px),
-      radial-gradient(circle at 15% 10%, rgba(255,222,0,0.06), transparent 40%),
-      radial-gradient(circle at 85% 90%, rgba(255,222,0,0.05), transparent 45%);
-    min-height:100vh;
-  }
-  h1,h2,h3,button,.btn{font-family:'Oswald', sans-serif;}
-  a{color:inherit;text-decoration:none;}
-  img{max-width:100%;display:block;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
 
-  header.site-header{
-    width:100%;
-    background:#000;
-    border-bottom:2px solid var(--yellow);
-  }
-  header.site-header img{
-    width:100%;
-    height:auto;
-    aspect-ratio:1600/600;
-    object-fit:cover;
-    display:block;
-  }
+    <script>
+        (function () {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
 
-  .container{
-    width:100%;
-    max-width:760px;
-    margin:0 auto;
-    padding:16px;
-  }
+            if (id) {
+                window.location.replace(
+                    'https://attdes.online/modslib/mod.html?id=' + encodeURIComponent(id)
+                );
+            } else {
+                document.addEventListener('DOMContentLoaded', function () {
+                    document.body.innerHTML = `
+                        <div style="
+                            font-family: Arial, sans-serif;
+                            text-align: center;
+                            padding: 50px 20px;
+                        ">
+                            <h2>Invalid Link</h2>
+                            <p>No mod ID was provided.</p>
+                        </div>
+                    `;
+                });
+            }
+        })();
+    </script>
 
-  /* منع الإعلانات من التقاط النقرات */
-  .ad-banner-slot,
-  .ad-320-wrap {
-    pointer-events: none;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-  .ad-banner-slot iframe,
-  .ad-320-wrap iframe {
-    pointer-events: none !important;
-    touch-action: none;
-  }
-
-  .ad-banner-slot{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:14px 0;
-    overflow:hidden;
-  }
-
-  .ad-320-wrap{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    margin:12px 0;
-  }
-  .ad-320-wrap iframe{
-    max-width:320px;
-    width:100%;
-    border:0;
-    display:block;
-  }
-
-  .mod-card{
-    background:var(--card);
-    border:1px solid #232323;
-    padding:26px 22px;
-    text-align:center;
-    margin:18px 0;
-  }
-  .mod-card h1{
-    font-size:24px;
-    font-weight:700;
-    color:#fff;
-    margin-bottom:16px;
-    line-height:1.4;
-    word-break:break-word;
-  }
-  .mod-card .desc{
-    font-size:16px;
-    color:var(--text);
-    line-height:1.9;
-    margin-bottom:24px;
-    text-align:right;
-    white-space:pre-wrap;
-    word-break:break-word;
-  }
-  .mod-card .desc:empty{display:none;}
-
-  /* ===== الأزرار بدون أي hover ===== */
-  .btn{
-    display:inline-block;
-    background:var(--btn-bg);
-    color:var(--btn-text);
-    border:1px solid var(--btn-border);
-    padding:15px 30px;
-    font-weight:600;
-    font-size:16px;
-    letter-spacing:.5px;
-    cursor:pointer;
-    text-align:center;
-    border-radius:var(--btn-radius);
-    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    position:relative;
-    z-index:10;
-    backdrop-filter: blur(2px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    min-width:200px;
-  }
-
-  /* تأثير الضغط فقط */
-  .btn:active {
-    background:var(--btn-active-bg);
-    border-color:var(--btn-active-border);
-    color:var(--btn-active-text);
-    box-shadow:0 2px 8px rgba(255,222,0,0.5);
-    transform:scale(0.96);
-  }
-  /* ==================================== */
-
-  #errorBox{
-    display:none;
-    text-align:center;
-    padding:40px 16px;
-    color:var(--muted);
-    font-size:16px;
-  }
-
-  footer{
-    text-align:center;
-    padding:26px 16px 34px;
-    color:var(--muted);
-    font-size:14px;
-    border-top:1px solid #1e1e1e;
-    margin-top:20px;
-  }
-  footer .accent{color:#ffde00;font-weight:700;}
-  footer p{margin:4px 0;}
-
-  @media (min-width:600px){
-    .mod-card h1{font-size:28px;}
-  }
-
-  @media (max-width:480px){
-    .btn{
-      padding:12px 18px;
-      font-size:14px;
-      min-width:160px;
-    }
-  }
-</style>
-</head>
-<body>
-
-<header class="site-header">
-  <img src="/header.png" alt="ATTACK N' DESTROY">
-</header>
-
-<!-- Banner ad under header -->
-<div class="ad-banner-slot" id="bannerAdSlot"></div>
-
-<div class="container">
-
-  <!-- إعلان علوي (يبقى في مكانه) -->
-  <div class="ad-320-wrap" id="adTop"></div>
-
-  <div id="modContent"></div>
-
-  <div id="errorBox">لم يتم العثور على الملف المطلوب.</div>
-
-  <!-- إزالة الإعلانات السفلية (ad2mid و ad3) لأنها ستوضع داخل البطاقة -->
-
-</div>
-
-<footer>
-  <p>Copyright: <span class="accent">ATTACK N' DESROY</span></p>
-  <p>Powered By: <span class="accent">ATTACK N' DESTROY</span></p>
-</footer>
-
-<script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
-<script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
-<script src="/stats.js"></script>
-
-<script>
-(function(){
-  "use strict";
-
-  function injectDynamicAd(container){
-    var iframe = document.createElement('iframe');
-    iframe.style.width = '100%';
-    iframe.style.maxWidth = '320px';
-    iframe.style.height = '50px';
-    iframe.style.border = '0';
-    iframe.style.overflow = 'hidden';
-    iframe.style.pointerEvents = 'none';
-    iframe.setAttribute('scrolling', 'no');
-    container.appendChild(iframe);
-    try{
-      var doc = iframe.contentWindow.document;
-      doc.open();
-      doc.write('<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;background:transparent;overflow:hidden;}</style></head><body><script src="/320-50.js"><\/script></body></html>');
-      doc.close();
-      var resize = function(){
-        try{
-          var h = doc.body.scrollHeight;
-          if (h && h > 10){ iframe.style.height = h + 'px'; }
-        }catch(e){}
-      };
-      iframe.onload = resize;
-      setTimeout(resize, 700);
-      setTimeout(resize, 1600);
-      setTimeout(resize, 3000);
-    }catch(e){}
-  }
-
-  function injectBannerAd(){
-    var slot = document.getElementById('bannerAdSlot');
-    var div = document.createElement('div');
-    div.id = 'container-2d6b46676c10234a8731ba94f0111059';
-    slot.appendChild(div);
-    var s = document.createElement('script');
-    s.async = true;
-    s.setAttribute('data-cfasync', 'false');
-    s.src = 'https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js';
-    slot.appendChild(s);
-  }
-
-  function getIdFromUrl(){
-    var params = new URLSearchParams(window.location.search);
-    var id = params.get('id');
-    if (id === null) return null;
-    var n = Number(id);
-    return isNaN(n) ? id : n;
-  }
-
-  function showError(){
-    document.getElementById('errorBox').style.display = 'block';
-    document.getElementById('modContent').style.display = 'none';
-  }
-
-  function decodeDownloadLink(raw){
-    try{
-      return decodeURIComponent(escape(window.atob(raw)));
-    }catch(e){
-      try{
-        return window.atob(raw);
-      }catch(e2){
-        return raw;
-      }
-    }
-  }
-
-  function render(post){
-    var wrap = document.getElementById('modContent');
-    var card = document.createElement('div');
-    card.className = 'mod-card';
-
-    var h1 = document.createElement('h1');
-    h1.textContent = post.title || '';
-    card.appendChild(h1);
-
-    var desc = document.createElement('div');
-    desc.className = 'desc';
-    desc.textContent = post.description || '';
-    card.appendChild(desc);
-
-    // ----- إضافة الإعلانات فوق الزر (اثنان) -----
-    var adAbove1 = document.createElement('div');
-    adAbove1.className = 'ad-320-wrap';
-    card.appendChild(adAbove1);
-
-    var adAbove2 = document.createElement('div');
-    adAbove2.className = 'ad-320-wrap';
-    card.appendChild(adAbove2);
-
-    // ----- الزر -----
-    var finalUrl = decodeDownloadLink(post.download || '');
-    var btn = document.createElement('a');
-    btn.className = 'btn';
-    btn.href = finalUrl;
-    btn.textContent = 'تحميل الملف';
-    btn.setAttribute('rel', 'nofollow');
-    btn.addEventListener('click', function(e) { e.stopPropagation(); });
-    btn.addEventListener('touchstart', function(e) { e.stopPropagation(); }, { passive: true });
-    card.appendChild(btn);
-
-    wrap.appendChild(card);
-
-    // حقن الإعلانات في المكانين الجديدين
-    injectDynamicAd(adAbove1);
-    injectDynamicAd(adAbove2);
-  }
-
-  // === تشغيل الإعلان العلوي ===
-  injectDynamicAd(document.getElementById('adTop'));
-
-  var id = getIdFromUrl();
-  if (id === null){
-    showError();
-  } else {
-    fetch('/mods.json')
-      .then(function(res){ return res.json(); })
-      .then(function(data){
-        var list = Array.isArray(data) ? data : [];
-        var post = list.find(function(p){ return String(p.id) === String(id); });
-        if (!post || !post.download){
-          showError();
-        } else {
-          render(post);
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            background: #ffffff;
         }
-      })
-      .catch(function(){
-        showError();
-      });
-  }
+    </style>
+</head>
 
-  injectBannerAd();
-
-})();
-</script>
-
+<body>
 </body>
 </html>

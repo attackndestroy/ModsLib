@@ -1,504 +1,549 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>ATTACK N' DESTROY - Mods</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#0a0a0a;
-    --card:#141414;
-    --yellow:#ffde00;
-    --text:#e9e9e9;
-    --muted:#9a9a9a;
-    --btn-bg: rgba(255,255,255,0.03);
-    --btn-border: #3a3a3a;
-    --btn-text: #e9e9e9;
-    --btn-active-bg: #ffde00;
-    --btn-active-border: #ffde00;
-    --btn-active-text: #0a0a0a;
-    --btn-radius: 8px;
-    --btn-transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  html,body{overflow-x:hidden;max-width:100%;}
-  body{
-    background-color:var(--bg);
-    color:var(--text);
-    font-family:'Cairo', sans-serif;
-    background-image:
-      repeating-linear-gradient(45deg, rgba(255,222,0,0.02) 0px, rgba(255,222,0,0.02) 2px, transparent 2px, transparent 40px),
-      radial-gradient(circle at 15% 10%, rgba(255,222,0,0.06), transparent 40%),
-      radial-gradient(circle at 85% 90%, rgba(255,222,0,0.05), transparent 45%);
-    min-height:100vh;
-  }
-  h1,h2,h3,.title-font,button,.btn{
-    font-family:'Oswald', sans-serif;
-  }
-  a{color:inherit;text-decoration:none;}
-  img{max-width:100%;display:block;}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModsLib - مكتبة المودات | ATT/DES</title>
+    
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" href="img/fav.ico" type="image/x-icon">
 
-  header.site-header{
-    width:100%;
-    background:#000;
-    border-bottom:2px solid var(--yellow);
-  }
-  header.site-header img{
-    width:100%;
-    height:auto;
-    aspect-ratio:1600/600;
-    object-fit:cover;
-    display:block;
-  }
+    <!-- Google Font: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-  .container{
-    width:100%;
-    max-width:1100px;
-    margin:0 auto;
-    padding:16px;
-  }
+    <!-- Font Awesome Icons (Free for commercial use) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  .ad-banner-slot,
-  .ad-320-wrap {
-    pointer-events: none;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-  .ad-banner-slot iframe,
-  .ad-320-wrap iframe {
-    pointer-events: none !important;
-    touch-action: none;
-  }
+    <style>
+        /* --- الأساسيات والألوان (Cairo Font & Block Style) --- */
+        :root {
+            --bg-main: #0b0f0c;
+            --bg-card: #141a16;
+            --bg-card-hover: #1c2620;
+            --neon-green: #00FF66;
+            --neon-green-glow: rgba(0, 255, 102, 0.3);
+            --text-light: #ffffff;
+            --text-dim: #a3b8a8;
+            --border-color: #243328;
+        }
 
-  .controls-bar{
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-    align-items:center;
-    margin-bottom:18px;
-  }
-  .controls-bar .search-box{
-    flex:1 1 220px;
-    min-width:0;
-  }
-  .search-box input{
-    width:100%;
-    background:var(--card);
-    border:1px solid #2a2a2a;
-    color:var(--text);
-    padding:12px 16px;
-    font-family:'Cairo', sans-serif;
-    font-size:15px;
-    border-radius:var(--btn-radius);
-    outline:none;
-    transition:border-color .2s, box-shadow .2s;
-  }
-  .search-box input:focus{
-    border-color:var(--yellow);
-    box-shadow:0 0 10px rgba(255,222,0,0.15);
-  }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif !important; /* خط Cairo الموحد */
+            border-radius: 0 !important; /* حواف حادة بستايل المكعبات */
+        }
 
-  /* ===== الأزرار بدون أي hover ===== */
-  .btn{
-    display:inline-block;
-    background:var(--btn-bg);
-    color:var(--btn-text);
-    border:1px solid var(--btn-border);
-    padding:10px 22px;
-    font-weight:600;
-    font-size:14px;
-    letter-spacing:.3px;
-    cursor:pointer;
-    text-align:center;
-    border-radius:var(--btn-radius);
-    transition:var(--btn-transition);
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    position:relative;
-    z-index:10;
-    backdrop-filter: blur(2px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    min-width:100px;
-  }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-light);
+            direction: rtl;
+            line-height: 1.5;
+            padding-bottom: 20px;
+        }
 
-  /* تأثير الضغط فقط (للكل) */
-  .btn:active {
-    background:var(--btn-active-bg);
-    border-color:var(--btn-active-border);
-    color:var(--btn-active-text);
-    box-shadow:0 2px 8px rgba(255,222,0,0.5);
-    transform:scale(0.96);
-  }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-  /* حالة النشاط (للأزرار المحددة) */
-  .btn.active {
-    background:var(--yellow);
-    border-color:var(--yellow);
-    color:#0a0a0a;
-    box-shadow:0 0 20px rgba(255,222,0,0.25);
-    font-weight:700;
-  }
-  .btn.active:active {
-    transform:scale(0.96);
-  }
+        /* --- 1. Header & Navigation --- */
+        .site-header {
+            background-color: var(--bg-card);
+            border-bottom: 3px solid var(--neon-green);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
 
-  /* تنسيق أزرار "عرض التفاصيل" داخل البطاقات */
-  .post-card .btn {
-    min-width:160px;
-    background:rgba(255,222,0,0.08);
-    border-color:rgba(255,222,0,0.25);
-    color:#ffde00;
-    font-weight:600;
-    letter-spacing:0.5px;
-    backdrop-filter:blur(4px);
-  }
-  .post-card .btn:active {
-    background:var(--btn-active-bg);
-    border-color:var(--btn-active-border);
-    color:#0a0a0a;
-  }
+        .header-brand-img {
+            max-height: 45px;
+            width: auto;
+            display: block;
+        }
 
-  /* تنسيق زر "إظهار المزيد" */
-  #loadMoreBtn {
-    background:rgba(255,255,255,0.05);
-    border-color:#3a3a3a;
-    color:#d0d0d0;
-    padding:12px 32px;
-    font-size:15px;
-    letter-spacing:1px;
-  }
-  #loadMoreBtn:active {
-    background:rgba(255,222,0,0.15);
-    border-color:var(--yellow);
-    color:var(--yellow);
-    transform:scale(0.96);
-  }
+        .header-nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
 
-  /* ====================================================== */
+        .nav-btn {
+            background: var(--bg-main);
+            color: var(--text-light);
+            border: 2px solid var(--border-color);
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
 
-  .order-btns{
-    display:flex;
-    gap:8px;
-  }
+        .nav-btn i {
+            color: var(--neon-green);
+            font-size: 14px;
+        }
 
-  #feed{
-    display:flex;
-    flex-direction:column;
-    gap:0;
-  }
-  .post-card{
-    background:var(--card);
-    border:1px solid #232323;
-    border-radius:4px;
-    overflow:hidden;
-    margin-bottom:18px;
-  }
-  .post-card .img-wrap{
-    width:100%;
-    aspect-ratio:16/9;
-    background:#000 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9"></svg>') center/cover;
-    overflow:hidden;
-  }
-  .post-card .img-wrap img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-  }
-  .post-card .post-body{
-    padding:16px;
-    text-align:center;
-  }
-  .post-card h3{
-    font-size:19px;
-    font-weight:600;
-    color:#fff;
-    margin-bottom:14px;
-    line-height:1.4;
-    word-break:break-word;
-  }
+        .nav-btn:hover {
+            border-color: var(--neon-green);
+            color: var(--neon-green);
+            box-shadow: 0 0 8px var(--neon-green-glow);
+        }
 
-  #loadMoreWrap{
-    display:flex;
-    justify-content:center;
-    margin:20px 0 10px;
-  }
-  #noResults{
-    text-align:center;
-    color:var(--muted);
-    padding:30px 0;
-    display:none;
-  }
+        /* --- 2. Slider Section --- */
+        .slider-section {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-  footer{
-    text-align:center;
-    padding:26px 16px 34px;
-    color:var(--muted);
-    font-size:14px;
-    border-top:1px solid #1e1e1e;
-    margin-top:20px;
-  }
-  footer .accent{
-    color:#ffde00;
-    font-weight:700;
-  }
-  footer p{margin:4px 0;}
+        .slider-container {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--neon-green) var(--bg-card);
+        }
 
-  @media (min-width:600px){
-    .post-card h3{font-size:21px;}
-  }
-  @media (min-width:900px){
-    .container{padding:24px;}
-  }
+        .slide-card {
+            min-width: 300px;
+            max-width: 320px;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
 
-  @media (max-width:480px) {
-    .btn {
-      padding:10px 16px;
-      font-size:13px;
-      min-width:80px;
-    }
-    .post-card .btn {
-      min-width:140px;
-    }
-    .controls-bar {
-      gap:8px;
-    }
-    .order-btns {
-      flex:1 1 100%;
-    }
-    .order-btns .btn {
-      flex:1;
-    }
-  }
-</style>
+        .slide-card:hover {
+            border-color: var(--neon-green);
+        }
+
+        .ratio-16-9 {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            background-color: #000;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .slide-content {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .slide-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .btn-action {
+            display: block;
+            text-align: center;
+            background-color: var(--neon-green);
+            color: #000;
+            font-weight: 700;
+            padding: 8px;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .btn-action:hover {
+            background-color: #fff;
+            box-shadow: 0 0 10px #fff;
+        }
+
+        /* --- 3. Main Layout Grid --- */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+        }
+
+        .section-header {
+            color: var(--neon-green);
+            font-size: 18px;
+            font-weight: 700;
+            border-bottom: 2px solid var(--neon-green);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Mods Grid */
+        .mods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 15px;
+        }
+
+        .mod-card {
+            background-color: var(--bg-card);
+            border: 2px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .mod-card:hover {
+            border-color: var(--neon-green);
+            transform: translateY(-3px);
+        }
+
+        .mod-info {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            justify-content: space-between;
+        }
+
+        .mod-title {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-light);
+            height: 42px;
+            overflow: hidden;
+            line-height: 1.4;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 25px;
+            grid-column: 1 / -1;
+        }
+
+        .page-btn {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            color: var(--text-light);
+            padding: 6px 14px;
+            font-weight: 700;
+        }
+
+        .page-btn.active, .page-btn:hover {
+            background: var(--neon-green);
+            color: #000;
+            border-color: var(--neon-green);
+        }
+
+        /* --- Sidebar & Social Media Cards --- */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .widget-box {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            padding: 15px;
+            text-align: center;
+        }
+
+        .widget-box h3 {
+            color: var(--neon-green);
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .social-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Social Media Specific Buttons */
+        .btn-youtube {
+            background-color: #FF0000;
+            color: #ffffff;
+        }
+
+        .btn-facebook {
+            background-color: #1877F2;
+            color: #ffffff;
+        }
+
+        .btn-telegram {
+            background-color: #0088cc;
+            color: #ffffff;
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: #ffffff;
+        }
+
+        /* --- 4. News Section --- */
+        .news-section {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            padding: 0 20px;
+        }
+
+        /* --- 5. Footer --- */
+        .site-footer {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding: 20px;
+            border-top: 2px solid var(--neon-green);
+            text-align: center;
+            background: var(--bg-card);
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .footer-nav a {
+            color: var(--text-dim);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer-nav a:hover {
+            color: var(--neon-green);
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: var(--neon-green);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 850px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<header class="site-header">
-  <img src="/header.png" alt="ATTACK N' DESTROY">
-</header>
+    <!-- Header & Navigation -->
+    <header class="site-header">
+        <a href="home.html">
+            <img src="img/head.png" alt="ATT/DES MODSLIB" class="header-brand-img" onerror="this.onerror=null; this.outerHTML='<div style=\'color:var(--neon-green); font-weight:800; font-size:20px;\'>ATT/DES MODSLIB</div>';">
+        </a>
+        <nav class="header-nav">
+            <a href="home.html" class="nav-btn"><i class="fa-solid fa-house"></i> الرئيسية</a>
+            <a href="search.html" class="nav-btn"><i class="fa-solid fa-magnifying-glass"></i> بحث</a>
+            <a href="store.html" class="nav-btn"><i class="fa-solid fa-cart-shopping"></i> المتجر</a>
+            <a href="newsletter.html" class="nav-btn"><i class="fa-solid fa-envelope"></i> النشرة</a>
+            <a href="sidemenu.html" class="nav-btn"><i class="fa-solid fa-bars"></i> القائمة</a>
+            <a href="archive/index.html" class="nav-btn"><i class="fa-solid fa-box-archive"></i> الأرشيف</a>
+            <a href="donate.html" class="nav-btn"><i class="fa-solid fa-heart"></i> دعم</a>
+        </nav>
+    </header>
 
-<div class="container">
+    <!-- Slider Section -->
+    <section class="slider-section">
+        <div class="slider-container" id="slider-wrapper">
+            <!-- تعبئة الصور الـ 12 من slider/ وتفاصيل slider.json -->
+        </div>
+    </section>
 
-  <div class="ad-banner-slot" id="bannerAdSlot"></div>
+    <!-- Main Content -->
+    <div class="main-container">
+        
+        <!-- Latest Mods Feed -->
+        <main>
+            <h2 class="section-header"><i class="fa-solid fa-fire"></i> أحدث المودات</h2>
+            <div class="mods-grid" id="mods-feed">
+                <!-- تعبئة أحدث 10 منشورات عبر a/a.json -->
+            </div>
 
-  <div class="controls-bar">
-    <div class="order-btns">
-      <button class="btn" id="btnLatest">أحدث</button>
-      <button class="btn" id="btnOldest">أقدم</button>
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="page-btn active">1</a>
+                <a href="#" class="page-btn">2</a>
+                <a href="#" class="page-btn">3</a>
+                <span class="page-btn">...</span>
+                <a href="#" class="page-btn">?</a>
+            </div>
+        </main>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            
+            <!-- YouTube Widget -->
+            <div class="widget-box">
+                <h3><i class="fa-brands fa-youtube" style="color:#FF0000;"></i> YouTube</h3>
+                <img src="img/youtube.png" alt="YouTube" class="social-img" onerror="this.src='https://via.placeholder.com/260x100/141a16/FF0000?text=YOUTUBE'">
+                <a href="https://youtube.com/@modslib" target="_blank" class="btn-action btn-youtube"><i class="fa-brands fa-youtube"></i> إشترك في القناة</a>
+            </div>
+
+            <!-- Facebook Widget -->
+            <div class="widget-box">
+                <h3><i class="fa-brands fa-facebook" style="color:#1877F2;"></i> Facebook</h3>
+                <img src="img/facebook.png" alt="Facebook" class="social-img" onerror="this.src='https://via.placeholder.com/260x100/141a16/1877F2?text=FACEBOOK'">
+                <a href="https://facebook.com/modslib" target="_blank" class="btn-action btn-facebook"><i class="fa-brands fa-facebook-f"></i> متابعة الصفحة</a>
+            </div>
+
+            <!-- Telegram Widget -->
+            <div class="widget-box">
+                <h3><i class="fa-brands fa-telegram" style="color:#0088cc;"></i> Telegram</h3>
+                <img src="img/TELEGRAM.png" alt="Telegram" class="social-img" onerror="this.src='https://via.placeholder.com/260x100/141a16/0088cc?text=TELEGRAM'">
+                <a href="https://t.me/modslib" target="_blank" class="btn-action btn-telegram"><i class="fa-paper-plane"></i> انضم للقناة</a>
+            </div>
+
+            <!-- WhatsApp Widget -->
+            <div class="widget-box">
+                <h3><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> WhatsApp</h3>
+                <img src="img/whatsapp.png" alt="WhatsApp" class="social-img" onerror="this.src='https://via.placeholder.com/260x100/141a16/25D366?text=WHATSAPP'">
+                <a href="https://whatsapp.com/channel/modslib" target="_blank" class="btn-action btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> متابعة القناة</a>
+            </div>
+
+        </aside>
+
     </div>
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="ابحث عن Mod...">
-    </div>
-  </div>
 
-  <div class="ad-320-wrap" id="adBeforeFirst"></div>
+    <!-- News Section -->
+    <section class="news-section">
+        <h2 class="section-header"><i class="fa-solid fa-newspaper"></i> الأخبار والأجدد</h2>
+        <div class="slider-container" id="news-feed">
+            <!-- تعبئة آخر 10 منشورات أخبار ديناميكياً -->
+        </div>
+    </section>
 
-  <div id="feed"></div>
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-nav">
+            <a href="privacy.html"><i class="fa-solid fa-shield-halved"></i> سياسة الخصوصية</a>
+            <span>-</span>
+            <a href="terms.html"><i class="fa-solid fa-file-contract"></i> سياسة الإستخدام</a>
+            <span>-</span>
+            <a href="contact.html"><i class="fa-solid fa-headset"></i> تواصل معنا</a>
+            <span>-</span>
+            <a href="about.html"><i class="fa-solid fa-circle-info"></i> من نحن؟</a>
+        </div>
+        <p class="copyright">Managed & Owned By ATTDES.online</p>
+    </footer>
 
-  <div id="noResults">لا توجد نتائج مطابقة.</div>
+    <!-- JavaScript Logic -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            // 1. جلب بيانات السلايدر (12 صورة من مجلد slider/ وربطها بـ slider.json)
+            fetch('slider/slider.json')
+                .then(res => res.json())
+                .then(data => {
+                    const sliderWrapper = document.getElementById('slider-wrapper');
+                    sliderWrapper.innerHTML = '';
+                    
+                    for (let i = 1; i <= 12; i++) {
+                        const itemData = data[i - 1] || { t: 'عنوان افتراضي', d: 'تحميل', l: '#' };
+                        
+                        const slide = document.createElement('div');
+                        slide.className = 'slide-card';
+                        slide.innerHTML = `
+                            <img src="slider/${i}.png" alt="Slide ${i}" class="ratio-16-9" onerror="this.src='https://via.placeholder.com/300x169/141a16/00FF66?text=Slider+${i}'">
+                            <div class="slide-content">
+                                <div class="slide-title">${itemData.t}</div>
+                                <a href="${itemData.l}" class="btn-action" target="_blank">${itemData.d}</a>
+                            </div>
+                        `;
+                        sliderWrapper.appendChild(slide);
+                    }
+                })
+                .catch(err => console.log('Error loading slider.json:', err));
 
-  <div id="loadMoreWrap">
-    <button class="btn" id="loadMoreBtn">إظهار المزيد</button>
-  </div>
 
-</div>
+            // 2. جلب أحدث المودات من a/a.json (تنازلياً حسب قيمة n)
+            fetch('a/a.json')
+                .then(res => res.json())
+                .then(data => {
+                    const modsFeed = document.getElementById('mods-feed');
+                    modsFeed.innerHTML = '';
 
-<footer>
-  <p>Copyright: <span class="accent">ATTACK N' DESROY</span></p>
-  <p>Powered By: <span class="accent">ATTACK N' DESTROY</span></p>
-</footer>
+                    data.sort((a, b) => b.n - a.n);
+                    const latestMods = data.slice(0, 10);
 
-<script src="https://pl30972434.profitableratecpmnetwork.com/5d/cb/c4/5dcbc48828059421881a9fb4cc6cbce5.js"></script>
-<script src="https://pl30972436.profitableratecpmnetwork.com/b1/ba/7f/b1ba7f77f910a4b42aa63b1b0f9fe466.js"></script>
-<script src="/stats.js"></script>
+                    latestMods.forEach(item => {
+                        const card = document.createElement('div');
+                        card.className = 'mod-card';
+                        card.innerHTML = `
+                            <img src="${item.i}" alt="${item.t}" class="ratio-16-9" onerror="this.src='https://via.placeholder.com/260x146/141a16/00FF66?text=Mod+${item.n}'">
+                            <div class="mod-info">
+                                <div class="mod-title">${item.t}</div>
+                                <a href="a/${item.n}.html" class="btn-action"><i class="fa-solid fa-download"></i> تحميل المود</a>
+                            </div>
+                        `;
+                        modsFeed.appendChild(card);
+                    });
+                })
+                .catch(err => console.log('Error loading a/a.json:', err));
 
-<script>
-(function(){
-  "use strict";
 
-  var BATCH_SIZE = 10;
-  var allPosts = [];
-  var currentOrder = 'desc';
-  var searchTerm = '';
-  var renderedCount = 0;
-  var activeList = [];
+            // 3. جلب الأخبار (آخر 10 منشورات من news/news.json)
+            fetch('news/news.json')
+                .then(res => res.json())
+                .then(data => {
+                    const newsFeed = document.getElementById('news-feed');
+                    newsFeed.innerHTML = '';
+                    
+                    data.sort((a, b) => b.n - a.n);
+                    const latestNews = data.slice(0, 10);
 
-  var feedEl = document.getElementById('feed');
-  var loadMoreWrap = document.getElementById('loadMoreWrap');
-  var loadMoreBtn = document.getElementById('loadMoreBtn');
-  var noResultsEl = document.getElementById('noResults');
-  var searchInput = document.getElementById('searchInput');
-  var btnLatest = document.getElementById('btnLatest');
-  var btnOldest = document.getElementById('btnOldest');
+                    latestNews.forEach(item => {
+                        const newsCard = document.createElement('div');
+                        newsCard.className = 'slide-card';
+                        newsCard.innerHTML = `
+                            <img src="${item.i}" class="ratio-16-9" onerror="this.src='https://via.placeholder.com/300x169/141a16/00FF66?text=News'">
+                            <div class="slide-content">
+                                <div class="slide-title">${item.t}</div>
+                                <a href="${item.l || '#'}" class="btn-action">${item.d || 'قراءة المزيد'}</a>
+                            </div>
+                        `;
+                        newsFeed.appendChild(newsCard);
+                    });
+                })
+                .catch(err => console.log('News JSON optional or not found:', err));
 
-  function injectDynamicAd(container){
-    var iframe = document.createElement('iframe');
-    iframe.style.width = '100%';
-    iframe.style.maxWidth = '320px';
-    iframe.style.height = '50px';
-    iframe.style.border = '0';
-    iframe.style.overflow = 'hidden';
-    iframe.style.pointerEvents = 'none';
-    iframe.setAttribute('scrolling', 'no');
-    container.appendChild(iframe);
-    try{
-      var doc = iframe.contentWindow.document;
-      doc.open();
-      doc.write('<!DOCTYPE html><html><head><style>html,body{margin:0;padding:0;background:transparent;overflow:hidden;}</style></head><body><script src="/320-50.js"><\/script></body></html>');
-      doc.close();
-      var resize = function(){
-        try{
-          var h = doc.body.scrollHeight;
-          if (h && h > 10){ iframe.style.height = h + 'px'; }
-        }catch(e){}
-      };
-      iframe.onload = resize;
-      setTimeout(resize, 700);
-      setTimeout(resize, 1600);
-      setTimeout(resize, 3000);
-    }catch(e){}
-  }
-
-  function createAdSlot(){
-    var wrap = document.createElement('div');
-    wrap.className = 'ad-320-wrap';
-    injectDynamicAd(wrap);
-    return wrap;
-  }
-
-  function injectBannerAd(){
-    var slot = document.getElementById('bannerAdSlot');
-    var div = document.createElement('div');
-    div.id = 'container-2d6b46676c10234a8731ba94f0111059';
-    slot.appendChild(div);
-    var s = document.createElement('script');
-    s.async = true;
-    s.setAttribute('data-cfasync', 'false');
-    s.src = 'https://pl30972435.profitableratecpmnetwork.com/2d6b46676c10234a8731ba94f0111059/invoke.js';
-    slot.appendChild(s);
-  }
-
-  function escapeHtml(str){
-    var d = document.createElement('div');
-    d.textContent = str == null ? '' : String(str);
-    return d.innerHTML;
-  }
-
-  function buildCard(post){
-    var card = document.createElement('div');
-    card.className = 'post-card';
-
-    var imgWrap = document.createElement('div');
-    imgWrap.className = 'img-wrap';
-    if (post.image){
-      var img = document.createElement('img');
-      img.src = post.image;
-      img.alt = post.title || '';
-      img.loading = 'lazy';
-      imgWrap.appendChild(img);
-    }
-    card.appendChild(imgWrap);
-
-    var body = document.createElement('div');
-    body.className = 'post-body';
-
-    var h3 = document.createElement('h3');
-    h3.textContent = post.title || '';
-    body.appendChild(h3);
-
-    var btn = document.createElement('a');
-    btn.className = 'btn';
-    btn.href = '/tomod.html?id=' + encodeURIComponent(post.id);
-    btn.textContent = 'عرض التفاصيل';
-
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-    });
-    btn.addEventListener('touchstart', function(e) {
-      e.stopPropagation();
-    }, { passive: true });
-
-    body.appendChild(btn);
-    card.appendChild(body);
-    return card;
-  }
-
-  function getFilteredSorted(){
-    var list = allPosts.slice();
-    if (searchTerm){
-      var term = searchTerm.toLowerCase();
-      list = list.filter(function(p){
-        return (p.title || '').toLowerCase().indexOf(term) !== -1;
-      });
-      list.sort(function(a,b){ return b.id - a.id; });
-    } else {
-      list.sort(function(a,b){
-        return currentOrder === 'desc' ? (b.id - a.id) : (a.id - b.id);
-      });
-    }
-    return list;
-  }
-
-  function resetAndRender(){
-    feedEl.innerHTML = '';
-    renderedCount = 0;
-    activeList = getFilteredSorted();
-    noResultsEl.style.display = activeList.length === 0 ? 'block' : 'none';
-    renderNextBatch();
-  }
-
-  function renderNextBatch(){
-    var slice = activeList.slice(renderedCount, renderedCount + BATCH_SIZE);
-    slice.forEach(function(post){
-      feedEl.appendChild(buildCard(post));
-      feedEl.appendChild(createAdSlot());
-    });
-    renderedCount += slice.length;
-    loadMoreWrap.style.display = (renderedCount < activeList.length) ? 'flex' : 'none';
-  }
-
-  loadMoreBtn.addEventListener('click', function(){
-    renderNextBatch();
-  });
-
-  btnLatest.addEventListener('click', function(){
-    currentOrder = 'desc';
-    btnLatest.classList.add('active');
-    btnOldest.classList.remove('active');
-    resetAndRender();
-  });
-
-  btnOldest.addEventListener('click', function(){
-    currentOrder = 'asc';
-    btnOldest.classList.add('active');
-    btnLatest.classList.remove('active');
-    resetAndRender();
-  });
-
-  searchInput.addEventListener('input', function(){
-    searchTerm = searchInput.value.trim();
-    resetAndRender();
-  });
-
-  fetch('/mods.json')
-    .then(function(res){ return res.json(); })
-    .then(function(data){
-      allPosts = Array.isArray(data) ? data : [];
-      btnLatest.classList.add('active');
-      injectBannerAd();
-      injectDynamicAd(document.getElementById('adBeforeFirst'));
-      resetAndRender();
-    })
-    .catch(function(){
-      feedEl.innerHTML = '<div style="text-align:center;color:#9a9a9a;padding:30px 0;">تعذر تحميل المنشورات حالياً.</div>';
-    });
-
-})();
-</script>
-
+        });
+    </script>
 </body>
 </html>

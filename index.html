@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ModsLib - مكتبة المودات | ATT/DES</title>
     
-    <!-- Favicon Icon -->
-    <link rel="shortcut icon" href="img/fav.ico" type="image/x-icon">
+    <!-- Favicon -->
+    <link rel="icon" href="img/fav.ico" type="image/x-icon">
 
     <!-- Google Font: Cairo -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome Icons (Free for commercial use) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Font Awesome Icons (Commercial-Free Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- الأساسيات والألوان (Cairo Font & Block Style) --- */
+        /* --- الأساسيات والألوان (Minecraft Charcoal & Neon Green Block Style) --- */
         :root {
             --bg-main: #0b0f0c;
             --bg-card: #141a16;
@@ -33,8 +33,8 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Cairo', sans-serif !important; /* خط Cairo الموحد */
-            border-radius: 0 !important; /* حواف حادة بستايل المكعبات */
+            font-family: 'Cairo', sans-serif !important;
+            border-radius: 0 !important; /* حواف حادة لمظهر المكعبات */
         }
 
         body {
@@ -50,38 +50,41 @@
             color: inherit;
         }
 
-        /* --- 1. Header & Navigation --- */
-        .site-header {
+        /* --- 1. Header Banner & Navigation --- */
+        .header-banner {
+            width: 100%;
             background-color: var(--bg-card);
             border-bottom: 3px solid var(--neon-green);
-            padding: 15px 20px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .header-banner img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .nav-bar {
+            background-color: var(--bg-card);
+            border-bottom: 2px solid var(--border-color);
+            padding: 10px 20px;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .header-brand-img {
-            max-height: 45px;
-            width: auto;
-            display: block;
-        }
-
-        .header-nav {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .nav-btn {
             background: var(--bg-main);
             color: var(--text-light);
             border: 2px solid var(--border-color);
-            padding: 6px 12px;
-            font-size: 13px;
+            padding: 8px 14px;
+            font-size: 14px;
             font-weight: 600;
-            display: inline-flex;
+            display: flex;
             align-items: center;
             gap: 8px;
             transition: all 0.2s ease;
@@ -89,7 +92,7 @@
 
         .nav-btn i {
             color: var(--neon-green);
-            font-size: 14px;
+            font-size: 16px;
         }
 
         .nav-btn:hover {
@@ -187,9 +190,7 @@
             border-bottom: 2px solid var(--neon-green);
             padding-bottom: 5px;
             margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            text-transform: uppercase;
         }
 
         /* Mods Grid */
@@ -225,9 +226,8 @@
             font-weight: 700;
             margin-bottom: 12px;
             color: var(--text-light);
-            height: 42px;
+            height: 40px;
             overflow: hidden;
-            line-height: 1.4;
         }
 
         /* Pagination */
@@ -253,7 +253,7 @@
             border-color: var(--neon-green);
         }
 
-        /* --- Sidebar & Social Media Cards --- */
+        /* --- Sidebar & Social Media --- */
         .sidebar {
             display: flex;
             flex-direction: column;
@@ -274,10 +274,6 @@
             margin-bottom: 12px;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
         }
 
         .social-img {
@@ -288,25 +284,25 @@
             border: 1px solid var(--border-color);
         }
 
-        /* Social Media Specific Buttons */
+        /* الأزرار المخصصة لمنصات التواصل */
         .btn-youtube {
             background-color: #FF0000;
-            color: #ffffff;
+            color: #fff;
         }
 
         .btn-facebook {
             background-color: #1877F2;
-            color: #ffffff;
+            color: #fff;
         }
 
         .btn-telegram {
             background-color: #0088cc;
-            color: #ffffff;
+            color: #fff;
         }
 
         .btn-whatsapp {
             background-color: #25D366;
-            color: #ffffff;
+            color: #fff;
         }
 
         /* --- 4. News Section --- */
@@ -332,14 +328,12 @@
             gap: 15px;
             flex-wrap: wrap;
             margin-bottom: 12px;
-            font-size: 13px;
+            font-size: 14px;
+            font-weight: 600;
         }
 
         .footer-nav a {
             color: var(--text-dim);
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
         }
 
         .footer-nav a:hover {
@@ -347,13 +341,13 @@
         }
 
         .copyright {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--neon-green);
             font-weight: 700;
             letter-spacing: 1px;
         }
 
-        /* Responsive Breakpoints */
+        /* Responsive */
         @media (max-width: 850px) {
             .main-container {
                 grid-template-columns: 1fr;
@@ -363,37 +357,37 @@
 </head>
 <body>
 
-    <!-- Header & Navigation -->
-    <header class="site-header">
-        <a href="home.html">
-            <img src="img/head.png" alt="ATT/DES MODSLIB" class="header-brand-img" onerror="this.onerror=null; this.outerHTML='<div style=\'color:var(--neon-green); font-weight:800; font-size:20px;\'>ATT/DES MODSLIB</div>';">
-        </a>
-        <nav class="header-nav">
-            <a href="home.html" class="nav-btn"><i class="fa-solid fa-house"></i> الرئيسية</a>
-            <a href="search.html" class="nav-btn"><i class="fa-solid fa-magnifying-glass"></i> بحث</a>
-            <a href="store.html" class="nav-btn"><i class="fa-solid fa-cart-shopping"></i> المتجر</a>
-            <a href="newsletter.html" class="nav-btn"><i class="fa-solid fa-envelope"></i> النشرة</a>
-            <a href="sidemenu.html" class="nav-btn"><i class="fa-solid fa-bars"></i> القائمة</a>
-            <a href="archive/index.html" class="nav-btn"><i class="fa-solid fa-box-archive"></i> الأرشيف</a>
-            <a href="donate.html" class="nav-btn"><i class="fa-solid fa-heart"></i> دعم</a>
-        </nav>
+    <!-- Header Banner Image -->
+    <header class="header-banner">
+        <img src="img/head.png" alt="ATT/DES MODSLIB Banner" onerror="this.src='https://via.placeholder.com/1200x200/141a16/00FF66?text=ATT/DES+MODSLIB'">
     </header>
+
+    <!-- Navigation Bar with Font Awesome Icons -->
+    <nav class="nav-bar">
+        <a href="home.html" class="nav-btn"><i class="fa-solid fa-house"></i> الرئيسية</a>
+        <a href="search.html" class="nav-btn"><i class="fa-solid fa-magnifying-glass"></i> البحث</a>
+        <a href="store.html" class="nav-btn"><i class="fa-solid fa-cart-shopping"></i> المتجر</a>
+        <a href="newsletter.html" class="nav-btn"><i class="fa-solid fa-envelope"></i> النشرة</a>
+        <a href="sidemenu.html" class="nav-btn"><i class="fa-solid fa-bars"></i> القائمة</a>
+        <a href="archive/index.html" class="nav-btn"><i class="fa-solid fa-box-archive"></i> الأرشيف</a>
+        <a href="donate.html" class="nav-btn"><i class="fa-solid fa-heart"></i> التبرع</a>
+    </nav>
 
     <!-- Slider Section -->
     <section class="slider-section">
         <div class="slider-container" id="slider-wrapper">
-            <!-- تعبئة الصور الـ 12 من slider/ وتفاصيل slider.json -->
+            <!-- يتم تعبئة الصور الـ 12 من /slider/ تلقائياً عبر JavaScript -->
         </div>
     </section>
 
-    <!-- Main Content -->
+    <!-- Main Content Layout -->
     <div class="main-container">
         
         <!-- Latest Mods Feed -->
         <main>
-            <h2 class="section-header"><i class="fa-solid fa-fire"></i> أحدث المودات</h2>
+            <h2 class="section-header">أحدث المودات</h2>
             <div class="mods-grid" id="mods-feed">
-                <!-- تعبئة أحدث 10 منشورات عبر a/a.json -->
+                <!-- يتم تعبئة أحدث 10 منشورات عبر JavaScript من /a/a.json -->
             </div>
 
             <!-- Pagination -->
@@ -406,35 +400,35 @@
             </div>
         </main>
 
-        <!-- Sidebar -->
+        <!-- Sidebar (Social Channels with Custom Buttons & Images) -->
         <aside class="sidebar">
             
             <!-- YouTube Widget -->
             <div class="widget-box">
-                <h3><i class="fa-brands fa-youtube" style="color:#FF0000;"></i> YouTube</h3>
+                <h3>YouTube Channel</h3>
                 <img src="img/youtube.png" alt="YouTube" class="social-img" onerror="this.src='https://via.placeholder.com/260x100/141a16/FF0000?text=YOUTUBE'">
-                <a href="https://youtube.com/@modslib" target="_blank" class="btn-action btn-youtube"><i class="fa-brands fa-youtube"></i> إشترك في القناة</a>
+                <a href="https://youtube.com/@modslib" target="_blank" class="btn-action btn-youtube">متابعة القناة</a>
             </div>
 
             <!-- Facebook Widget -->
             <div class="widget-box">
-                <h3><i class="fa-brands fa-facebook" style="color:#1877F2;"></i> Facebook</h3>
+                <h3>Facebook Page</h3>
                 <img src="img/facebook.png" alt="Facebook" class="social-img" onerror="this.src='https://via.placeholder.com/260x100/141a16/1877F2?text=FACEBOOK'">
-                <a href="https://facebook.com/modslib" target="_blank" class="btn-action btn-facebook"><i class="fa-brands fa-facebook-f"></i> متابعة الصفحة</a>
+                <a href="https://facebook.com/modslib" target="_blank" class="btn-action btn-facebook">متابعة الصفحة</a>
             </div>
 
             <!-- Telegram Widget -->
             <div class="widget-box">
-                <h3><i class="fa-brands fa-telegram" style="color:#0088cc;"></i> Telegram</h3>
+                <h3>Telegram</h3>
                 <img src="img/TELEGRAM.png" alt="Telegram" class="social-img" onerror="this.src='https://via.placeholder.com/260x100/141a16/0088cc?text=TELEGRAM'">
-                <a href="https://t.me/modslib" target="_blank" class="btn-action btn-telegram"><i class="fa-paper-plane"></i> انضم للقناة</a>
+                <a href="https://t.me/modslib" target="_blank" class="btn-action btn-telegram">متابعة القناة</a>
             </div>
 
             <!-- WhatsApp Widget -->
             <div class="widget-box">
-                <h3><i class="fa-brands fa-whatsapp" style="color:#25D366;"></i> WhatsApp</h3>
+                <h3>WhatsApp Channel</h3>
                 <img src="img/whatsapp.png" alt="WhatsApp" class="social-img" onerror="this.src='https://via.placeholder.com/260x100/141a16/25D366?text=WHATSAPP'">
-                <a href="https://whatsapp.com/channel/modslib" target="_blank" class="btn-action btn-whatsapp"><i class="fa-brands fa-whatsapp"></i> متابعة القناة</a>
+                <a href="https://whatsapp.com/channel/modslib" target="_blank" class="btn-action btn-whatsapp">متابعة القناة</a>
             </div>
 
         </aside>
@@ -443,22 +437,22 @@
 
     <!-- News Section -->
     <section class="news-section">
-        <h2 class="section-header"><i class="fa-solid fa-newspaper"></i> الأخبار والأجدد</h2>
+        <h2 class="section-header">الأخبار والأجدد</h2>
         <div class="slider-container" id="news-feed">
-            <!-- تعبئة آخر 10 منشورات أخبار ديناميكياً -->
+            <!-- يتم تعبئة آخر 10 منشورات أخبار من /news/ ديناميكياً -->
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-nav">
-            <a href="privacy.html"><i class="fa-solid fa-shield-halved"></i> سياسة الخصوصية</a>
+            <a href="privacy.html">سياسة الخصوصية</a>
             <span>-</span>
-            <a href="terms.html"><i class="fa-solid fa-file-contract"></i> سياسة الإستخدام</a>
+            <a href="terms.html">سياسة الإستخدام</a>
             <span>-</span>
-            <a href="contact.html"><i class="fa-solid fa-headset"></i> تواصل معنا</a>
+            <a href="contact.html">تواصل معنا</a>
             <span>-</span>
-            <a href="about.html"><i class="fa-solid fa-circle-info"></i> من نحن؟</a>
+            <a href="about.html">من نحن؟</a>
         </div>
         <p class="copyright">Managed & Owned By ATTDES.online</p>
     </footer>
@@ -492,7 +486,7 @@
                 .catch(err => console.log('Error loading slider.json:', err));
 
 
-            // 2. جلب أحدث المودات من a/a.json (تنازلياً حسب قيمة n)
+            // 2. جلب أحدث المودات من /a/a.json (ترتيب تنازلي حسب أكبر n)
             fetch('a/a.json')
                 .then(res => res.json())
                 .then(data => {
@@ -509,7 +503,7 @@
                             <img src="${item.i}" alt="${item.t}" class="ratio-16-9" onerror="this.src='https://via.placeholder.com/260x146/141a16/00FF66?text=Mod+${item.n}'">
                             <div class="mod-info">
                                 <div class="mod-title">${item.t}</div>
-                                <a href="a/${item.n}.html" class="btn-action"><i class="fa-solid fa-download"></i> تحميل المود</a>
+                                <a href="a/${item.n}.html" class="btn-action">تحميل المود</a>
                             </div>
                         `;
                         modsFeed.appendChild(card);
@@ -518,7 +512,7 @@
                 .catch(err => console.log('Error loading a/a.json:', err));
 
 
-            // 3. جلب الأخبار (آخر 10 منشورات من news/news.json)
+            // 3. جلب الأخبار (آخر 10 منشورات من مجلد news)
             fetch('news/news.json')
                 .then(res => res.json())
                 .then(data => {

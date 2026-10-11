@@ -13,9 +13,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome Icons (Commercial-Free Icons) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
         /* --- الأساسيات والألوان (Minecraft Charcoal & Neon Green Block Style) --- */
         :root {
@@ -90,9 +87,9 @@
             transition: all 0.2s ease;
         }
 
-        .nav-btn i {
-            color: var(--neon-green);
-            font-size: 16px;
+        .nav-btn svg {
+            flex-shrink: 0;
+            fill: var(--neon-green);
         }
 
         .nav-btn:hover {
@@ -362,15 +359,36 @@
         <img src="img/head.png" alt="ATT/DES MODSLIB Banner" onerror="this.src='https://via.placeholder.com/1200x200/141a16/00FF66?text=ATT/DES+MODSLIB'">
     </header>
 
-    <!-- Navigation Bar with Font Awesome Icons -->
+    <!-- Navigation Bar with Reliable Inline SVG Icons -->
     <nav class="nav-bar">
-        <a href="home.html" class="nav-btn"><i class="fa-solid fa-house"></i> الرئيسية</a>
-        <a href="search.html" class="nav-btn"><i class="fa-solid fa-magnifying-glass"></i> البحث</a>
-        <a href="store.html" class="nav-btn"><i class="fa-solid fa-cart-shopping"></i> المتجر</a>
-        <a href="newsletter.html" class="nav-btn"><i class="fa-solid fa-envelope"></i> النشرة</a>
-        <a href="sidemenu.html" class="nav-btn"><i class="fa-solid fa-bars"></i> القائمة</a>
-        <a href="archive/index.html" class="nav-btn"><i class="fa-solid fa-box-archive"></i> الأرشيف</a>
-        <a href="donate.html" class="nav-btn"><i class="fa-solid fa-heart"></i> التبرع</a>
+        <a href="home.html" class="nav-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            الرئيسية
+        </a>
+        <a href="search.html" class="nav-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            البحث
+        </a>
+        <a href="store.html" class="nav-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            المتجر
+        </a>
+        <a href="newsletter.html" class="nav-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            النشرة
+        </a>
+        <a href="sidemenu.html" class="nav-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+            القائمة
+        </a>
+        <a href="archive/index.html" class="nav-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12.14l.81 1H5.12z"/></svg>
+            الأرشيف
+        </a>
+        <a href="donate.html" class="nav-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            التبرع
+        </a>
     </nav>
 
     <!-- Slider Section -->

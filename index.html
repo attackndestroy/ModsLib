@@ -1,561 +1,134 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ModsLib - مكتبة المودات | ATT/DES</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" href="img/fav.ico" type="image/x-icon">
-
-    <!-- Google Font: Cairo -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-    <style>
-        /* --- الأساسيات والألوان (Minecraft Charcoal & Neon Green Block Style) --- */
-        :root {
-            --bg-main: #0b0f0c;
-            --bg-card: #141a16;
-            --bg-card-hover: #1c2620;
-            --neon-green: #00FF66;
-            --neon-green-glow: rgba(0, 255, 102, 0.3);
-            --text-light: #ffffff;
-            --text-dim: #a3b8a8;
-            --border-color: #243328;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif !important;
-            border-radius: 0 !important; /* حواف حادة لمظهر المكعبات */
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-light);
-            direction: rtl;
-            line-height: 1.5;
-            padding-bottom: 20px;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* --- 1. Header Banner & Navigation --- */
-        .header-banner {
-            width: 100%;
-            background-color: var(--bg-card);
-            border-bottom: 3px solid var(--neon-green);
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .header-banner img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
-
-        .nav-bar {
-            background-color: var(--bg-card);
-            border-bottom: 2px solid var(--border-color);
-            padding: 10px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .nav-btn {
-            background: var(--bg-main);
-            color: var(--text-light);
-            border: 2px solid var(--border-color);
-            padding: 8px 14px;
-            font-size: 14px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .nav-btn svg {
-            flex-shrink: 0;
-            fill: var(--neon-green);
-        }
-
-        .nav-btn:hover {
-            border-color: var(--neon-green);
-            color: var(--neon-green);
-            box-shadow: 0 0 8px var(--neon-green-glow);
-        }
-
-        /* --- 2. Slider Section --- */
-        .slider-section {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .slider-container {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding-bottom: 15px;
-            scrollbar-width: thin;
-            scrollbar-color: var(--neon-green) var(--bg-card);
-        }
-
-        .slide-card {
-            min-width: 300px;
-            max-width: 320px;
-            background: var(--bg-card);
-            border: 2px solid var(--border-color);
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .slide-card:hover {
-            border-color: var(--neon-green);
-        }
-
-        .ratio-16-9 {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            object-fit: cover;
-            background-color: #000;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        .slide-content {
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            justify-content: space-between;
-        }
-
-        .slide-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-light);
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-
-        .btn-action {
-            display: block;
-            text-align: center;
-            background-color: var(--neon-green);
-            color: #000;
-            font-weight: 700;
-            padding: 8px;
-            font-size: 13px;
-            border: none;
-            cursor: pointer;
-            text-transform: uppercase;
-        }
-
-        .btn-action:hover {
-            background-color: #fff;
-            box-shadow: 0 0 10px #fff;
-        }
-
-        /* --- 3. Main Layout Grid --- */
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 20px;
-        }
-
-        .section-header {
-            color: var(--neon-green);
-            font-size: 18px;
-            font-weight: 700;
-            border-bottom: 2px solid var(--neon-green);
-            padding-bottom: 5px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        /* Mods Grid */
-        .mods-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 15px;
-        }
-
-        .mod-card {
-            background-color: var(--bg-card);
-            border: 2px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .mod-card:hover {
-            border-color: var(--neon-green);
-            transform: translateY(-3px);
-        }
-
-        .mod-info {
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            justify-content: space-between;
-        }
-
-        .mod-title {
-            font-size: 13px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-light);
-            height: 40px;
-            overflow: hidden;
-        }
-
-        /* Pagination */
-        .pagination {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            margin-top: 25px;
-            grid-column: 1 / -1;
-        }
-
-        .page-btn {
-            background: var(--bg-card);
-            border: 2px solid var(--border-color);
-            color: var(--text-light);
-            padding: 6px 14px;
-            font-weight: 700;
-        }
-
-        .page-btn.active, .page-btn:hover {
-            background: var(--neon-green);
-            color: #000;
-            border-color: var(--neon-green);
-        }
-
-        /* --- Sidebar & Social Media --- */
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .widget-box {
-            background: var(--bg-card);
-            border: 2px solid var(--border-color);
-            padding: 15px;
-            text-align: center;
-        }
-
-        .widget-box h3 {
-            color: var(--neon-green);
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 5px;
-        }
-
-        .social-img {
-            width: 100%;
-            height: auto;
-            display: block;
-            margin-bottom: 10px;
-            border: 1px solid var(--border-color);
-        }
-
-        /* الأزرار المخصصة لمنصات التواصل */
-        .btn-youtube {
-            background-color: #FF0000;
-            color: #fff;
-        }
-
-        .btn-facebook {
-            background-color: #1877F2;
-            color: #fff;
-        }
-
-        .btn-telegram {
-            background-color: #0088cc;
-            color: #fff;
-        }
-
-        .btn-whatsapp {
-            background-color: #25D366;
-            color: #fff;
-        }
-
-        /* --- 4. News Section --- */
-        .news-section {
-            max-width: 1200px;
-            margin: 30px auto 0;
-            padding: 0 20px;
-        }
-
-        /* --- 5. Footer --- */
-        .site-footer {
-            max-width: 1200px;
-            margin: 40px auto 0;
-            padding: 20px;
-            border-top: 2px solid var(--neon-green);
-            text-align: center;
-            background: var(--bg-card);
-        }
-
-        .footer-nav {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 12px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .footer-nav a {
-            color: var(--text-dim);
-        }
-
-        .footer-nav a:hover {
-            color: var(--neon-green);
-        }
-
-        .copyright {
-            font-size: 13px;
-            color: var(--neon-green);
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        /* Responsive */
-        @media (max-width: 850px) {
-            .main-container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مودات ماين كرافت | الرئيسية</title>
+  <meta name="description" content="أحدث مودات ماين كرافت المجانية - تحميل سريع" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--primary:#52c41a;--primary-dark:#389e0d;--bg:#f5f5f5;--card:#fff;--text:#262626;--muted:#8c8c8c}
+    body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    a{text-decoration:none;color:inherit}
+    header{background:linear-gradient(135deg,#52c41a,#237804);color:#fff;padding:20px 24px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+    .header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-size:1.6rem;font-weight:800}
+    .logo span{opacity:.85;font-size:.85rem;display:block;font-weight:400}
+    main{max-width:1200px;margin:0 auto;padding:30px 20px 60px}
+    h1{margin-bottom:24px;font-size:1.8rem}
+    h1::before{content:'⛏️ '}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
+    .card{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
+    .card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(82,196,26,.2)}
+    .card-img{aspect-ratio:16/9;overflow:hidden;background:#e0e0e0}
+    .card-img img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+    .card:hover .card-img img{transform:scale(1.05)}
+    .card-body{padding:14px;display:flex;flex-direction:column;gap:12px;flex:1}
+    .card-title{font-size:1.05rem;font-weight:700;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .btn{display:inline-block;padding:10px 18px;background:var(--primary);color:#fff!important;border-radius:8px;text-align:center;font-weight:700;transition:background .2s;border:none;cursor:pointer;font-family:inherit;font-size:.95rem}
+    .btn:hover{background:var(--primary-dark)}
+    .card .btn{margin-top:auto;display:block}
+    .pagination{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:40px}
+    .page-btn{min-width:42px;height:42px;padding:0 12px;border:1px solid #d9d9d9;background:#fff;border-radius:8px;cursor:pointer;font-family:inherit;font-weight:600;color:var(--text);transition:all .2s}
+    .page-btn:hover{border-color:var(--primary);color:var(--primary)}
+    .page-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+    .page-btn:disabled{opacity:.4;cursor:not-allowed}
+    .empty,.loading{text-align:center;padding:60px 20px;color:var(--muted);font-size:1.1rem}
+    @media(max-width:600px){
+      .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+      .card-body{padding:10px;gap:8px}
+      .card-title{font-size:.95rem}
+      .btn{padding:8px 12px;font-size:.9rem}
+      h1{font-size:1.4rem}
+    }
+  </style>
 </head>
 <body>
-
-    <!-- Header Banner Image -->
-    <header class="header-banner">
-        <img src="img/head.png" alt="ATT/DES MODSLIB Banner" onerror="this.src='https://via.placeholder.com/1200x200/141a16/00FF66?text=ATT/DES+MODSLIB'">
-    </header>
-
-    <!-- Navigation Bar with Reliable Inline SVG Icons -->
-    <nav class="nav-bar">
-        <a href="home.html" class="nav-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-            الرئيسية
-        </a>
-        <a href="search.html" class="nav-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-            البحث
-        </a>
-        <a href="store.html" class="nav-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-            المتجر
-        </a>
-        <a href="newsletter.html" class="nav-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-            النشرة
-        </a>
-        <a href="sidemenu.html" class="nav-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-            القائمة
-        </a>
-        <a href="archive/index.html" class="nav-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12.14l.81 1H5.12z"/></svg>
-            الأرشيف
-        </a>
-        <a href="donate.html" class="nav-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            التبرع
-        </a>
-    </nav>
-
-    <!-- Slider Section -->
-    <section class="slider-section">
-        <div class="slider-container" id="slider-wrapper">
-            <!-- يتم تعبئة الصور الـ 12 من /slider/ تلقائياً عبر JavaScript -->
-        </div>
-    </section>
-
-    <!-- Main Content Layout -->
-    <div class="main-container">
-        
-        <!-- Latest Mods Feed -->
-        <main>
-            <h2 class="section-header">أحدث المودات</h2>
-            <div class="mods-grid" id="mods-feed">
-                <!-- يتم تعبئة أحدث 10 منشورات عبر JavaScript من /a/a.json -->
-            </div>
-
-            <!-- Pagination -->
-            <div class="pagination">
-                <a href="#" class="page-btn active">1</a>
-                <a href="#" class="page-btn">2</a>
-                <a href="#" class="page-btn">3</a>
-                <span class="page-btn">...</span>
-                <a href="#" class="page-btn">?</a>
-            </div>
-        </main>
-
-        <!-- Sidebar (Social Channels with Custom Buttons & Images) -->
-        <aside class="sidebar">
-            
-            <!-- YouTube Widget -->
-            <div class="widget-box">
-                <h3>YouTube Channel</h3>
-                <img src="img/youtube.png" alt="YouTube" class="social-img" onerror="this.src='https://via.placeholder.com/260x100/141a16/FF0000?text=YOUTUBE'">
-                <a href="https://youtube.com/@modslib" target="_blank" class="btn-action btn-youtube">متابعة القناة</a>
-            </div>
-
-            <!-- Facebook Widget -->
-            <div class="widget-box">
-                <h3>Facebook Page</h3>
-                <img src="img/facebook.png" alt="Facebook" class="social-img" onerror="this.src='https://via.placeholder.com/260x100/141a16/1877F2?text=FACEBOOK'">
-                <a href="https://facebook.com/modslib" target="_blank" class="btn-action btn-facebook">متابعة الصفحة</a>
-            </div>
-
-            <!-- Telegram Widget -->
-            <div class="widget-box">
-                <h3>Telegram</h3>
-                <img src="img/TELEGRAM.png" alt="Telegram" class="social-img" onerror="this.src='https://via.placeholder.com/260x100/141a16/0088cc?text=TELEGRAM'">
-                <a href="https://t.me/modslib" target="_blank" class="btn-action btn-telegram">متابعة القناة</a>
-            </div>
-
-            <!-- WhatsApp Widget -->
-            <div class="widget-box">
-                <h3>WhatsApp Channel</h3>
-                <img src="img/whatsapp.png" alt="WhatsApp" class="social-img" onerror="this.src='https://via.placeholder.com/260x100/141a16/25D366?text=WHATSAPP'">
-                <a href="https://whatsapp.com/channel/modslib" target="_blank" class="btn-action btn-whatsapp">متابعة القناة</a>
-            </div>
-
-        </aside>
-
+  <header>
+    <div class="header-inner">
+      <div class="logo">Minecraft Mods<span>مودات ماين كرافت</span></div>
     </div>
+  </header>
 
-    <!-- News Section -->
-    <section class="news-section">
-        <h2 class="section-header">الأخبار والأجدد</h2>
-        <div class="slider-container" id="news-feed">
-            <!-- يتم تعبئة آخر 10 منشورات أخبار من /news/ ديناميكياً -->
-        </div>
-    </section>
+  <main>
+    <h1>أحدث المودات</h1>
+    <div id="grid" class="grid"><div class="loading">جاري التحميل...</div></div>
+    <div id="pagination" class="pagination"></div>
+  </main>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="footer-nav">
-            <a href="privacy.html">سياسة الخصوصية</a>
-            <span>-</span>
-            <a href="terms.html">سياسة الإستخدام</a>
-            <span>-</span>
-            <a href="contact.html">تواصل معنا</a>
-            <span>-</span>
-            <a href="about.html">من نحن؟</a>
-        </div>
-        <p class="copyright">Managed & Owned By ATTDES.online</p>
-    </footer>
+  <script>
+    const JSON_URL = 'jsons/1.json';
+    const PAGE_SIZE = 10;
+    let allMods = [];
+    let currentPage = 1;
 
-    <!-- JavaScript Logic -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            
-            // 1. جلب بيانات السلايدر (12 صورة من مجلد slider/ وربطها بـ slider.json)
-            fetch('slider/slider.json')
-                .then(res => res.json())
-                .then(data => {
-                    const sliderWrapper = document.getElementById('slider-wrapper');
-                    sliderWrapper.innerHTML = '';
-                    
-                    for (let i = 1; i <= 12; i++) {
-                        const itemData = data[i - 1] || { t: 'عنوان افتراضي', d: 'تحميل', l: '#' };
-                        
-                        const slide = document.createElement('div');
-                        slide.className = 'slide-card';
-                        slide.innerHTML = `
-                            <img src="slider/${i}.png" alt="Slide ${i}" class="ratio-16-9" onerror="this.src='https://via.placeholder.com/300x169/141a16/00FF66?text=Slider+${i}'">
-                            <div class="slide-content">
-                                <div class="slide-title">${itemData.t}</div>
-                                <a href="${itemData.l}" class="btn-action" target="_blank">${itemData.d}</a>
-                            </div>
-                        `;
-                        sliderWrapper.appendChild(slide);
-                    }
-                })
-                .catch(err => console.log('Error loading slider.json:', err));
+    async function load() {
+      try {
+        const res = await fetch(JSON_URL);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        allMods = Array.isArray(data) ? data : (data.mods || []);
+        allMods.sort((a, b) => b.n - a.n);   // الأحدث أولاً (رقم أعلى = أحدث)
+        render();
+      } catch (e) {
+        document.getElementById('grid').innerHTML =
+          '<div class="empty">⚠️ تعذّر تحميل المودات. تأكد من وجود <code>jsons/1.json</code></div>';
+        console.error(e);
+      }
+    }
 
+    function render() {
+      const grid = document.getElementById('grid');
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const items = allMods.slice(start, start + PAGE_SIZE);
 
-            // 2. جلب أحدث المودات من /a/a.json (ترتيب تنازلي حسب أكبر n)
-            fetch('a/a.json')
-                .then(res => res.json())
-                .then(data => {
-                    const modsFeed = document.getElementById('mods-feed');
-                    modsFeed.innerHTML = '';
+      if (items.length === 0) {
+        grid.innerHTML = '<div class="empty">لا توجد مودات حالياً</div>';
+        document.getElementById('pagination').innerHTML = '';
+        return;
+      }
 
-                    data.sort((a, b) => b.n - a.n);
-                    const latestMods = data.slice(0, 10);
+      grid.innerHTML = items.map(mod => `
+        <article class="card">
+          <div class="card-img">
+            <img src="${esc(mod.i)}" alt="${esc(mod.t)}" loading="lazy"
+                 onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 225%22><rect fill=%22%23ddd%22 width=%22400%22 height=%22225%22/><text x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-size=%2218%22>No Image</text></svg>'">
+          </div>
+          <div class="card-body">
+            <h2 class="card-title">${esc(mod.t)}</h2>
+            <a href="mod/${mod.n}.html" class="btn">⬇ تحميل</a>
+          </div>
+        </article>
+      `).join('');
 
-                    latestMods.forEach(item => {
-                        const card = document.createElement('div');
-                        card.className = 'mod-card';
-                        card.innerHTML = `
-                            <img src="${item.i}" alt="${item.t}" class="ratio-16-9" onerror="this.src='https://via.placeholder.com/260x146/141a16/00FF66?text=Mod+${item.n}'">
-                            <div class="mod-info">
-                                <div class="mod-title">${item.t}</div>
-                                <a href="a/${item.n}.html" class="btn-action">تحميل المود</a>
-                            </div>
-                        `;
-                        modsFeed.appendChild(card);
-                    });
-                })
-                .catch(err => console.log('Error loading a/a.json:', err));
+      renderPagination();
+    }
 
+    function renderPagination() {
+      const totalPages = Math.ceil(allMods.length / PAGE_SIZE);
+      const pag = document.getElementById('pagination');
+      if (totalPages <= 1) { pag.innerHTML = ''; return; }
 
-            // 3. جلب الأخبار (آخر 10 منشورات من مجلد news)
-            fetch('news/news.json')
-                .then(res => res.json())
-                .then(data => {
-                    const newsFeed = document.getElementById('news-feed');
-                    newsFeed.innerHTML = '';
-                    
-                    data.sort((a, b) => b.n - a.n);
-                    const latestNews = data.slice(0, 10);
+      let html = `<button class="page-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="goPage(${currentPage - 1})">‹</button>`;
+      for (let i = 1; i <= totalPages; i++) {
+        html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goPage(${i})">${i}</button>`;
+      }
+      html += `<button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="goPage(${currentPage + 1})">›</button>`;
+      pag.innerHTML = html;
+    }
 
-                    latestNews.forEach(item => {
-                        const newsCard = document.createElement('div');
-                        newsCard.className = 'slide-card';
-                        newsCard.innerHTML = `
-                            <img src="${item.i}" class="ratio-16-9" onerror="this.src='https://via.placeholder.com/300x169/141a16/00FF66?text=News'">
-                            <div class="slide-content">
-                                <div class="slide-title">${item.t}</div>
-                                <a href="${item.l || '#'}" class="btn-action">${item.d || 'قراءة المزيد'}</a>
-                            </div>
-                        `;
-                        newsFeed.appendChild(newsCard);
-                    });
-                })
-                .catch(err => console.log('News JSON optional or not found:', err));
+    function goPage(p) {
+      currentPage = p;
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-        });
-    </script>
+    function esc(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    load();
+  </script>
 </body>
 </html>

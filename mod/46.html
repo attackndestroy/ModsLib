@@ -10,84 +10,85 @@
 
   <script>
     (async function() {
-      // 1. استخراج الرقم من اسم الملف (مثال: 41.htm أو 41.html -> 41)
-      const fileName = location.pathname.split('/').pop();
-      const match = fileName.match(/^(\d+)\.htm(l)?$/);
-      const id = match ? parseInt(match[1]) : null;
-
-      if (!id) {
-        document.body.innerHTML = '⚠️ رقم المود غير صالح.';
-        return;
-      }
-
       try {
-        // 2. جلب ملف التصميم من السيرفر
-        const templateUrl = 'https://ModsLib.attdes.online/mod/mod.html';
-        const templateRes = await fetch(templateUrl);
-        if (!templateRes.ok) throw new Error('فشل جلب التصميم');
-        
-        const templateHtml = await templateRes.text();
-        const templateDoc = new DOMParser().parseFromString(templateHtml, 'text/html');
+        // 1. استخراج الرقم من اسم الملف (مثال: 41.html -> 41)
+        const fileName = location.pathname.split('/').pop();
+        const match = fileName.match(/^(\d+)\.htm(l)?$/);
+        const id = match ? parseInt(match[1]) : null;
 
-        // 3. استبدال الـ Head والـ Body بالكامل لضمان عمل التصميم والـ CSS
-        document.head.innerHTML = templateDoc.head.innerHTML;
-        document.body.innerHTML = templateDoc.body.innerHTML;
-
-        // 4. إعادة تشغيل سكربتات الإعلانات
-        document.querySelectorAll('script').forEach(oldScript => {
-          const newScript = document.createElement('script');
-          Array.from(oldScript.attributes).forEach(attr => {
-            newScript.setAttribute(attr.name, attr.value);
-          });
-          newScript.textContent = oldScript.textContent;
-          oldScript.parentNode.replaceChild(newScript, oldScript);
-        });
-
-        // 5. جلب البيانات من 1.json
-        const jsonUrl = 'https://ModsLib.attdes.online/jsons/1.json';
-        const jsonRes = await fetch(jsonUrl);
-        const data = await jsonRes.json();
-        const mods = Array.isArray(data) ? data : (data.mods || []);
-        
-        const mod = mods.find(m => m.n === id);
-        const contentDiv = document.getElementById('content');
-
-        if (!mod) {
-          contentDiv.innerHTML = '<div class="error">❌ لم يتم العثور على المود رقم ' + id + '</div>';
+        if (!id) {
+          document.body.innerHTML = '⚠️ رقم المود غير صالح.';
           return;
         }
 
-        document.title = (mod.t || 'مود ' + id) + ' | Minecraft Mods';
+        // 2. جلب التصميم فقط من ملف mod.html
+        const templateUrl = 'https://ModsLib.attdes.online/mod/mod.html';
+        const res = await fetch(templateUrl);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        let html = await res.text();
 
-        // معالجة الصورة
-        let imgSrc = '';
-        if (mod.i && mod.i.trim() !== '') {
-          imgSrc = /^https?:\/\//.test(mod.i) ? mod.i : 'https://ModsLib.attdes.online/' + mod.i.replace(/^\//, '');
-        }
+        // 3. تجهيز سكربت صغير ليتم حقنه داخل الصفحة
+        // هذا السكربت هو الوحيد الذي سيجلب البيانات من 1.json ويضعها في #content
+        const dataScript = `
+          <script>
+            window.addEventListener("DOMContentLoaded", async function() {
+              const id = ${id};
+              const contentDiv = document.getElementById('content');
+              if (!contentDiv) return;
 
-        // 6. وضع البيانات داخل التصميم
-        contentDiv.innerHTML = `
-          <article class="detail">
-            <div class="detail-img">
-              ${imgSrc ? `<img src="${imgSrc}" alt="${esc(mod.t)}" onerror="this.style.display='none'">` : ''}
-            </div>
-            <div class="detail-body">
-              <span class="badge">مود #${mod.n}</span>
-              <h1>${esc(mod.t || 'بدون عنوان')}</h1>
-              <p>${esc(mod.d || 'لا يوجد وصف.')}</p>
-              <a href="../download/${mod.n}.html" class="btn">⬇ الانتقال للتحميل</a>
-            </div>
-          </article>
+              try {
+                const jsonRes = await fetch('https://ModsLib.attdes.online/jsons/1.json');
+                const data = await jsonRes.json();
+                const mods = Array.isArray(data) ? data : (data.mods || []);
+                const mod = mods.find(m => m.n === id);
+
+                if (!mod) {
+                  contentDiv.innerHTML = '<div class="error">❌ لم يتم العثور على المود رقم ' + id + '</div>';
+                  return;
+                }
+
+                document.title = (mod.t || 'مود ' + id) + ' | Minecraft Mods';
+
+                let imgSrc = '';
+                if (mod.i && mod.i.trim() !== '') {
+                  imgSrc = /^https?:\\/\\//.test(mod.i) ? mod.i : 'https://ModsLib.attdes.online/' + mod.i.replace(/^\\//, '');
+                }
+
+                function esc(s) {
+                  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+                }
+
+                contentDiv.innerHTML = '<article class="detail">' +
+                  '<div class="detail-img">' +
+                    (imgSrc ? '<img src="' + imgSrc + '" alt="' + esc(mod.t) + '" onerror="this.style.display=\\'none\\'">' : '') +
+                  '</div>' +
+                  '<div class="detail-body">' +
+                    '<span class="badge">مود #' + mod.n + '</span>' +
+                    '<h1>' + esc(mod.t || 'بدون عنوان') + '</h1>' +
+                    '<p>' + esc(mod.d || 'لا يوجد وصف.') + '</p>' +
+                    '<a href="../download/' + mod.n + '.html" class="btn">⬇ الانتقال للتحميل</a>' +
+                  '</div>' +
+                '</article>';
+
+              } catch (e) {
+                contentDiv.innerHTML = '<div class="error">⚠️ حدث خطأ في تحميل البيانات</div>';
+                console.error(e);
+              }
+            });
+          <\/script>
         `;
+
+        // 4. دمج السكربت في نهاية ملف التصميم
+        html = html.replace('</body>', dataScript + '</body>');
+
+        // 5. كتابة الصفحة كاملة (هذا يجبر المتصفح على تطبيق التصميم 100%)
+        document.open();
+        document.write(html);
+        document.close();
 
       } catch (error) {
         console.error(error);
         document.body.innerHTML = '<div style="padding:40px;text-align:center;color:#999">⚠️ حدث خطأ أثناء تحميل الصفحة.</div>';
-      }
-
-      // دالة لحماية النصوص
-      function esc(s) {
-        return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
       }
     })();
   </script>

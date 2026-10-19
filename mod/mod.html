@@ -20,7 +20,7 @@
     .back:hover{background:#f0f0f0}
     .ads-slot{margin:16px auto;text-align:center;min-height:60px}
     
-    /* تصميم البطاقة التي ستستقبل البيانات */
+    /* تصميم البطاقة */
     .detail{background:var(--card);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
     .detail-img{aspect-ratio:16/9;background:#e0e0e0;overflow:hidden}
     .detail-img img{width:100%;height:100%;object-fit:cover}
@@ -30,59 +30,49 @@
     .detail-body p{color:#555;line-height:1.9;margin-bottom:24px;font-size:1.05rem}
     .btn{display:inline-block;padding:14px 32px;background:var(--primary);color:#fff!important;border-radius:10px;font-weight:800;font-size:1.05rem;transition:background .2s;border:none;cursor:pointer;font-family:inherit}
     .btn:hover{background:var(--primary-dark)}
-    .error{padding:60px 20px;text-align:center;color:var(--muted)}
-    .native-ad{margin:20px auto}
+    .loading-text{text-align:center;padding:50px;color:var(--muted);font-size:1.2rem}
     @media(max-width:600px){.detail-body{padding:18px}.detail-body h1{font-size:1.4rem}}
   </style>
 </head>
 <body>
   <header>
     <div class="header-inner">
-      <a href="../index.html"><img src="https://ModsLib.attdes.online/assets/banner.png" alt="Banner" /></a>
+      <a href="../index.html" target="_top"><img src="https://ModsLib.attdes.online/assets/banner.png" alt="Banner" /></a>
       <span class="site-name">Minecraft Mods</span>
     </div>
   </header>
 
-  <!-- إعلان بانر 320x50 (1) -->
   <div class="ads-slot">
     <script src="https://ModsLib.attdes.online/scripts/banner320-50.js"></script>
   </div>
 
   <main>
-    <a href="../index.html" class="back">← رجوع للرئيسية</a>
+    <a href="../index.html" target="_top" class="back">← رجوع للرئيسية</a>
 
-    <!-- إعلان native (1) -->
-    <div class="native-ad">
+    <div class="ads-slot">
       <script src="https://ModsLib.attdes.online/scripts/native.js"></script>
     </div>
 
-    <!-- ⬇️ هنا سيتم وضع البيانات عبر الملف المرقم (x.html) ⬇️ -->
-    <div id="content"><div class="error">جاري جلب البيانات...</div></div>
+    <!-- مكان وضع البيانات -->
+    <div id="content"><div class="loading-text">⏳ جاري تحميل بيانات المود...</div></div>
 
-    <!-- إعلان بانر 320x50 (2) -->
     <div class="ads-slot">
       <script src="https://ModsLib.attdes.online/scripts/banner320-50.js"></script>
     </div>
 
-    <!-- إعلان native (2) -->
-    <div class="native-ad">
+    <div class="ads-slot">
       <script src="https://ModsLib.attdes.online/scripts/native.js"></script>
     </div>
   </main>
 
-  <!-- إعلان بانر 320x50 (3) -->
   <div class="ads-slot">
     <script src="https://ModsLib.attdes.online/scripts/banner320-50.js"></script>
   </div>
 
-  <!-- إعلان socialbar (مرة واحدة) -->
   <div class="ads-slot">
     <script src="https://ModsLib.attdes.online/scripts/socialbar.js"></script>
   </div>
 
-  <!-- إعلان pop (مرة واحدة) -->
   <script src="https://ModsLib.attdes.online/scripts/pop.js"></script>
-  
-  <!-- ملاحظة: لا تضع أي سكربت آخر هنا، الملف المرقم هو من سيجلب البيانات ويعرضها -->
 </body>
 </html>

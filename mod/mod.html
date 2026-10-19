@@ -3,94 +3,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>جاري التحميل...</title>
+  <title>تفاصيل المود</title>
+  <link rel="icon" href="https://ModsLib.attdes.online/assets/fav.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--primary:#52c41a;--primary-dark:#389e0d;--bg:#f5f5f5;--card:#fff;--text:#262626;--muted:#8c8c8c}
+    body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+    a{text-decoration:none;color:inherit}
+    header{background:linear-gradient(135deg,#52c41a,#237804);color:#fff;padding:12px 20px}
+    .header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:12px}
+    .header-inner img{height:40px;width:auto}
+    .header-inner .site-name{font-weight:800;font-size:1.2rem;color:#fff}
+    main{max-width:900px;margin:0 auto;padding:24px 20px 60px}
+    .back{display:inline-block;margin-bottom:16px;color:var(--primary);font-weight:700;padding:8px 14px;border-radius:8px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+    .back:hover{background:#f0f0f0}
+    .ads-slot{margin:16px auto;text-align:center;min-height:60px}
+    
+    /* تصميم البطاقة التي ستستقبل البيانات */
+    .detail{background:var(--card);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+    .detail-img{aspect-ratio:16/9;background:#e0e0e0;overflow:hidden}
+    .detail-img img{width:100%;height:100%;object-fit:cover}
+    .detail-body{padding:28px}
+    .detail-body h1{font-size:1.8rem;margin-bottom:16px;line-height:1.3}
+    .badge{display:inline-block;background:#e6f7d9;color:var(--primary-dark);padding:4px 12px;border-radius:20px;font-size:.85rem;font-weight:700;margin-bottom:16px}
+    .detail-body p{color:#555;line-height:1.9;margin-bottom:24px;font-size:1.05rem}
+    .btn{display:inline-block;padding:14px 32px;background:var(--primary);color:#fff!important;border-radius:10px;font-weight:800;font-size:1.05rem;transition:background .2s;border:none;cursor:pointer;font-family:inherit}
+    .btn:hover{background:var(--primary-dark)}
+    .error{padding:60px 20px;text-align:center;color:var(--muted)}
+    .native-ad{margin:20px auto}
+    @media(max-width:600px){.detail-body{padding:18px}.detail-body h1{font-size:1.4rem}}
+  </style>
 </head>
-<body style="margin:0; font-family:sans-serif; display:flex; justify-content:center; align-items:center; height:100vh; color:#999;">
-  ⏳ جاري تحميل الصفحة...
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="../index.html"><img src="https://ModsLib.attdes.online/assets/banner.png" alt="Banner" /></a>
+      <span class="site-name">Minecraft Mods</span>
+    </div>
+  </header>
 
-  <script>
-    (async function() {
-      try {
-        // 1. استخراج الرقم من اسم الملف (مثال: 41.html -> 41)
-        const fileName = location.pathname.split('/').pop();
-        const match = fileName.match(/^(\d+)\.htm(l)?$/);
-        const id = match ? parseInt(match[1]) : null;
+  <!-- إعلان بانر 320x50 (1) -->
+  <div class="ads-slot">
+    <script src="https://ModsLib.attdes.online/scripts/banner320-50.js"></script>
+  </div>
 
-        if (!id) {
-          document.body.innerHTML = '⚠️ رقم المود غير صالح.';
-          return;
-        }
+  <main>
+    <a href="../index.html" class="back">← رجوع للرئيسية</a>
 
-        // 2. جلب التصميم فقط من ملف mod.html
-        const templateUrl = 'https://ModsLib.attdes.online/mod/mod.html';
-        const res = await fetch(templateUrl);
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        let html = await res.text();
+    <!-- إعلان native (1) -->
+    <div class="native-ad">
+      <script src="https://ModsLib.attdes.online/scripts/native.js"></script>
+    </div>
 
-        // 3. تجهيز سكربت صغير ليتم حقنه داخل الصفحة
-        // هذا السكربت هو الوحيد الذي سيجلب البيانات من 1.json ويضعها في #content
-        const dataScript = `
-          <script>
-            window.addEventListener("DOMContentLoaded", async function() {
-              const id = ${id};
-              const contentDiv = document.getElementById('content');
-              if (!contentDiv) return;
+    <!-- ⬇️ هنا سيتم وضع البيانات عبر الملف المرقم (x.html) ⬇️ -->
+    <div id="content"><div class="error">جاري جلب البيانات...</div></div>
 
-              try {
-                const jsonRes = await fetch('https://ModsLib.attdes.online/jsons/1.json');
-                const data = await jsonRes.json();
-                const mods = Array.isArray(data) ? data : (data.mods || []);
-                const mod = mods.find(m => m.n === id);
+    <!-- إعلان بانر 320x50 (2) -->
+    <div class="ads-slot">
+      <script src="https://ModsLib.attdes.online/scripts/banner320-50.js"></script>
+    </div>
 
-                if (!mod) {
-                  contentDiv.innerHTML = '<div class="error">❌ لم يتم العثور على المود رقم ' + id + '</div>';
-                  return;
-                }
+    <!-- إعلان native (2) -->
+    <div class="native-ad">
+      <script src="https://ModsLib.attdes.online/scripts/native.js"></script>
+    </div>
+  </main>
 
-                document.title = (mod.t || 'مود ' + id) + ' | Minecraft Mods';
+  <!-- إعلان بانر 320x50 (3) -->
+  <div class="ads-slot">
+    <script src="https://ModsLib.attdes.online/scripts/banner320-50.js"></script>
+  </div>
 
-                let imgSrc = '';
-                if (mod.i && mod.i.trim() !== '') {
-                  imgSrc = /^https?:\\/\\//.test(mod.i) ? mod.i : 'https://ModsLib.attdes.online/' + mod.i.replace(/^\\//, '');
-                }
+  <!-- إعلان socialbar (مرة واحدة) -->
+  <div class="ads-slot">
+    <script src="https://ModsLib.attdes.online/scripts/socialbar.js"></script>
+  </div>
 
-                function esc(s) {
-                  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-                }
-
-                contentDiv.innerHTML = '<article class="detail">' +
-                  '<div class="detail-img">' +
-                    (imgSrc ? '<img src="' + imgSrc + '" alt="' + esc(mod.t) + '" onerror="this.style.display=\\'none\\'">' : '') +
-                  '</div>' +
-                  '<div class="detail-body">' +
-                    '<span class="badge">مود #' + mod.n + '</span>' +
-                    '<h1>' + esc(mod.t || 'بدون عنوان') + '</h1>' +
-                    '<p>' + esc(mod.d || 'لا يوجد وصف.') + '</p>' +
-                    '<a href="../download/' + mod.n + '.html" class="btn">⬇ الانتقال للتحميل</a>' +
-                  '</div>' +
-                '</article>';
-
-              } catch (e) {
-                contentDiv.innerHTML = '<div class="error">⚠️ حدث خطأ في تحميل البيانات</div>';
-                console.error(e);
-              }
-            });
-          <\/script>
-        `;
-
-        // 4. دمج السكربت في نهاية ملف التصميم
-        html = html.replace('</body>', dataScript + '</body>');
-
-        // 5. كتابة الصفحة كاملة (هذا يجبر المتصفح على تطبيق التصميم 100%)
-        document.open();
-        document.write(html);
-        document.close();
-
-      } catch (error) {
-        console.error(error);
-        document.body.innerHTML = '<div style="padding:40px;text-align:center;color:#999">⚠️ حدث خطأ أثناء تحميل الصفحة.</div>';
-      }
-    })();
-  </script>
+  <!-- إعلان pop (مرة واحدة) -->
+  <script src="https://ModsLib.attdes.online/scripts/pop.js"></script>
+  
+  <!-- ملاحظة: لا تضع أي سكربت آخر هنا، الملف المرقم هو من سيجلب البيانات ويعرضها -->
 </body>
 </html>

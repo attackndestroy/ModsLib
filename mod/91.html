@@ -7,47 +7,67 @@
   <link rel="icon" href="https://modslib.attdes.online/assets/fav.ico" />
 </head>
 <body>
+  <!-- شاشة تحميل مؤقتة -->
   <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Tajawal',sans-serif;color:#999;font-size:1.2rem">
     ⏳ جاري التحميل...
   </div>
 
   <script>
-    (async function loadFromTemplate() {
+    (async function loadTemplateFromRemote() {
       try {
-        // مسار جذر الموقع (خطوة للأعلى من /mod/)
-        const baseUrl = new URL('../', location.href).href;
+        // 1. استخراج رقم المود من اسم الملف (مثال: 49.html → 49)
+        const fileName = location.pathname.split('/').pop();
+        const match = fileName.match(/^(\d+)\.html?$/);
+        const id = match ? parseInt(match[1]) : null;
 
-        // 1) جلب القالب mod.html
-        const res = await fetch(baseUrl + 'mod.html');
+        if (!id) {
+          document.body.innerHTML = '<div style="padding:40px;text-align:center;color:#999;font-family:sans-serif">⚠️ رقم المود غير صالح. تأكد من اسم الملف.</div>';
+          return;
+        }
+
+        // 2. جلب القالب من الرابط البعيد المحدد
+        const templateUrl = 'https://modslib.attdes.online/mod/mod.html';
+        const res = await fetch(templateUrl);
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const html = await res.text();
         const doc = new DOMParser().parseFromString(html, 'text/html');
 
-        // 2) إضافة <base> حتى تعمل كل المسارات النسبية من جذر الموقع
+        // 3. إضافة <base> لضمان عمل المسارات النسبية داخل القالب
         const base = document.createElement('base');
-        base.href = baseUrl;
+        base.href = 'https://modslib.attdes.online/mod/';
         document.head.appendChild(base);
 
-        // 3) نسخ التصميم (style / link / title)
+        // 4. نسخ التصميم (Styles, Links, Title) من القالب إلى الصفحة الحالية
         doc.head.querySelectorAll('style, link, title').forEach(el => {
           document.head.appendChild(el.cloneNode(true));
         });
 
-        // 4) استبدال محتوى الصفحة بمحتوى القالب
+        // 5. نسخ هيكل الصفحة (Header, Main, Footer) من القالب
         document.body.innerHTML = doc.body.innerHTML;
 
-        // 5) إعادة تنفيذ كل السكربتات (الإعلانات + جلب البيانات)
+        // 6. إعادة تشغيل جميع السكربتات (بما فيها الإعلانات) التي كانت في القالب
+        //    مع تمرير متغير عام يحمل رقم المود لاستخدامه إذا لزم الأمر.
+        window.MOD_ID = id;
         document.querySelectorAll('script').forEach(oldScript => {
           const newScript = document.createElement('script');
+          // نسخ الخصائص (مثل src أو type)
           Array.from(oldScript.attributes).forEach(attr => {
             newScript.setAttribute(attr.name, attr.value);
           });
+          // نسخ المحتوى الداخلي (للسكربتات المضمنة)
           newScript.textContent = oldScript.textContent;
+          // استبدال السكربت القديم بالجديد ليتم تنفيذه
           oldScript.parentNode.replaceChild(newScript, oldScript);
         });
+
+        // 7. (اختياري) إذا كان القالب يحتوي على دالة جلب البيانات، يمكن استدعاؤها هنا.
+        //    ولكن في الغالب، السكربتات المضمنة في القالب ستقوم بجلب البيانات بنفسها.
+        //    إذا كان القالب يقرأ الـ id من الرابط (query string)، فقد لا يعمل تلقائياً.
+        //    لذلك، نمرر الـ id عبر متغير عام قد يستخدمه القالب.
+        //    (يمكنك تعديل هذا الجزء إذا كان القالب يحتاج إلى تنفيذ إضافي).
+
       } catch (e) {
-        document.body.innerHTML =
-          '<div style="padding:40px;text-align:center;color:#999;font-family:sans-serif">⚠️ فشل تحميل الصفحة</div>';
+        document.body.innerHTML = '<div style="padding:40px;text-align:center;color:#999;font-family:sans-serif">⚠️ فشل تحميل الصفحة. تأكد من اتصالك بالإنترنت أو من صلاحية الوصول للرابط.</div>';
         console.error(e);
       }
     })();

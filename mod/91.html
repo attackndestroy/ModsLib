@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>جاري التحميل...</title>
+  <link rel="icon" href="https://modslib.attdes.online/assets/fav.ico" />
+</head>
+<body>
+  <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Tajawal',sans-serif;color:#999;font-size:1.2rem">
+    ⏳ جاري التحميل...
+  </div>
+
+  <script>
+    (async function loadFromTemplate() {
+      try {
+        // مسار جذر الموقع (خطوة للأعلى من /mod/)
+        const baseUrl = new URL('../', location.href).href;
+
+        // 1) جلب القالب mod.html
+        const res = await fetch(baseUrl + 'mod.html');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const html = await res.text();
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+
+        // 2) إضافة <base> حتى تعمل كل المسارات النسبية من جذر الموقع
+        const base = document.createElement('base');
+        base.href = baseUrl;
+        document.head.appendChild(base);
+
+        // 3) نسخ التصميم (style / link / title)
+        doc.head.querySelectorAll('style, link, title').forEach(el => {
+          document.head.appendChild(el.cloneNode(true));
+        });
+
+        // 4) استبدال محتوى الصفحة بمحتوى القالب
+        document.body.innerHTML = doc.body.innerHTML;
+
+        // 5) إعادة تنفيذ كل السكربتات (الإعلانات + جلب البيانات)
+        document.querySelectorAll('script').forEach(oldScript => {
+          const newScript = document.createElement('script');
+          Array.from(oldScript.attributes).forEach(attr => {
+            newScript.setAttribute(attr.name, attr.value);
+          });
+          newScript.textContent = oldScript.textContent;
+          oldScript.parentNode.replaceChild(newScript, oldScript);
+        });
+      } catch (e) {
+        document.body.innerHTML =
+          '<div style="padding:40px;text-align:center;color:#999;font-family:sans-serif">⚠️ فشل تحميل الصفحة</div>';
+        console.error(e);
+      }
+    })();
+  </script>
+</body>
+</html>

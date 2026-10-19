@@ -4,20 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>مودات ماين كرافت | الرئيسية</title>
-  <meta name="description" content="أحدث مودات ماين كرافت المجانية - تحميل سريع" />
+  <link rel="icon" href="https://modslib.attdes.online/assets/fav.ico" />
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     :root{--primary:#52c41a;--primary-dark:#389e0d;--bg:#f5f5f5;--card:#fff;--text:#262626;--muted:#8c8c8c}
     body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
     a{text-decoration:none;color:inherit}
-    header{background:linear-gradient(135deg,#52c41a,#237804);color:#fff;padding:20px 24px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
-    .header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-    .logo{font-size:1.6rem;font-weight:800}
-    .logo span{opacity:.85;font-size:.85rem;display:block;font-weight:400}
-    main{max-width:1200px;margin:0 auto;padding:30px 20px 60px}
-    h1{margin-bottom:24px;font-size:1.8rem}
-    h1::before{content:'⛏️ '}
+    header{background:linear-gradient(135deg,#52c41a,#237804);color:#fff;padding:16px 20px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+    .header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .header-inner img{height:48px;width:auto;border-radius:6px}
+    .header-inner .site-name{font-size:1.4rem;font-weight:800;color:#fff}
+    .ads-slot{margin:16px auto;max-width:1200px;text-align:center;min-height:60px}
+    main{max-width:1200px;margin:0 auto;padding:20px 20px 60px}
+    h1{margin-bottom:24px;font-size:1.8rem;display:flex;align-items:center;gap:10px}
+    h1::before{content:'⛏️';font-size:1.8rem}
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}
     .card{background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
     .card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(82,196,26,.2)}
@@ -35,30 +36,67 @@
     .page-btn.active{background:var(--primary);color:#fff;border-color:var(--primary)}
     .page-btn:disabled{opacity:.4;cursor:not-allowed}
     .empty,.loading{text-align:center;padding:60px 20px;color:var(--muted);font-size:1.1rem}
+    .native-ad{margin:20px auto;max-width:1200px}
     @media(max-width:600px){
       .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
       .card-body{padding:10px;gap:8px}
       .card-title{font-size:.95rem}
       .btn{padding:8px 12px;font-size:.9rem}
       h1{font-size:1.4rem}
+      .header-inner img{height:36px}
     }
   </style>
 </head>
 <body>
   <header>
     <div class="header-inner">
-      <div class="logo">Minecraft Mods<span>مودات ماين كرافت</span></div>
+      <a href="index.html"><img src="https://modslib.attdes.online/assets/banner.png" alt="Minecraft Mods Banner" /></a>
+      <div class="site-name">Minecraft Mods</div>
     </div>
   </header>
 
+  <!-- إعلان بانر 320x50 (1) -->
+  <div class="ads-slot">
+    <script src="https://modslib.attdes.online/scripts/banner320-50.js"></script>
+  </div>
+
   <main>
     <h1>أحدث المودات</h1>
+
+    <!-- إعلان native (1) -->
+    <div class="native-ad">
+      <script src="https://modslib.attdes.online/scripts/native.js"></script>
+    </div>
+
     <div id="grid" class="grid"><div class="loading">جاري التحميل...</div></div>
     <div id="pagination" class="pagination"></div>
+
+    <!-- إعلان بانر 320x50 (2) -->
+    <div class="ads-slot">
+      <script src="https://modslib.attdes.online/scripts/banner320-50.js"></script>
+    </div>
+
+    <!-- إعلان native (2) -->
+    <div class="native-ad">
+      <script src="https://modslib.attdes.online/scripts/native.js"></script>
+    </div>
   </main>
 
+  <!-- إعلان بانر 320x50 (3) -->
+  <div class="ads-slot">
+    <script src="https://modslib.attdes.online/scripts/banner320-50.js"></script>
+  </div>
+
+  <!-- إعلان socialbar (مرة واحدة) -->
+  <div class="ads-slot">
+    <script src="https://modslib.attdes.online/scripts/socialbar.js"></script>
+  </div>
+
+  <!-- إعلان pop (مرة واحدة) -->
+  <script src="https://modslib.attdes.online/scripts/pop.js"></script>
+
   <script>
-    const JSON_URL = 'jsons/1.json';
+    const JSON_URL = 'https://modslib.attdes.online/jsons/1.json';
     const PAGE_SIZE = 10;
     let allMods = [];
     let currentPage = 1;
@@ -69,11 +107,11 @@
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
         allMods = Array.isArray(data) ? data : (data.mods || []);
-        allMods.sort((a, b) => b.n - a.n);   // الأحدث أولاً (رقم أعلى = أحدث)
+        allMods.sort((a, b) => b.n - a.n);
         render();
       } catch (e) {
         document.getElementById('grid').innerHTML =
-          '<div class="empty">⚠️ تعذّر تحميل المودات. تأكد من وجود <code>jsons/1.json</code></div>';
+          '<div class="empty">⚠️ تعذّر تحميل المودات من السيرفر</div>';
         console.error(e);
       }
     }

@@ -36,7 +36,8 @@
 <body>
   <header>
     <div class="header-inner">
-      <a href="index.html"><img src="https://modslib.attdes.online/assets/banner.png" alt="Banner" /></a>
+      <!-- الرابط يعود للرئيسية -->
+      <a href="index.html" target="_top"><img src="https://modslib.attdes.online/assets/banner.png" alt="Banner" /></a>
       <span class="site-name">Minecraft Mods</span>
     </div>
   </header>
@@ -47,7 +48,8 @@
   </div>
 
   <main>
-    <a href="index.html" class="back">← رجوع للرئيسية</a>
+    <!-- زر الرجوع يفتح الرئيسية في النافذة الأساسية وليس داخل الـ iframe -->
+    <a href="index.html" target="_top" class="back">← رجوع للرئيسية</a>
 
     <!-- إعلان native (1) -->
     <div class="native-ad">
@@ -81,26 +83,25 @@
   <script src="https://modslib.attdes.online/scripts/pop.js"></script>
 
   <script>
-    function getModId() {
-      // 1) من ?id= في الرابط (عند فتح mod.html مباشرة)
-      const paramId = parseInt(new URLSearchParams(location.search).get('id'));
-      if (paramId && !isNaN(paramId)) return paramId;
-      // 2) من اسم الملف (mod/3.html → 3)
-      const match = location.pathname.split('/').pop().match(/^(\d+)\.html$/);
-      return match ? parseInt(match[1]) : null;
-    }
-    const id = getModId();
+    // 1. قراءة رقم المود من الرابط (مثال: mod.html?id=49)
+    const params = new URLSearchParams(location.search);
+    const id = parseInt(params.get('id'));
 
     async function load() {
       const content = document.getElementById('content');
+      
       if (!id || isNaN(id)) {
         content.innerHTML = '<div class="error">⚠️ رقم المود غير صالح. تأكد من الرابط.</div>';
         return;
       }
+
       try {
+        // 2. جلب البيانات من السيرفر الخاص بك
         const res = await fetch('https://modslib.attdes.online/jsons/1.json');
         const data = await res.json();
         const mods = Array.isArray(data) ? data : (data.mods || []);
+        
+        // 3. البحث عن المود المطلوب
         const mod = mods.find(m => m.n === id);
 
         if (!mod) {
@@ -110,10 +111,12 @@
 
         document.title = mod.t + ' | Minecraft Mods';
 
+        // معالجة مسار الصورة
         const imgSrc = /^https?:\/\//.test(mod.i)
           ? mod.i
           : 'https://modslib.attdes.online/' + mod.i.replace(/^\//, '');
 
+        // 4. عرض التصميم والبيانات
         content.innerHTML = `
           <article class="detail">
             <div class="detail-img">
@@ -123,6 +126,7 @@
               <span class="badge">مود #${mod.n}</span>
               <h1>${esc(mod.t)}</h1>
               <p>${esc(mod.d)}</p>
+              <!-- زر التحميل يوجه لصفحة التحميل داخل الـ iframe -->
               <a href="download/${mod.n}.html" class="btn">⬇ الانتقال للتحميل</a>
             </div>
           </article>

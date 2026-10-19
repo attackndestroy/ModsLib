@@ -19,6 +19,7 @@
     .back{display:inline-block;margin-bottom:16px;color:var(--primary);font-weight:700;padding:8px 14px;border-radius:8px;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.06)}
     .back:hover{background:#f0f0f0}
     .ads-slot{margin:16px auto;text-align:center;min-height:60px}
+    /* تصميم البطاقة التي ستوضع داخلها البيانات */
     .detail{background:var(--card);border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
     .detail-img{aspect-ratio:16/9;background:#e0e0e0;overflow:hidden}
     .detail-img img{width:100%;height:100%;object-fit:cover}
@@ -36,7 +37,7 @@
 <body>
   <header>
     <div class="header-inner">
-      <a href="index.html" target="_top"><img src="https://ModsLib.attdes.online/assets/banner.png" alt="Banner" /></a>
+      <a href="../index.html"><img src="https://ModsLib.attdes.online/assets/banner.png" alt="Banner" /></a>
       <span class="site-name">Minecraft Mods</span>
     </div>
   </header>
@@ -47,14 +48,15 @@
   </div>
 
   <main>
-    <a href="index.html" target="_top" class="back">← رجوع للرئيسية</a>
+    <a href="../index.html" class="back">← رجوع للرئيسية</a>
 
     <!-- إعلان native (1) -->
     <div class="native-ad">
       <script src="https://ModsLib.attdes.online/scripts/native.js"></script>
     </div>
 
-    <div id="content"><div class="error">جاري التحميل...</div></div>
+    <!-- هنا سيتم وضع البيانات من الملف المرقم -->
+    <div id="content"><div class="error">جاري جلب البيانات...</div></div>
 
     <!-- إعلان بانر 320x50 (2) -->
     <div class="ads-slot">
@@ -79,69 +81,7 @@
 
   <!-- إعلان pop (مرة واحدة) -->
   <script src="https://ModsLib.attdes.online/scripts/pop.js"></script>
-
-  <script>
-    // 1. قراءة رقم المود من الرابط (مثال: mod.html?id=49)
-    const params = new URLSearchParams(location.search);
-    const id = parseInt(params.get('id'));
-
-    async function load() {
-      const content = document.getElementById('content');
-      
-      if (!id || isNaN(id)) {
-        content.innerHTML = '<div class="error">⚠️ رقم المود غير صالح. تأكد من الرابط.</div>';
-        return;
-      }
-
-      try {
-        // 2. جلب البيانات من الرابط الجديد (مع مراعاة حالة الأحرف)
-        const res = await fetch('https://ModsLib.attdes.online/jsons/1.json');
-        const data = await res.json();
-        const mods = Array.isArray(data) ? data : (data.mods || []);
-        
-        // 3. البحث عن المود المطلوب
-        const mod = mods.find(m => m.n === id);
-
-        if (!mod) {
-          content.innerHTML = `<div class="error">❌ لم يتم العثور على المود رقم ${id}</div>`;
-          return;
-        }
-
-        document.title = (mod.t || 'مود ' + id) + ' | Minecraft Mods';
-
-        // 4. معالجة مسار الصورة (يدعم المسار النسبي أو الرابط الكامل)
-        let imgSrc = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225"><rect fill="%23ddd" width="400" height="225"/><text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="%23999" font-size="18">No Image</text></svg>';
-        if (mod.i && mod.i.trim() !== "") {
-          imgSrc = /^https?:\/\//.test(mod.i)
-            ? mod.i
-            : 'https://ModsLib.attdes.online/' + mod.i.replace(/^\//, '');
-        }
-
-        // 5. عرض التصميم والبيانات (مع حماية ضد الحقول الفارغة)
-        content.innerHTML = `
-          <article class="detail">
-            <div class="detail-img">
-              <img src="${imgSrc}" alt="${esc(mod.t || '')}" onerror="this.style.display='none'">
-            </div>
-            <div class="detail-body">
-              <span class="badge">مود #${mod.n}</span>
-              <h1>${esc(mod.t || 'بدون عنوان')}</h1>
-              <p>${esc(mod.d || 'لا يوجد وصف متاح لهذا المود حالياً.')}</p>
-              <a href="download/${mod.n}.html" class="btn">⬇ الانتقال للتحميل</a>
-            </div>
-          </article>
-        `;
-      } catch (e) {
-        content.innerHTML = '<div class="error">⚠️ حدث خطأ في تحميل البيانات</div>';
-        console.error(e);
-      }
-    }
-
-    function esc(s) {
-      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
-
-    load();
-  </script>
+  
+  <!-- لا يوجد أي سكربت يقرأ ID أو JSON هنا -->
 </body>
 </html>

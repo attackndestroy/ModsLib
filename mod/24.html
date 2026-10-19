@@ -4,71 +4,100 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>جاري التحميل...</title>
-  <link rel="icon" href="https://modslib.attdes.online/assets/fav.ico" />
 </head>
-<body>
-  <!-- شاشة تحميل مؤقتة -->
-  <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Tajawal',sans-serif;color:#999;font-size:1.2rem">
-    ⏳ جاري التحميل...
-  </div>
+<body style="margin:0; font-family:sans-serif; display:flex; justify-content:center; align-items:center; height:100vh; color:#999;">
+  ⏳ جاري تحميل الصفحة...
 
   <script>
-    (async function loadTemplateFromRemote() {
+    (async function() {
+      // 1. استخراج الرقم من اسم الملف (مثال: 49.html -> 49)
+      const fileName = location.pathname.split('/').pop();
+      const match = fileName.match(/^(\d+)\.html?$/);
+      const id = match ? parseInt(match[1]) : null;
+
+      if (!id) {
+        document.body.innerHTML = '⚠️ رقم المود غير صالح.';
+        return;
+      }
+
       try {
-        // 1. استخراج رقم المود من اسم الملف (مثال: 49.html → 49)
-        const fileName = location.pathname.split('/').pop();
-        const match = fileName.match(/^(\d+)\.html?$/);
-        const id = match ? parseInt(match[1]) : null;
+        // 2. جلب ملف التصميم من السيرفر
+        const templateUrl = 'https://ModsLib.attdes.online/mod/mod.html';
+        const templateRes = await fetch(templateUrl);
+        if (!templateRes.ok) throw new Error('فشل جلب التصميم');
+        const templateHtml = await templateRes.text();
+        const templateDoc = new DOMParser().parseFromString(templateHtml, 'text/html');
 
-        if (!id) {
-          document.body.innerHTML = '<div style="padding:40px;text-align:center;color:#999;font-family:sans-serif">⚠️ رقم المود غير صالح. تأكد من اسم الملف.</div>';
-          return;
-        }
-
-        // 2. جلب القالب من الرابط البعيد المحدد
-        const templateUrl = 'https://modslib.attdes.online/mod/mod.html';
-        const res = await fetch(templateUrl);
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const html = await res.text();
-        const doc = new DOMParser().parseFromString(html, 'text/html');
-
-        // 3. إضافة <base> لضمان عمل المسارات النسبية داخل القالب
+        // 3. تطبيق التصميم على الصفحة الحالية
+        // إضافة base لضمان عمل المسارات داخل التصميم
         const base = document.createElement('base');
-        base.href = 'https://modslib.attdes.online/mod/';
+        base.href = 'https://ModsLib.attdes.online/mod/';
         document.head.appendChild(base);
 
-        // 4. نسخ التصميم (Styles, Links, Title) من القالب إلى الصفحة الحالية
-        doc.head.querySelectorAll('style, link, title').forEach(el => {
+        // نسخ الـ CSS والخطوط
+        templateDoc.head.querySelectorAll('style, link').forEach(el => {
           document.head.appendChild(el.cloneNode(true));
         });
 
-        // 5. نسخ هيكل الصفحة (Header, Main, Footer) من القالب
-        document.body.innerHTML = doc.body.innerHTML;
+        // نسخ هيكل الصفحة (بما فيه الإعلانات ومساحة #content)
+        document.body.innerHTML = templateDoc.body.innerHTML;
 
-        // 6. إعادة تشغيل جميع السكربتات (بما فيها الإعلانات) التي كانت في القالب
-        //    مع تمرير متغير عام يحمل رقم المود لاستخدامه إذا لزم الأمر.
-        window.MOD_ID = id;
+        // 4. إعادة تشغيل سكربتات الإعلانات الموجودة داخل التصميم
         document.querySelectorAll('script').forEach(oldScript => {
           const newScript = document.createElement('script');
-          // نسخ الخصائص (مثل src أو type)
           Array.from(oldScript.attributes).forEach(attr => {
             newScript.setAttribute(attr.name, attr.value);
           });
-          // نسخ المحتوى الداخلي (للسكربتات المضمنة)
           newScript.textContent = oldScript.textContent;
-          // استبدال السكربت القديم بالجديد ليتم تنفيذه
           oldScript.parentNode.replaceChild(newScript, oldScript);
         });
 
-        // 7. (اختياري) إذا كان القالب يحتوي على دالة جلب البيانات، يمكن استدعاؤها هنا.
-        //    ولكن في الغالب، السكربتات المضمنة في القالب ستقوم بجلب البيانات بنفسها.
-        //    إذا كان القالب يقرأ الـ id من الرابط (query string)، فقد لا يعمل تلقائياً.
-        //    لذلك، نمرر الـ id عبر متغير عام قد يستخدمه القالب.
-        //    (يمكنك تعديل هذا الجزء إذا كان القالب يحتاج إلى تنفيذ إضافي).
+        // 5. الآن نقوم بجلب البيانات من ملف JSON ونضعها في #content
+        const jsonUrl = 'https://ModsLib.attdes.online/jsons/1.json';
+        const jsonRes = await fetch(jsonUrl);
+        const data = await jsonRes.json();
+        const mods = Array.isArray(data) ? data : (data.mods || []);
+        
+        // البحث عن المود بالرقم
+        const mod = mods.find(m => m.n === id);
+        const contentDiv = document.getElementById('content');
 
-      } catch (e) {
-        document.body.innerHTML = '<div style="padding:40px;text-align:center;color:#999;font-family:sans-serif">⚠️ فشل تحميل الصفحة. تأكد من اتصالك بالإنترنت أو من صلاحية الوصول للرابط.</div>';
-        console.error(e);
+        if (!mod) {
+          contentDiv.innerHTML = '<div class="error">❌ لم يتم العثور على المود رقم ' + id + '</div>';
+          return;
+        }
+
+        document.title = (mod.t || 'مود ' + id) + ' | Minecraft Mods';
+
+        // معالجة الصورة
+        let imgSrc = '';
+        if (mod.i && mod.i.trim() !== '') {
+          imgSrc = /^https?:\/\//.test(mod.i) ? mod.i : 'https://ModsLib.attdes.online/' + mod.i.replace(/^\//, '');
+        }
+
+        // 6. عرض البيانات داخل التصميم
+        contentDiv.innerHTML = `
+          <article class="detail">
+            <div class="detail-img">
+              ${imgSrc ? `<img src="${imgSrc}" alt="${esc(mod.t)}" onerror="this.style.display='none'">` : ''}
+            </div>
+            <div class="detail-body">
+              <span class="badge">مود #${mod.n}</span>
+              <h1>${esc(mod.t || 'بدون عنوان')}</h1>
+              <p>${esc(mod.d || 'لا يوجد وصف.')}</p>
+              <a href="../download/${mod.n}.html" class="btn">⬇ الانتقال للتحميل</a>
+            </div>
+          </article>
+        `;
+
+      } catch (error) {
+        console.error(error);
+        document.body.innerHTML = '<div style="padding:40px;text-align:center;color:#999">⚠️ حدث خطأ أثناء تحميل الصفحة.</div>';
+      }
+      
+      // دالة لحماية النصوص
+      function esc(s) {
+        return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
       }
     })();
   </script>
